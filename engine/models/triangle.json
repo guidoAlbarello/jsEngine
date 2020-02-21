@@ -1,0 +1,15 @@
+{
+    "attributes" : [ 
+        {
+            "data" : [
+        -0.5,-0.5, 0.0,    
+        -0.5, 0.5, 0.0,     
+        0.0,-0.5, 0.0     
+    ], "name" : "positions" }, {
+        "data" : [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+        "name" : "normals"
+    }
+    ],
+    "indexBuffer" : [0,1,2], 
+    "drawingMethod" : "TRIANGLE_STRIP"
+}
