@@ -3,6 +3,7 @@
 class Object3d {
     mesh;
     physicsComponent;
+    behaviour;
     
     constructor() {
     	this.worldPosition = vec3.create();
@@ -12,11 +13,7 @@ class Object3d {
         this.worldModelMatrix = mat4.create();
         this.animations = [];
         this.id = Object3d.generateId();
-	
-        // Not used for now. Refactor how to use it.  
-        //this.position = [0.0, 0.0, 0.0];
-        //this.rotation = [0.0, 0.0, 0.0];
-        //this.scale = [1.0, 1.0, 1.0];
+	this.behaviour = new Behaviour(this);
     }
 
     static generateId() {
@@ -34,7 +31,9 @@ class Object3d {
     }
 
     setBehaviour(behaviour) {
-	   this.updateMyself = () => {behaviour(this)};
+	behaviour.setObject(this);
+	behaviour.init();
+	this.behaviour = behaviour;
     }
 
     setPhysicsComponent(component) {
@@ -85,7 +84,7 @@ class Object3d {
     }
     
     update(fatherModelMatrix) {
-	this.updateMyself(fatherModelMatrix);
+	this.behaviour.update();
 	for(let i=0; i<this.animations.length;i++){
             this.animations[i].update();
         }
@@ -97,10 +96,6 @@ class Object3d {
         }
     }
 
-    updateMyself(fatherModelMatrix) {
-
-    }
-    
     draw() {
         // Other uniforms may be passed. 
         if (this.mesh) {
