@@ -15,9 +15,11 @@ class TextureManager {
     async loadTextures() {
 	let texture_loading = [];
 	let texturesToLoad = (await this.getTexturesToLoad()).split("\n");
-	for (let i = 0; i < texturesToLoad.length;i++) {
-	    let texture = texturesToLoad[i].split(",");
-	    texture_loading.push(this.loadTexture(texture[0], this.TEXTURES_DIRECTORY + texture[1]));
+	if (!texturesToLoad) {
+	    for (let i = 0; i < texturesToLoad.length;i++) {
+		let texture = texturesToLoad[i].split(",");
+		texture_loading.push(this.loadTexture(texture[0], this.TEXTURES_DIRECTORY + texture[1]));
+	    }
 	}
 	await Promise.all(texture_loading);
     }

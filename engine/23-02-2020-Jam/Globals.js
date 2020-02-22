@@ -3,6 +3,14 @@ const vec3 = glMatrix.vec3;
 const vec4 = glMatrix.vec4;
 const vec2 = glMatrix.vec2;
 
+const addVector3 = (vec1, vec2) => {
+    return [vec1[0] + vec2[0], vec1[1] + vec2[1], vec2[2] + vec2[2]];
+}
+
+const vecMulScalar = (vec, scalar) => {
+    return [vec[0] * scalar, vec[1] * scalar, vec[2] * scalar];
+}
+
 const round = (value, decimals) => {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
@@ -36,11 +44,5 @@ var gMaterialManager = new MaterialManager();
 var gModelMaker = new ModelMaker();
 
 var gDeltaTime = 0.0;
-var gGUIParams = {
-    profile:"cruzada",
-    columns: 5,
-    chairs: 4,
-    elevation: 4
-};
 const IDENTITY = mat4.identity(mat4.create());
 

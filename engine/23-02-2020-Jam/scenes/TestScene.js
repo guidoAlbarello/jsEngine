@@ -4,20 +4,49 @@ class TestScene {
     }
     
     build() {
-	this.scene.addCamera(new Camera([0.0,2.0,5.0], [0.0,0.0,0.0]), "default");
-	this.scene.addCamera(new Camera([-2.0, 4.0, 10.0], [0.0,0.0,0.0]), "test");
-	this.scene.addCamera(new OrbitalCamera([10.0,4.0,10.0], [0.0,0.0,0.0]), "orbital");
-	this.scene.useCamera("default");
-	
-	let plane = gSurfaceCreator.makePlane(5, 5, 1);
-	plane.translate([4.0,0.0,0.0]);
-	this.scene.addChild(plane);
+	this.scene.addCamera(new OrbitalCamera(20, [0.0,0.0,0.0]), "orbital");
+	this.scene.useCamera("orbital");
 
-	let sphere = gSurfaceCreator.makeSphere(0.2, 50);
-	sphere.translate([-1.0, 0.0, 2.0]);
-	sphere.scale([4.0,4.0,4.0]);
-	this.scene.addChild(sphere); 
+	// Keep point light here for now. Maybe later move it as something of dev view. 
+	let pointLight = new PointLight([-0.5,3.0,-2.0], [1.9,0.2,0]);
+	this.scene.addPointLight(pointLight);
+
+	// Create sphere
+	let sphere = gSurfaceCreator.makeSphere(1, 70);
+
+	let sphereMaterial = new PBRMaterial();
+	sphere.setMaterial(sphereMaterial);
+
+	let physicsComponent = new PhysicsComponent();
+	sphere.setPhysicsComponent(physicsComponent);
+
+	this.scene.addChild(sphere);
+
+	// Create walls
+	let structure = new Object3d();
+	let length = 10;
+	let width = 0.3;
+	let wall = gSurfaceCreator.makeCube(width, length, length);
+	wall.translate([-length/2,0.0,0]);
+	let floor = gSurfaceCreator.makeCube(length, width, length);
+	floor.translate([0,-length/2,0]);
+	let wall2 = gSurfaceCreator.makeCube(length, length, width);
+	wall2.translate([0,0,-length/2]);
+
+	structure.addChild(wall);
+	structure.addChild(wall2);
+	structure.addChild(floor);
+
+	let mat = new PBRMaterial();
+	wall.setMaterial(mat);
 	
+	let mat2 = new PBRMaterial();
+	wall2.setMaterial(mat2);
+
+	let mat3 = new PBRMaterial();
+	floor.setMaterial(mat3);
+	
+	this.scene.addChild(structure);
 	return this.scene;
     }
 }

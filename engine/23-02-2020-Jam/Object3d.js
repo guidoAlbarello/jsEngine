@@ -2,6 +2,7 @@
 // For now we just use an static id. 
 class Object3d {
     mesh;
+    physicsComponent;
     
     constructor() {
     	this.worldPosition = vec3.create();
@@ -36,6 +37,15 @@ class Object3d {
 	   this.updateMyself = () => {behaviour(this)};
     }
 
+    setPhysicsComponent(component) {
+	component.setObject(this);
+	this.physicsComponent = component;
+    }
+
+    getPosition() {
+	return this.modelMatrix.slice(12,15);
+    }
+    
     translate(position) {
         mat4.translate(this.modelMatrix, this.modelMatrix, position);
     }
@@ -96,6 +106,10 @@ class Object3d {
         if (this.mesh) {
             gRenderer.draw(this.mesh, this.material, this.worldModelMatrix);
         }
+
+	if (this.physicsComponent) {
+	    this.physicsComponent.update();
+	}
 
         for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].draw();
