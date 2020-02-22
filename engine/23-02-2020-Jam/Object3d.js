@@ -85,6 +85,10 @@ class Object3d {
     
     update(fatherModelMatrix) {
 	this.behaviour.update();
+	if (this.physicsComponent) {
+	    this.physicsComponent.update();
+	}
+	
 	for(let i=0; i<this.animations.length;i++){
             this.animations[i].update();
         }
@@ -101,10 +105,6 @@ class Object3d {
         if (this.mesh) {
             gRenderer.draw(this.mesh, this.material, this.worldModelMatrix);
         }
-
-	if (this.physicsComponent) {
-	    this.physicsComponent.update();
-	}
 
         for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].draw();
