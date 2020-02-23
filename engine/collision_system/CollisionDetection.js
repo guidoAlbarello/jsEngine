@@ -26,8 +26,7 @@ class CollisionDetection {
 				let collision = collider.collides(otherCollider.getHitbox());
 				if (collision) {
 					console.log("collision found")
-					collider.onCollisionEnter();
-					otherCollider.onCollisionEnter();
+					collider.onCollisionEnter(otherCollider);
 				}
 			}
 		}

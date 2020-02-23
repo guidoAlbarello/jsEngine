@@ -5,6 +5,7 @@ class PhysicsComponent {
 	constructor(object) {
 		this.object = object;
 		this.velocity = [0, 0, 0];
+		this.mass = 1;
 	}
 
 	update() {
@@ -15,7 +16,15 @@ class PhysicsComponent {
 		this.velocity = velocity;
 	}
 
+	setMass(mass) {
+		this.mass = mass;
+	}
+
 	setObject(object) {
 		this.object = object;
+	}
+
+	getVelocity() {
+		return this.velocity;
 	}
 }

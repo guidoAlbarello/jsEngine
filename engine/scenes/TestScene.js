@@ -41,7 +41,8 @@ class TestScene {
 
 		let physicsComponent = new PhysicsComponent();
 		sphere.setPhysicsComponent(physicsComponent);
-		physicsComponent.setVelocity([0.001,0,0])
+		physicsComponent.setVelocity([0.01,0,0])
+		physicsComponent.setMass(5);
 		this.scene.addChild(sphere);
 
 		// Create bouncing sphere
