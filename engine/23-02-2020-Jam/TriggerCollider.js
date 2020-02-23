@@ -1,3 +1,0 @@
-class TriggerCollider extends Collider {
-
-}

@@ -1,3 +1,0 @@
-class PhysicsCollider extends Collider {
-
-}

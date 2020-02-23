@@ -3,7 +3,6 @@
 class Object3d {
     mesh;
     physicsComponent;
-    behaviour;
     
     constructor() {
     	this.worldPosition = vec3.create();
@@ -14,6 +13,7 @@ class Object3d {
         this.animations = [];
         this.id = Object3d.generateId();
 	this.behaviour = new Behaviour(this);
+	this.colliders = [];
     }
 
     static generateId() {
@@ -41,6 +41,10 @@ class Object3d {
 	this.physicsComponent = component;
     }
 
+    addCollider(collider) {
+	this.colliders.push(collider);
+    }
+    
     getPosition() {
 	return this.modelMatrix.slice(12,15);
     }

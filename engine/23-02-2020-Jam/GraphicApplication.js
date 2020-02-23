@@ -21,6 +21,8 @@ class GraphicApplication {
 
     	this.scene.update(IDENTITY);
 
+	gCollisionDetection.update();
+	
 	// Refactor so that the if is not checked every cycle.?
 	// Also be ware of recursive call. For now is fine. 
 	this.scene.drawScene();
