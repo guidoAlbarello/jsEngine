@@ -105,7 +105,7 @@ void main(void) {
      highp vec3 Lo = vec3(0.0);
      
      // Calculate directional light
-     highp vec3 Wi = -dirLight.direction;
+     highp vec3 Wi = dirLight.direction;
      highp vec3 Wo = normalize(cameraPos - worldPos);
      highp vec3 LWi = dirLight.intensity;
      

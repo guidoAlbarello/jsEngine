@@ -12,7 +12,7 @@ class TestScene {
 	this.scene.addPointLight(pointLight);
 
 	let light = new DirectionalLight();
-	light.setDirection([0,0,-1]);
+	light.setDirection([0,0,1]);
 	light.intensity = [2,2,2];
 	this.scene.addDirectionalLight(light);
 
