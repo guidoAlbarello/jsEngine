@@ -7,7 +7,7 @@ class OrbitalCamera extends Camera {
 		this.alfa = Math.PI / 4;
 		this.beta = Math.PI / 4;
 		this.speed = 0.0001;
-		this.zoomSpeed = 0.00025;
+		this.zoomSpeed = 0.005;
 		this.radius = radius; // This should be calculated from the targe
 	}
 

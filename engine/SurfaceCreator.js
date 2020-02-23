@@ -88,7 +88,7 @@ class SurfaceCreator {
 	}
 
 	// Should we use GL_TRIANGLES or GL_TRIANGLE_STRIP?
-	makeCube(w, h, d) {
+	makeCube(w, h, d, xRepeat = 1, yRepeat = 1) {
 		let cube = new Object3d();
 		let params = gAssetManager.makeModelParams();
 		params.positions = [
@@ -259,57 +259,57 @@ class SurfaceCreator {
 		params.textureCoordinates = [
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0,
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0,
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0,
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0,
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0,
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 
 			0.0,
 			0.0,
-			1.0,
+			1.0 * xRepeat,
 			0.0,
 			0.0,
-			1.0,
-			1.0,
-			1.0
+			1.0 * yRepeat,
+			1.0 * xRepeat,
+			1.0 * yRepeat,
 		];
 
 		cube.setModel(
