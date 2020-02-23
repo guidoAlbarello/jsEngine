@@ -19,30 +19,38 @@ class TestScene {
 
 		// Create Enemy
 		let enemy = gSurfaceCreator.makeSphere(2, 70);
-		sphere.translate([10,0,0]);
-		enemy.setHitbox(new SphericalHitbox());
-		CollisionDetection.registerCollidable(enemy, "enemy");
+		enemy.translate([10,0,0]);
+		enemy.setHitbox(new SphericalHitbox(2));
+		gCollisionDetection.registerCollidable(enemy, "enemy");
 
 		this.scene.addChild(enemy);
 
 		// Create sphere
 		let sphere = gSurfaceCreator.makeSphere(1, 70);
-		sphere.setHitbox(new SphericalHitbox());
+		sphere.setHitbox(new SphericalHitbox(1));
 
-		let collider = new TriggerCollider("enemy");
+		let collider = new Collider("enemy");
 		collider.onCollisionEnter = (otherObject) => {
-			delete otherObject;
 			console.log('Collide with another sphere ');
 		}
 		sphere.addCollider(collider);		
+		sphere.addPhysicsCollider();
 
 		let sphereMaterial = new PBRMaterial();
 		sphere.setMaterial(sphereMaterial);
 
 		let physicsComponent = new PhysicsComponent();
 		sphere.setPhysicsComponent(physicsComponent);
-
+		physicsComponent.setVelocity([0.001,0,0])
 		this.scene.addChild(sphere);
+
+		// Create bouncing sphere
+		let bounce = gSurfaceCreator.makeSphere(2, 70);
+		bounce.setPhysicsComponent(new PhysicsComponent());
+		bounce.translate([15, 0,0])
+		bounce.setHitbox(new SphericalHitbox(2));
+		bounce.addPhysicsCollider();
+		this.scene.addChild(bounce);
 
 		// Create walls
 		let structure = new Object3d();

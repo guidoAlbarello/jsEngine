@@ -45,10 +45,23 @@ class Object3d {
 	addCollider(collider) {
 		collider.setObject(this);
 		this.colliders.push(collider);
+		gCollisionDetection.addCollider(collider);
+	}
+
+	addPhysicsCollider() {
+		let physicsCollider = new PhysicsCollider();
+		physicsCollider.setObject(this);
+		this.colliders.push(physicsCollider);
+		gCollisionDetection.addPhysicalCollider(physicsCollider);
 	}
 
 	setHitbox(hitbox) {
+		hitbox.setObject(this);
 		this.hitbox = hitbox;
+	}
+
+	getHitbox() {
+		return this.hitbox;
 	}
 
 	getPosition() {

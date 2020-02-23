@@ -1,4 +1,4 @@
-class TriggerCollider {
+class Collider {
 	onCollisionEnter;
 	onCollisionExit;
 	onCollisionStay;
@@ -11,6 +11,10 @@ class TriggerCollider {
 		this.onCollisionEnter = () => {};
 		this.onCollisionExit = () => {};
 		this.onCollisionStay = () => {};
+	}
+
+	collides(otherHitbox) {
+		return this.object.getHitbox().intersects(otherHitbox);
 	}
 
 	setOnCollisionEnter(callback) {
@@ -26,7 +30,7 @@ class TriggerCollider {
 	}
 
 	getTag() {
-		return tag;
+		return this.tag;
 	}
 
 	setTag(tag) {
@@ -35,5 +39,9 @@ class TriggerCollider {
 
 	setObject(object) {
 		this.object = object;
+	}
+
+	getHitbox() {
+		return this.object.getHitbox();
 	}
 }
