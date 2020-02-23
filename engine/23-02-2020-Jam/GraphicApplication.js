@@ -16,10 +16,10 @@ class GraphicApplication {
 	
 	this.handleInput();
 	
-        let activeCamera = this.scene.getCamera();
+    let activeCamera = this.scene.getCamera();
 	activeCamera.updateController();
 
-    	this.scene.update(IDENTITY);
+    this.scene.update(IDENTITY);
 
 	gCollisionDetection.update();
 	

@@ -180,9 +180,9 @@ class SurfaceCreator {
                 positions.push(r * Math.cos(theta));                   // y
                 positions.push(r * Math.sin(theta) * Math.sin(phi));   // z
 
-                normals.push(-Math.sin(theta) * Math.cos(phi));   // x
-                normals.push(-Math.cos(theta));                   // y
-                normals.push(-Math.sin(theta) * Math.sin(phi));   // z
+                normals.push(Math.sin(theta) * Math.cos(phi));   // x
+                normals.push(Math.cos(theta));                   // y
+                normals.push(Math.sin(theta) * Math.sin(phi));   // z
 
 				texture_coordinates.push(phi_deg/360.0);                 // s
 				texture_coordinates.push((theta_deg)/180.0);      // t
