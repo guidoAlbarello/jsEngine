@@ -16,8 +16,25 @@ class TestScene {
 		light.intensity = [2, 2, 2];
 		this.scene.addDirectionalLight(light);
 
+
+		// Create Enemy
+		let enemy = gSurfaceCreator.makeSphere(2, 70);
+		sphere.translate([10,0,0]);
+		enemy.setHitbox(new SphericalHitbox());
+		CollisionDetection.registerCollidable(enemy, "enemy");
+
+		this.scene.addChild(enemy);
+
 		// Create sphere
 		let sphere = gSurfaceCreator.makeSphere(1, 70);
+		sphere.setHitbox(new SphericalHitbox());
+
+		let collider = new TriggerCollider("enemy");
+		collider.onCollisionEnter = (otherObject) => {
+			delete otherObject;
+			console.log('Collide with another sphere ');
+		}
+		sphere.addCollider(collider);		
 
 		let sphereMaterial = new PBRMaterial();
 		sphere.setMaterial(sphereMaterial);

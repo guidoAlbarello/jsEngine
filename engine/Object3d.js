@@ -3,6 +3,7 @@
 class Object3d {
 	mesh;
 	physicsComponent;
+	hitbox;
 
 	constructor() {
 		this.worldPosition = vec3.create();
@@ -42,7 +43,12 @@ class Object3d {
 	}
 
 	addCollider(collider) {
+		collider.setObject(this);
 		this.colliders.push(collider);
+	}
+
+	setHitbox(hitbox) {
+		this.hitbox = hitbox;
 	}
 
 	getPosition() {

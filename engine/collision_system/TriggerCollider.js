@@ -1,11 +1,13 @@
-class Collider {
+class TriggerCollider {
 	onCollisionEnter;
 	onCollisionExit;
 	onCollisionStay;
 
 	tag;
+	object;
 
-	constructor() {
+	constructor(tag) {
+		this.tag = tag;
 		this.onCollisionEnter = () => {};
 		this.onCollisionExit = () => {};
 		this.onCollisionStay = () => {};
@@ -29,5 +31,9 @@ class Collider {
 
 	setTag(tag) {
 		this.tag = tag;
+	}
+
+	setObject(object) {
+		this.object = object;
 	}
 }
