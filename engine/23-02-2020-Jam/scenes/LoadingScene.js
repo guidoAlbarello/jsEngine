@@ -10,7 +10,7 @@ class LoadingScene {
 	this.scene.addCamera(new OrbitalCamera(20, [0.0,0.0,0.0]), "orbital");
 	this.scene.useCamera("orbital");
 
-	let light = new PBRLight();
+	let light = new DirectionalLight();
 	light.setDirection([0, 10,5]);
 	light.intensity = [3.01,3.01,3.01];
 

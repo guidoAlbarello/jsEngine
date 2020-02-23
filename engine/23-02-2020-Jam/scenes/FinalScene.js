@@ -6,7 +6,7 @@ class FinalScene {
     build() {
 	this.scene.addCamera(new FirstPersonCamera([0.0, 2.8, 1.0],[0.0, 2.8,0.0] ), "default");
 	
-	let moonlight = new PBRLight();
+	let moonlight = new DirectionalLight();
 	moonlight.setDirection([0, 10, -1]);
 	moonlight.intensity = [0.00,0.51,1.01];
 

@@ -11,6 +11,11 @@ class TestScene {
 	let pointLight = new PointLight([-0.5,3.0,-2.0], [1.9,0.2,0]);
 	this.scene.addPointLight(pointLight);
 
+	let light = new DirectionalLight();
+	light.setDirection([0,0,-1]);
+	light.intensity = [2,2,2];
+	this.scene.addDirectionalLight(light);
+
 	// Create sphere
 	let sphere = gSurfaceCreator.makeSphere(1, 70);
 
