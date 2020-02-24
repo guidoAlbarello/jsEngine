@@ -42,7 +42,8 @@ class Player extends Object3d {
         let movementDirection = vec3.create();
         // We can rotate on y axis because we know the first person camera up is pointing upwards.
         vec3.rotateY(movementDirection, viewDirection, this.camera.getPosition(), -movementAngle);
-		vec3.scale(movementDirection, movementDirection, this.WALK_SPEED);
+        vec3.scale(movementDirection, movementDirection, this.WALK_SPEED);
+        movementDirection[1] = 0;
         this.physicsComponent.setVelocity(movementDirection);
     }
 }

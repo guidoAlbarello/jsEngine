@@ -4,6 +4,10 @@ class TestScene {
 	}
 
 	build() {
+		let gameManager = new GameManager(this.scene);
+		gameManager.init();
+		this.scene.addChild(gameManager);
+		
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
 		this.scene.useCamera("fp");
 
