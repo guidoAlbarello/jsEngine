@@ -11,14 +11,14 @@ class GraphicApplication {
 	}
 
 	update(timeStamp) {
-		gDeltaTime = timeStamp - this.previousTimeStamp;
+		gDeltaTime = (timeStamp - this.previousTimeStamp)/1000;
 		this.previousTimeStamp = timeStamp;
 
 		this.handleInput();
 
 		let activeCamera = this.scene.getCamera();
 		activeCamera.updateController();
-
+	
 		this.scene.update(IDENTITY);
 
 		gCollisionDetection.update();
@@ -93,6 +93,8 @@ class GraphicApplication {
 		if (gInputHandler.getInput("hide_axis"))
 			this.developerTools.commands.hideAxis = !this.developerTools
 				.commands.hideAxis;
+
+		this.scene.updateController();
 	}
 
 	initDeveloperStuff() {

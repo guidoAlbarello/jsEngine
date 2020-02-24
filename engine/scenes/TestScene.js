@@ -6,6 +6,10 @@ class TestScene {
 	build() {
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
 		this.scene.useCamera("orbital");
+		let player = new Player();
+		let playerController = new PlayerController(player);
+		this.scene.setController(playerController);
+		this.scene.addChild(player);
 
 		// Keep point light here for now. Maybe later move it as something of dev view.
 		let pointLight = new PointLight([-0.5, 3.0, -2.0], [1.9, 0.2, 0]);
@@ -25,26 +29,7 @@ class TestScene {
 
 		this.scene.addChild(enemy);
 
-		// Create sphere
-		let sphere = gSurfaceCreator.makeSphere(1, 70);
-		sphere.setHitbox(new SphericalHitbox(1));
-
-		let collider = new Collider("enemy");
-		collider.onCollisionEnter = (otherObject) => {
-			console.log('Collide with another sphere ');
-		}
-		sphere.addCollider(collider);		
-		sphere.addPhysicsCollider();
-
-		let sphereMaterial = new PBRMaterial();
-		sphere.setMaterial(sphereMaterial);
-
-		let physicsComponent = new PhysicsComponent();
-		sphere.setPhysicsComponent(physicsComponent);
-		physicsComponent.setVelocity([0.01,0,0])
-		physicsComponent.setMass(5);
-		this.scene.addChild(sphere);
-
+		
 		// Create bouncing sphere
 		let bounce = gSurfaceCreator.makeSphere(2, 70);
 		bounce.setPhysicsComponent(new PhysicsComponent());
@@ -61,6 +46,11 @@ class TestScene {
 		wall.translate([-length / 2, 0.0, 0]);
 		let floor = gSurfaceCreator.makeCube(length, width, length);
 		floor.translate([0, -length / 2, 0]);
+		floor.setPhysicsComponent(new PhysicsComponent());
+		floor.addPhysicsCollider();
+		floor.setHitbox(new BoxHitbox(-5, -0.15, -5, 5, 0.15, 5));
+		floor.physicsComponent.setIsKinematic(true);	
+		floor.physicsComponent.setMass(1000);
 		let wall2 = gSurfaceCreator.makeCube(length, length, width);
 		wall2.translate([0, 0, -length / 2]);
 

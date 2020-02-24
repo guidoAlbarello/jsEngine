@@ -22,8 +22,6 @@ class FirstPersonCamera extends Camera {
 		if (gInputHandler.getInput("backwards")) this.walkBackwards();
 		if (gInputHandler.getInput("right")) this.walkRight();
 		if (gInputHandler.getInput("left")) this.walkLeft();
-		if (gInputHandler.getInput("up")) this.walkUp();
-		if (gInputHandler.getInput("down")) this.walkDown();
 	}
 
 	walkDown() {

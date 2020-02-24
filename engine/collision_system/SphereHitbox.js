@@ -1,21 +1,9 @@
-class SphericalHitbox {
-    type = "SPHERICAL_HITBOX";
+class SphericalHitbox extends Hitbox {
     object;
 
     constructor(radius) {
+        super("SPHERICAL_HITBOX");
         this.radius = radius;
-    }
-
-    setObject(object) {
-        this.object = object;
-    }
-
-    getType() {
-        return this.type;
-    }
-
-    getPosition() {
-        return this.object.getPosition();
     }
 
     getRadius() {
@@ -31,6 +19,23 @@ class SphericalHitbox {
             } else {
                 return true;
             }
+        }
+
+        if (otherHitbox.getType() == "BOX_HITBOX") {
+             // get box closest point to sphere center by clamping
+             let x = Math.max(otherHitbox.minX, Math.min(this.getPosition()[0], otherHitbox.maxX));
+             let y = Math.max(otherHitbox.minY, Math.min(this.getPosition()[1], otherHitbox.maxY));
+             let z = Math.max(otherHitbox.minZ, Math.min(this.getPosition()[2], otherHitbox.maxZ));
+ 
+             // this is the same as isPointInsideSphere
+             let distance = vec3.create();
+             vec3.scaleAndAdd(distance, otherHitbox.getPosition(), this.getPosition(), -1)
+ 
+             if (vec3.length(distance) < this.getRadius()) {
+                 return true 
+             } else {
+                 return undefined;
+             }
         }
     }
 }

@@ -73,6 +73,10 @@ class InputHandler {
 				return this.getKey(90); //Z
 			case "hide_axis":
 				return this.getKey(88); //H
+			case "jump":
+				return this.getKey(32); // Space
+			case "regulate":
+				return this.getKey(82); // R
 			default:
 				return false;
 		}

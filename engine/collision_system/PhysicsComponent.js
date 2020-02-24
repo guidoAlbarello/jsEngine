@@ -3,6 +3,7 @@ class PhysicsComponent {
 	object;
 	gravityInteraction = 0;
 	GRAVITY = 9.8;
+	isKinematic = false;
 
 	constructor(object) {
 		this.object = object;
@@ -11,8 +12,9 @@ class PhysicsComponent {
 	}
 
 	update() {
-		this.velocity[1] -= gDeltaTime * this.GRAVITY * this.gravityInteraction; 
-		this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
+		this.velocity[1] -= gDeltaTime * this.GRAVITY * this.gravityInteraction;
+		if (!this.isKinematic) 
+			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
 	}
 
 	setVelocity(velocity) {
@@ -21,6 +23,10 @@ class PhysicsComponent {
 
 	setMass(mass) {
 		this.mass = mass;
+	}
+
+	setIsKinematic(isKinematic) {
+		this.isKinematic = isKinematic;
 	}
 
 	setObject(object) {
@@ -33,5 +39,9 @@ class PhysicsComponent {
 
 	setGravity(gravityInteraction) {
 		this.gravityInteraction = gravityInteraction;
+	}
+
+	addImpulse(impulse) {
+		vec3.add(this.velocity, this.velocity, impulse); 
 	}
 }

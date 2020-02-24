@@ -1,4 +1,5 @@
 class Scene extends Object3d {
+	controller;
 	constructor() {
 		super();
 		this.cameras = [];
@@ -34,6 +35,15 @@ class Scene extends Object3d {
 				break;
 			}
 		}
+	}
+	
+	setController(controller) {
+		this.controller = controller;
+	}
+
+	updateController() {
+		if (this.controller)
+			this.controller.update();
 	}
 
 	addDirectionalLight(light) {
