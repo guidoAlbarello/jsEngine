@@ -15,6 +15,7 @@ class Scene extends Object3d {
 			this.cameraNames.push(cameraName);
 			this.cameras[cameraName] = camera;
 			object.addChild(camera);
+			object.setCamera(camera);
 		}
 	}
 

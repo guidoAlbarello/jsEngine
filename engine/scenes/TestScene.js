@@ -5,12 +5,14 @@ class TestScene {
 
 	build() {
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
-		this.scene.useCamera("orbital");
+		this.scene.useCamera("fp");
 
 		let player = new Player();
 		let playerController = new PlayerController(player);
 		this.scene.setController(playerController);
 		this.scene.addChild(player);
+		
+		this.scene.addCamera(new FirstPersonCamera([0,1.5,0] , [0,1,3]), "fp", player);
 
 		// Keep point light here for now. Maybe later move it as something of dev view.
 		let pointLight = new PointLight([-0.5, 3.0, -2.0], [1.9, 0.2, 0]);

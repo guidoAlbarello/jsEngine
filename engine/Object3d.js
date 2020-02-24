@@ -4,7 +4,7 @@ class Object3d {
 	mesh;
 	physicsComponent;
 	hitbox;
-
+	camera;
 	constructor() {
 		this.worldPosition = vec3.create();
 		this.nodes = [];
@@ -26,6 +26,10 @@ class Object3d {
 		this.setMeshDataLocationsInMaterial();
 	}
 
+	setCamera(camera) {
+		this.camera = camera;
+	}
+	
 	setModel(modelData) {
 		this.mesh = gAssetManager.loadData(modelData);
 		this.setMeshDataLocationsInMaterial();
