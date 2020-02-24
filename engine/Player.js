@@ -9,7 +9,7 @@ class Player extends Object3d {
         this.addChild(gSurfaceCreator.makeSphere(1, 50));
         this.setHitbox(new SphericalHitbox(1));
         this.addPhysicsCollider();
-
+        
         let material = new PBRMaterial();
         model.setMaterial(material);
 
@@ -18,6 +18,14 @@ class Player extends Object3d {
         this.setPhysicsComponent(physicsComponent);
         physicsComponent.setMass(5);
         this.addChild(model);
+
+        let trigger = new Collider('enemy');
+        trigger.onCollisionEnter = (otherObject) => {
+          console.log('enemiy hit')
+          otherObject.remove();  
+        };
+
+        this.addCollider(trigger);
     }
 
     jump() {

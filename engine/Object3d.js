@@ -21,6 +21,10 @@ class Object3d {
 		return Object3d.ID++;
 	}
 
+	getId() {
+		return this.id;
+	}
+
 	async loadModel(modelFilename) {
 		this.mesh = await gAssetManager.loadDataFromFile(modelFilename);
 		this.setMeshDataLocationsInMaterial();
@@ -122,6 +126,7 @@ class Object3d {
 	}
 
 	addChild(node) {
+		node.parent = this;
 		this.nodes.push(node);
 	}
 
@@ -174,6 +179,19 @@ class Object3d {
 		for (let i = 0; i < this.nodes.length; i++) {
 			this.nodes[i].drawAt(modelMatrix);
 		}
+	}
+
+	removeObject(objectId) {
+		for (let i = 0; i < this.nodes.length; i++) {
+			if (this.nodes[i].getId() == objectId) {
+				gCollisionDetection.removeColliders(objectId);
+				this.nodes.splice(i, 1);	
+			} 
+		}
+	}
+
+	remove() {
+		this.parent.removeObject(this.getId());
 	}
 }
 

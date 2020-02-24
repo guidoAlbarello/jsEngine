@@ -9,11 +9,13 @@ class CollisionDetection {
 		for (let i = 0; i < this.colliders.length; i++) {
 			let collider = this.colliders[i];
 			let collidablesWithSameTag = this.collidables[collider.getTag()];
-			for (let j = 0; j < collidablesWithSameTag.length; j++) {
-				let otherObject = collidablesWithSameTag[j];
-				let collision = collider.collides(otherObject.getHitbox());
-				if (collision) {
-					collider.onCollisionEnter(otherObject, collision);
+			if (collidablesWithSameTag) {
+				for (let j = 0; j < collidablesWithSameTag.length; j++) {
+					let otherObject = collidablesWithSameTag[j];
+					let collision = collider.collides(otherObject.getHitbox());
+					if (collision) {
+						collider.onCollisionEnter(otherObject, collision);
+					}
 				}
 			}
 		}
@@ -43,5 +45,11 @@ class CollisionDetection {
 			this.collidables[tag].push(object);
 		else
 			this.collidables[tag] = [object];
+	}
+
+	removeColliders(objectId) {
+		this.colliders = this.colliders.filter(collider => collider.object.getId() != objectId);
+		this.physicalColliders = this.physicalColliders.filter(collider => collider.object.getId() != objectId);
+		this.collidables = this.collidables.filter(object => object.getId() != objectId);
 	}
 }

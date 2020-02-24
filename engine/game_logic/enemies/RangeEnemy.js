@@ -5,7 +5,7 @@ class RangeEnemy extends Object3d {
         let material = new PBRMaterial();
         material.setAlbedo("red");
         sphere.setMaterial(material);
-
+        sphere.id = this.id;
         this.addChild(sphere);
     }
 }

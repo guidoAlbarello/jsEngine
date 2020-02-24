@@ -5,7 +5,7 @@ class MeleeEnemy extends Object3d {
         let material = new PBRMaterial();
         material.setAlbedo("blue");
         sphere.setMaterial(material);
-
+        sphere.id = this.id;
         this.addChild(sphere);
     }
 }
