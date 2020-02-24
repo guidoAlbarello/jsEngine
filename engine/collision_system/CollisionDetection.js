@@ -13,7 +13,6 @@ class CollisionDetection {
 				let otherObject = collidablesWithSameTag[j];
 				let collision = collider.collides(otherObject.getHitbox());
 				if (collision) {
-					console.log("collision found")
 					collider.onCollisionEnter(otherObject, collision);
 				}
 			}
@@ -25,7 +24,6 @@ class CollisionDetection {
 				let otherCollider = this.physicalColliders[j];
 				let collision = collider.collides(otherCollider.getHitbox());
 				if (collision) {
-					console.log("collision found")
 					collider.onCollisionEnter(otherCollider);
 				}
 			}

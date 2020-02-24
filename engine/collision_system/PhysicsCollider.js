@@ -13,11 +13,15 @@ class PhysicsCollider extends Collider {
             
             let velocityAfterCollision = vec3.create();
             vec3.scaleAndAdd(velocityAfterCollision, this.object.physicsComponent.getVelocity(), distanceBetweenObjects, -optimizedP * otherCollider.object.physicsComponent.mass)
+			vec3.mul(velocityAfterCollision, velocityAfterCollision, otherCollider.object.physicsComponent.movility);
             this.object.physicsComponent.setVelocity(velocityAfterCollision);
+            this.object.physicsComponent.move();
 
             let velocityAfterCollision2 = vec3.create();
             vec3.scaleAndAdd(velocityAfterCollision2, otherCollider.object.physicsComponent.getVelocity(), distanceBetweenObjects, optimizedP * this.object.physicsComponent.mass);
+            vec3.mul(velocityAfterCollision2, velocityAfterCollision2, this.object.physicsComponent.movility);
             otherCollider.object.physicsComponent.setVelocity(velocityAfterCollision2);
+            otherCollider.object.physicsComponent.move();
         });
 	}
 }

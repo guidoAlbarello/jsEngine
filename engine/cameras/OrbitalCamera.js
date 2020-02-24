@@ -6,8 +6,8 @@ class OrbitalCamera extends Camera {
 		super(sphericalToXYZ(radius, Math.PI / 4, Math.PI / 4), target);
 		this.alfa = Math.PI / 4;
 		this.beta = Math.PI / 4;
-		this.speed = 0.0001;
-		this.zoomSpeed = 0.00025;
+		this.speed = 0.1;
+		this.zoomSpeed = 2.5;
 		this.radius = radius; // This should be calculated from the targe
 	}
 

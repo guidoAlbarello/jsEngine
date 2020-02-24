@@ -6,6 +6,7 @@ class TestScene {
 	build() {
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
 		this.scene.useCamera("orbital");
+
 		let player = new Player();
 		let playerController = new PlayerController(player);
 		this.scene.setController(playerController);
@@ -51,6 +52,7 @@ class TestScene {
 		floor.setHitbox(new BoxHitbox(-5, -0.15, -5, 5, 0.15, 5));
 		floor.physicsComponent.setIsKinematic(true);	
 		floor.physicsComponent.setMass(1000);
+		floor.physicsComponent.setMovility([0,0,0]);
 		let wall2 = gSurfaceCreator.makeCube(length, length, width);
 		wall2.translate([0, 0, -length / 2]);
 

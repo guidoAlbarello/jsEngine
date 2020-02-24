@@ -18,7 +18,7 @@ class GraphicApplication {
 
 		let activeCamera = this.scene.getCamera();
 		activeCamera.updateController();
-	
+
 		this.scene.update(IDENTITY);
 
 		gCollisionDetection.update();
@@ -93,7 +93,6 @@ class GraphicApplication {
 		if (gInputHandler.getInput("hide_axis"))
 			this.developerTools.commands.hideAxis = !this.developerTools
 				.commands.hideAxis;
-
 		this.scene.updateController();
 	}
 

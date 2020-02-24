@@ -23,13 +23,13 @@ class SphericalHitbox extends Hitbox {
 
         if (otherHitbox.getType() == "BOX_HITBOX") {
              // get box closest point to sphere center by clamping
-             let x = Math.max(otherHitbox.minX, Math.min(this.getPosition()[0], otherHitbox.maxX));
-             let y = Math.max(otherHitbox.minY, Math.min(this.getPosition()[1], otherHitbox.maxY));
-             let z = Math.max(otherHitbox.minZ, Math.min(this.getPosition()[2], otherHitbox.maxZ));
+             let x = Math.max(otherHitbox.getPosition()[0] + otherHitbox.minX, Math.min(this.getPosition()[0], otherHitbox.getPosition()[0] + otherHitbox.maxX));
+             let y = Math.max(otherHitbox.getPosition()[1] + otherHitbox.minY, Math.min(this.getPosition()[1], otherHitbox.getPosition()[1] + otherHitbox.maxY));
+             let z = Math.max(otherHitbox.getPosition()[1] + otherHitbox.minZ, Math.min(this.getPosition()[2], otherHitbox.getPosition()[2] + otherHitbox.maxZ));
  
              // this is the same as isPointInsideSphere
              let distance = vec3.create();
-             vec3.scaleAndAdd(distance, otherHitbox.getPosition(), this.getPosition(), -1)
+             vec3.scaleAndAdd(distance, [x, y, z], this.getPosition(), -1)
  
              if (vec3.length(distance) < this.getRadius()) {
                  return true 
