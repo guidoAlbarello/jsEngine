@@ -2,30 +2,49 @@ class Player extends Object3d {
     JUMP_FORCE = 4;
     WALK_SPEED = 3;
     weapon;
-
+    
     constructor() {
         super();
-        let model = gModelMaker.makeCylindre(1.8, 0.8, 50, 1, 1);
-        this.addChild(gSurfaceCreator.makeSphere(1, 50));
         this.setHitbox(new SphericalHitbox(1));
         this.addPhysicsCollider();
-        
-        let material = new PBRMaterial();
-        model.setMaterial(material);
 
         let physicsComponent = new PhysicsComponent();
         physicsComponent.setGravity(1)
         this.setPhysicsComponent(physicsComponent);
         physicsComponent.setMass(5);
-        this.addChild(model);
+        
+        gCollisionDetection.registerCollidable(this, 'player');
 
-        let trigger = new Collider('enemy');
-        trigger.onCollisionEnter = (otherObject) => {
-          console.log('enemiy hit')
-          otherObject.remove();  
-        };
+        this.playerStats = new PlayerStats();
 
-        this.addCollider(trigger);
+        this.weapon = new Weapon();
+        this.weapon.translate([0,1, 0])
+        this.behaviour.setUpdate(() => {
+            let viewDirection = this.camera.getViewDirection();
+            let rightVector = vec3.create();
+            let position = this.weapon.getPosition();
+            vec3.cross(rightVector, viewDirection, this.camera.UP);
+
+            this.weapon.modelMatrix = mat4.fromValues(
+                this.camera.UP[0],
+                this.camera.UP[1],
+                this.camera.UP[2],
+                0.0,
+                rightVector[0],
+                rightVector[1],
+                rightVector[2],
+                0.0,
+                viewDirection[0],
+                viewDirection[1],
+                viewDirection[2],
+                0,
+                position[0],
+                position[1],
+                position[2],
+                1.0
+            );
+        });
+        this.addChild(this.weapon);
     }
 
     jump() {
@@ -35,7 +54,6 @@ class Player extends Object3d {
     }
 
     shoot() {
-        // TODO: Implement weapon
         if (!undefined)
             this.weapon.shoot();
     }

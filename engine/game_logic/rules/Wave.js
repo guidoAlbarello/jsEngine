@@ -31,12 +31,18 @@ class Wave {
         return this;
     }
 
-    isOver() {
+    isOver(gameStats) {
         for (let i = 0; i < this.conditionsToWin.length; i++) {
-            if (!this.conditionsToWin[i].completed())
+            if (!this.conditionsToWin[i].completed(gameStats))
                 return false;
         }
         return true;
+    }
+
+    init() {
+        for (let i = 0; i < this.conditionsToWin.length; i++) {
+            this.conditionsToWin[i].init();
+        }
     }
 
     terminate() {

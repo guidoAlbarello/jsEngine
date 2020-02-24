@@ -70,13 +70,15 @@ class InputHandler {
 			case "change_camera":
 				return this.getTapKey(67); //C
 			case "change_mode":
-				return this.getTapKey(90); //Z
+				return this.getTapKey(66); //B
 			case "hide_axis":
 				return this.getTapKey(88); //H
 			case "jump":
 				return this.getTapKey(32, 0.0166); // Space
 			case "regulate":
 				return this.getTapKey(82); // R
+			case "shoot":
+				return this.getTapKey(90);
 			default:
 				return false;
 		}

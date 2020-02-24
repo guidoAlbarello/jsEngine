@@ -8,7 +8,6 @@ class Chaser extends Object3d {
         material.setAlbedo("violet");
         sphere.setMaterial(material);
         sphere.id = this.id;
-        gCollisionDetection.registerCollidable(this, 'enemy');
 
         this.addChild(sphere);
     }

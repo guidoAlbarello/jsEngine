@@ -37,6 +37,10 @@ class Scene extends Object3d {
 			}
 		}
 	}
+
+	getController() {
+		return this.controller;
+	}
 	
 	setController(controller) {
 		this.controller = controller;

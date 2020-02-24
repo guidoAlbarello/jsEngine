@@ -12,6 +12,10 @@ class PlayerController {
         this.player = player;
     }
 
+    getPlayer() {
+        return this.player;
+    }
+    
     update() {
         if (gInputHandler.getInput("jump")) this.player.jump();
         if (gInputHandler.getInput("shoot")) this.player.shoot();
