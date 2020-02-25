@@ -6,6 +6,7 @@ class PhysicsComponent {
 		this.object = object;
 		this.velocity = [0, 0, 0];
 	}
+    
 
 	update() {
 		this.object.translate(vecMulScalar(this.velocity, gDeltaTime));

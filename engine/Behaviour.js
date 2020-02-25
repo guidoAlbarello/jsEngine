@@ -1,23 +1,24 @@
 class Behaviour {
-	object;
-	init;
-	update;
+    object;
+    init;
+    update;
 
-	constructor(object) {
-		this.object = object;
-		this.init = () => {};
-		this.update = () => {};
-	}
+    constructor(object) {
+	this.object = object;
+	this.init = () => {};
+	this.update = () => {};
+    }
 
-	setObject(object) {
-		this.object = object;
-	}
+    
+    setObject(object) {
+	this.object = object;
+    }
 
-	setInit(init) {
-		this.init = init;
-	}
+    setInit(init) {
+	this.init = init;
+    }
 
-	setUpdate(update) {
-		this.update = update;
-	}
+    setUpdate(update) {
+	this.update = update;
+    }
 }
