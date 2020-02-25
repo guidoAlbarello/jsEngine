@@ -1,5 +1,5 @@
 class Weapon extends Object3d {
-    projectileSpeed = 10.0;
+    projectileSpeed = 40.0;
     constructor () {
         super();
         let model = gSurfaceCreator.makeCube(0.3, 0.3, 3);
@@ -15,11 +15,17 @@ class Weapon extends Object3d {
             this.parent.playerStats.killCount += 1;
         });
         projectile.addCollider(collider);
+        projectile.behaviour.setUpdate(() => {
+            if (this.getPosition()[1] <= 0) {
+                this.remove();
+            }
+        });
         projectile.setHitbox(new SphericalHitbox(0.05));
         projectile.modelMatrix = mat4.create();
         mat4.copy(projectile.modelMatrix, this.parent.modelMatrix);
         projectile.modelMatrix[13] += 1;
         projectile.setPhysicsComponent(new PhysicsComponent());
+        projectile.physicsComponent.setGravity(0.3);
         projectile.physicsComponent.setVelocity(vecMulScalar(this.modelMatrix.slice(8,11), -this.projectileSpeed));
         let parent = this.parent;
         while(parent.parent) {
