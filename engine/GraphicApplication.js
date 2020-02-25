@@ -11,7 +11,7 @@ class GraphicApplication {
 	}
 
 	update(timeStamp) {
-		gDeltaTime = timeStamp - this.previousTimeStamp;
+		gDeltaTime = (timeStamp - this.previousTimeStamp)/1000;
 		this.previousTimeStamp = timeStamp;
 
 		this.handleInput();
@@ -52,7 +52,7 @@ class GraphicApplication {
 		loadMaterialsPromise.then(() => {
 			gTextureManager.loadDefaultArrayTextures();
 			gRenderer.initMaterials();
-			this.scene = new LoadingScene(this, TestScene).build();
+			this.scene = new LoadingScene(this, LevelScene).build();
 
 			this.initDeveloperStuff();
 
@@ -93,6 +93,7 @@ class GraphicApplication {
 		if (gInputHandler.getInput("hide_axis"))
 			this.developerTools.commands.hideAxis = !this.developerTools
 				.commands.hideAxis;
+		this.scene.updateController();
 	}
 
 	initDeveloperStuff() {

@@ -3,7 +3,8 @@
 class Object3d {
 	mesh;
 	physicsComponent;
-
+	hitbox;
+	camera;
 	constructor() {
 		this.worldPosition = vec3.create();
 		this.nodes = [];
@@ -20,11 +21,19 @@ class Object3d {
 		return Object3d.ID++;
 	}
 
+	getId() {
+		return this.id;
+	}
+
 	async loadModel(modelFilename) {
 		this.mesh = await gAssetManager.loadDataFromFile(modelFilename);
 		this.setMeshDataLocationsInMaterial();
 	}
 
+	setCamera(camera) {
+		this.camera = camera;
+	}
+	
 	setModel(modelData) {
 		this.mesh = gAssetManager.loadData(modelData);
 		this.setMeshDataLocationsInMaterial();
@@ -42,7 +51,25 @@ class Object3d {
 	}
 
 	addCollider(collider) {
+		collider.setObject(this);
 		this.colliders.push(collider);
+		gCollisionDetection.addCollider(collider);
+	}
+
+	addPhysicsCollider() {
+		let physicsCollider = new PhysicsCollider();
+		physicsCollider.setObject(this);
+		this.colliders.push(physicsCollider);
+		gCollisionDetection.addPhysicalCollider(physicsCollider);
+	}
+
+	setHitbox(hitbox) {
+		hitbox.setObject(this);
+		this.hitbox = hitbox;
+	}
+
+	getHitbox() {
+		return this.hitbox;
 	}
 
 	getPosition() {
@@ -99,6 +126,7 @@ class Object3d {
 	}
 
 	addChild(node) {
+		node.parent = this;
 		this.nodes.push(node);
 	}
 
@@ -151,6 +179,19 @@ class Object3d {
 		for (let i = 0; i < this.nodes.length; i++) {
 			this.nodes[i].drawAt(modelMatrix);
 		}
+	}
+
+	removeObject(objectId) {
+		for (let i = 0; i < this.nodes.length; i++) {
+			if (this.nodes[i].getId() == objectId) {
+				gCollisionDetection.removeColliders(objectId);
+				this.nodes.splice(i, 1);	
+			} 
+		}
+	}
+
+	remove() {
+		this.parent.removeObject(this.getId());
 	}
 }
 

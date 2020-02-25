@@ -68,17 +68,38 @@ class InputHandler {
 			case "left":
 				return this.getKey(65); //A
 			case "change_camera":
-				return this.getKey(67); //C
+				return this.getTapKey(67); //C
 			case "change_mode":
-				return this.getKey(90); //Z
+				return this.getTapKey(66); //B
 			case "hide_axis":
-				return this.getKey(88); //H
+				return this.getTapKey(88); //H
+			case "jump":
+				return this.getTapKey(32, 0.0166); // Space
+			case "regulate":
+				return this.getTapKey(82); // R
+			case "shoot":
+				return this.getTapKey(90);
 			default:
 				return false;
 		}
 	}
 
+	getKeyWithDeadTime(keycode, deadTime) {
+		if (this.keys[keycode].lastAccess) {
+			if (this.keys[keycode].lastAccess > deadTime)
+				this.keys[keycode].lastAccess = 0;
+			else
+				this.keys[keycode].lastAccess += gDeltaTime;
+		} else {
+			this.keys[keycode].lastAccess = 0;
+		}
+	}
+
 	getKey(keycode) {
+		return this.keys[keycode];
+	}
+
+	getTapKey(keycode) {
 		let keyState = this.keys[keycode];
 		this.keys[keycode] = false;
 		return keyState;

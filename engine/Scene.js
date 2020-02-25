@@ -1,4 +1,5 @@
 class Scene extends Object3d {
+	controller;
 	constructor() {
 		super();
 		this.cameras = [];
@@ -14,6 +15,7 @@ class Scene extends Object3d {
 			this.cameraNames.push(cameraName);
 			this.cameras[cameraName] = camera;
 			object.addChild(camera);
+			object.setCamera(camera);
 		}
 	}
 
@@ -34,6 +36,19 @@ class Scene extends Object3d {
 				break;
 			}
 		}
+	}
+
+	getController() {
+		return this.controller;
+	}
+	
+	setController(controller) {
+		this.controller = controller;
+	}
+
+	updateController() {
+		if (this.controller)
+			this.controller.update();
 	}
 
 	addDirectionalLight(light) {
