@@ -3,6 +3,8 @@ class Weapon extends Object3d {
     constructor () {
         super();
         let model = gSurfaceCreator.makeCube(0.3, 0.3, 3);
+        let material = new PBRMaterial();
+        model.setMaterial(material);
         this.addChild(model);
     }
 

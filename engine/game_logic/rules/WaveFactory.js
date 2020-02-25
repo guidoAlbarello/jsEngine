@@ -17,6 +17,8 @@ class WaveFactory {
             return gameStats.playerKillCount >= this.KILL_COUNT_TO_WIN;
         });
 
-        return new Wave().addChaser(gEnemyFactory.createChaser()).addMeleeEnemy(melee).addRangeEnemy(range).addConditionToWin(condition);
+        let element = new Element();
+        element.translate([5,0,0])
+        return new Wave().addElement(element).addChaser(gEnemyFactory.createChaser()).addMeleeEnemy(melee).addRangeEnemy(range).addConditionToWin(condition);
     }
 }

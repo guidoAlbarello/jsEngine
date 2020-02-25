@@ -14,7 +14,17 @@ class CollisionDetection {
 					let otherObject = collidablesWithSameTag[j];
 					let collision = collider.collides(otherObject.getHitbox());
 					if (collision) {
+						if (!collider.isColliding) {
 						collider.onCollisionEnter(otherObject, collision);
+						collider.isColliding = true;
+						} else {
+							collider.onCollisionStay(otherObject, collision);
+						}
+					}
+	
+					if (collider.isColliding && !collision) {
+						collider.onCollisionExit();
+						collider.isColliding = false;
 					}
 				}
 			}

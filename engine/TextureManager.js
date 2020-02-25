@@ -59,6 +59,7 @@ class TextureManager {
 
 		let textureObject = this.gl.createTexture();
 		this.gl.bindTexture(this.gl.TEXTURE_2D, textureObject);
+		//this.gl.generateMipmap(this.gl.TEXTURE_2D);
 		this.gl.texParameteri(
 			this.gl.TEXTURE_2D,
 			this.gl.TEXTURE_MIN_FILTER,
