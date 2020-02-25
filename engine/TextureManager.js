@@ -26,6 +26,7 @@ class TextureManager {
 				);
 			}
 		}
+		texture_loading.push(this.loadCubemap("skybox", this.TEXTURES_DIRECTORY+"skybox/"));
 		await Promise.all(texture_loading);
 	}
 
