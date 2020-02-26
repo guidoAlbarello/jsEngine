@@ -49,8 +49,8 @@ class Wave {
 
     }
 
-    update() {
-        if (this.enemies.length >0)
-        this.enemies[0].shoot([0,1,0]);
+    update(playerPosition) {
+  //      if (this.enemies.length >0)
+//        this.enemies[0].shoot([0,1,0]);
     }
 }

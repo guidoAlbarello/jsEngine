@@ -1,5 +1,5 @@
 class GameManager extends Object3d {
-    TIME_BETWEEN_WAVES = 10;
+    TIME_BETWEEN_WAVES = 2;
     waveNumber = 0;
     gameStats = {
         'playerKillCount': 0
@@ -43,7 +43,8 @@ class GameManager extends Object3d {
     }
 
     loadWave() {
-        this.currentWave = gWaveFactory.createWave(this.waveNumber);
+	console.log(  this.scene.getController().getPlayer());
+        this.currentWave = gWaveFactory.createWave(this.waveNumber, this.scene.getController().getPlayer());
         this.currentWave.init(this.gameStats);
         for (let i = 0; i < this.currentWave.enemies.length; i++)
             this.scene.addChild(this.currentWave.enemies[i]);

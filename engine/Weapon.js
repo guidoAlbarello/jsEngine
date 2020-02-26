@@ -12,6 +12,10 @@ class Weapon extends Object3d {
 
     shoot() {
         let projectile = gSurfaceCreator.makeSphere(0.05, 4);
+        let material = new PBRMaterial();
+        material.setAlbedo("yellow");
+        projectile.setMaterial(material);
+
         let collider = new Collider('enemy');
         collider.setOnCollisionEnter((otherObject) => {
             otherObject.remove();
