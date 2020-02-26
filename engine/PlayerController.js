@@ -17,13 +17,13 @@ class PlayerController {
     }
     
     update() {
-        if (gInputHandler.getInput("jump")) this.player.jump();
-        if (gInputHandler.getInput("shoot")) this.player.shoot();
-        if (gInputHandler.getInput("regulate")) this.player.regulate();
-
         if (gInputHandler.getInput("forward")) this.player.walk(this.FORWARD);
         if (gInputHandler.getInput("backwards")) this.player.walk(this.BACKWARDS);
         if (gInputHandler.getInput("left")) this.player.walk(this.LEFT);
         if (gInputHandler.getInput("right")) this.player.walk(this.RIGHT);
+
+        if (gInputHandler.getInput("jump")) this.player.jump();
+        if (gInputHandler.getInput("shoot")) this.player.shoot();
+        if (gInputHandler.getInput("regulate")) this.player.regulate();
     }
 }

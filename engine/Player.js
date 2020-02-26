@@ -60,7 +60,7 @@ class Player extends Object3d {
     }
 
     jump() {
-        if (this.physicsComponent.velocity[1] >= 0) {
+        if (this.physicsComponent.velocity[1] == 0) {
             this.physicsComponent.addImpulse([0, this.JUMP_FORCE, 0]);
         }
     }
@@ -81,7 +81,7 @@ class Player extends Object3d {
         // We can rotate on y axis because we know the first person camera up is pointing upwards.
         vec3.rotateY(movementDirection, viewDirection, this.camera.getPosition(), -movementAngle);
         vec3.scale(movementDirection, movementDirection, this.WALK_SPEED);
-        movementDirection[1] = 0;
+        movementDirection[1] = this.physicsComponent.velocity[1];
         this.physicsComponent.setVelocity(movementDirection);
     }
 }
