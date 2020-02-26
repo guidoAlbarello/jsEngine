@@ -13,6 +13,6 @@ class EnemyFactory {
     }
 
     createRangeEnemy(player, maxShootingSpeed) {
-        return new RangeEnemy(player, maxShootingSpeed);
+        return new RangeEnemy(player, maxShootingSpeed, maxShootingSpeed/2);
     }
 }

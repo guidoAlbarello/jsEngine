@@ -200,6 +200,39 @@ class DeveloperTools {
 		}
 	}
 
+	/*drawHitbox(object) {
+		for (let i = 0; i < object.nodes.length; i++)
+			this.drawHitbox(object.nodes[i]);
+		if (object.hitbox) {
+			let segments = [];
+			if (object.hitbox.getType() == "BOX_HITBOX") {
+				segments = [
+					object.hitbox.getMinX(), object.hitbox.getMinX(), object.hitbox.getMinX(),
+					object.hitbox.getMaxX(), object.hitbox.getMaxX(), object.hitbox.getMaxX(),
+					
+					object.hitbox.getMinY(), object.hitbox.getMinY(), object.hitbox.getMinY(),
+					object.hitbox.getMinZ(), object.hitbox.getMinZ(), object.hitbox.getMinZ(),
+					object.hitbox.getMaxY(), object.hitbox.getMaxY(), object.hitbox.getMaxY(),
+					object.hitbox.getMaxZ(), object.hitbox.getMaxZ(), object.hitbox.getMaxZ(),
+				];
+			}
+
+			let hitboxVolume = new Object3d();
+			let params = gAssetManager.makeModelParams();
+			params.positions = segments;
+			params.normals = segments;
+			let indexBuffer = [];
+			for (let i = 0; i < segments.length / 3; i++)
+				indexBuffer.push(i);
+			hitboxVolume.setModel(
+				gAssetManager.makeModelData(params, indexBuffer, "LINES")
+			);
+			hitboxVolume.setMaterial(new DefaultMaterial([1.0, 1.0, 0.005]));
+
+			object.addChild(hitboxVolume);
+		}
+	}*/
+
 	drawNormals(object) {
 		let normalLength = 0.5;
 

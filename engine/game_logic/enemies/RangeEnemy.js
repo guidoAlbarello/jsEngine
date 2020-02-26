@@ -25,7 +25,7 @@ function normalize(v) {
 }
 class RangeEnemyBehaviour extends Behaviour {
     life = 100;
-    speed = 1;
+    speed = 10;
     damage = 10;
     range = 100;
     view = [1, 0, 0];
@@ -39,11 +39,12 @@ class RangeEnemyBehaviour extends Behaviour {
 
     CHANCE_TO_SHOOT = 0.2;
 
-    constructor(actor, player, maxShootingSpeed) {
+    constructor(actor, player, maxShootingSpeed, speed) {
         super();
         //	this.attackCallback = attackCallback;
         this.actor = actor;
         this.player = player;
+        this.speed = speed;
         this.shooting_speed = this.MIN_SHOOTING_SPEED + Math.random() * maxShootingSpeed;
         this.shootingTimer = 0;
         this.update = () => { this.react() };
@@ -73,7 +74,7 @@ class RangeEnemyBehaviour extends Behaviour {
         //	let angleRotation = angle(playerPos-this.actor.getPosition(),this.view);
         //	this.rotate(angleRotation);
         let newDirection =
-            normalize(add(playerPos, scalarProduct(this.actor.getPosition(), -1)));
+            scalarProduct(normalize(add(playerPos, scalarProduct(this.actor.getPosition(), -1))), this.speed);
         //	console.log(newDirection);
         this.actor.physicsComponent.setVelocity(newDirection);
     }
@@ -136,7 +137,7 @@ class RangeEnemy extends Object3d {
     MAX_PROJECTILE_SPEED = 3;
     size = 0.5;
 
-    constructor(player, maxShootingSpeed) {
+    constructor(player, maxShootingSpeed, speed) {
         super();
         console.log(player);
         this.player = player;
@@ -154,7 +155,7 @@ class RangeEnemy extends Object3d {
         this.physicsComponent.setDontFall(true);
         this.addChild(sphere);
 
-        this.setBehaviour(new RangeEnemyBehaviour(this, player, maxShootingSpeed));
+        this.setBehaviour(new RangeEnemyBehaviour(this, player, maxShootingSpeed, speed));
 
         this.translate([0, this.size, 0]);
     }
