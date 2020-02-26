@@ -39,12 +39,12 @@ class RangeEnemyBehaviour extends Behaviour {
 
     CHANCE_TO_SHOOT = 0.2;
 
-    constructor(actor, player) {
+    constructor(actor, player, maxShootingSpeed) {
         super();
         //	this.attackCallback = attackCallback;
         this.actor = actor;
         this.player = player;
-        this.shooting_speed = this.MIN_SHOOTING_SPEED + Math.random() * this.MAX_SHOOTING_SPEED;
+        this.shooting_speed = this.MIN_SHOOTING_SPEED + Math.random() * maxShootingSpeed;
         this.shootingTimer = 0;
         this.update = () => { this.react() };
     }
@@ -136,7 +136,7 @@ class RangeEnemy extends Object3d {
     MAX_PROJECTILE_SPEED = 3;
     size = 0.5;
 
-    constructor(player) {
+    constructor(player, maxShootingSpeed) {
         super();
         console.log(player);
         this.player = player;
@@ -154,7 +154,7 @@ class RangeEnemy extends Object3d {
         this.physicsComponent.setDontFall(true);
         this.addChild(sphere);
 
-        this.setBehaviour(new RangeEnemyBehaviour(this, player));
+        this.setBehaviour(new RangeEnemyBehaviour(this, player, maxShootingSpeed));
 
         this.translate([0, this.size, 0]);
     }

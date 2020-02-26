@@ -23,12 +23,11 @@ class WaveFactory {
 
             let element3 = new Element();
             element3.translate([10, 0, 10]);
-            element3.scale([3,1,3]);
             wave.addElement(element).addElement(element2).addElement(element3);
         }
 
         for (let i = 0; i < waveNumber; i++) {
-            let range = gEnemyFactory.createRangeEnemy(player);
+            let range = gEnemyFactory.createRangeEnemy(player, Math.floor(waveNumber));
             range.translate([(10 + Math.random() * 35) * (2 * Math.random() - 1), 0.6, (10 + Math.random() * 35) * (2 * Math.random() - 1)]);
             wave.addRangeEnemy(range);
         }
