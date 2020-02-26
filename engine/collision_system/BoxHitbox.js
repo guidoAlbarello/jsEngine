@@ -30,9 +30,9 @@ class BoxHitbox extends Hitbox {
         }
 
         if (otherHitbox.getType() == "BOX_HITBOX") {
-            if ((this.minX <= otherHitbox.maxX && this.maxX >= otherHitbox.minX) &&
-                (this.minY <= otherHitbox.maxY && this.maxY >= otherHitbox.minY) &&
-                (this.minZ <= otherHitbox.maxZ && this.maxZ >= otherHitbox.minZ))
+            if ((this.object.getPosition()[0] + this.minX <= otherHitbox.getPosition()[0] + otherHitbox.maxX && this.object.getPosition()[0] + this.maxX >= otherHitbox.getPosition()[0] + otherHitbox.minX) &&
+                (this.object.getPosition()[1] + this.minY <= otherHitbox.getPosition()[1] + otherHitbox.maxY && this.object.getPosition()[1] + this.maxY >= otherHitbox.getPosition()[1] + otherHitbox.minY) &&
+                (this.object.getPosition()[2] + this.minZ <= otherHitbox.getPosition()[2] + otherHitbox.maxZ && this.object.getPosition()[2] + this.maxZ >= otherHitbox.getPosition()[2] + otherHitbox.minZ))
                 return true;
             else
                 return undefined;

@@ -15,6 +15,7 @@ class PhysicsComponent {
 
 	update() {
 		this.velocity[1] -= gDeltaTime * this.GRAVITY * this.gravityMultiplier;
+		vec3.mul(this.velocity, this.velocity, this.movility);
 		this.move();
 	}
 

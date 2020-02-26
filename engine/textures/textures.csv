@@ -7,3 +7,8 @@ bricks_rough,bricks/bricks_rough.jpg
 roof_albedo,roof/roof_albedo.jpg
 roof_normal,roof/roof_normal.jpg
 roof_rough,roof/roof_rough.jpg
+dirt_albedo,dry-dirt2-bl/dry-dirt1-albedo.png
+dirt_ao,dry-dirt2-bl/dry-dirt1-ao.png
+dirt_metal,dry-dirt2-bl/dry-dirt1-metalness.png
+dirt_normal,dry-dirt2-bl/dry-dirt1-normal2.png
+dirt_roughness,dry-dirt2-bl/dry-dirt1-roughness.png

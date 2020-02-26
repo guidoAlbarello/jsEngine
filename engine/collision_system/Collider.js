@@ -5,7 +5,8 @@ class Collider {
 
 	tag;
 	object;
-
+	isColliding = false;
+	
 	constructor(tag) {
 		this.tag = tag;
 		this.onCollisionEnter = () => {};

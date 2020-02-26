@@ -1,11 +1,11 @@
 class Player extends Object3d {
-    JUMP_FORCE = 4;
-    WALK_SPEED = 3;
+    JUMP_FORCE = 6;
+    WALK_SPEED = 7;
     weapon;
     
     constructor() {
         super();
-        this.setHitbox(new SphericalHitbox(1));
+        this.setHitbox(new BoxHitbox(-0.3, 0, -0.1, 0.3, 1.8, 0.1));
         this.addPhysicsCollider();
 
         let physicsComponent = new PhysicsComponent();
@@ -14,7 +14,19 @@ class Player extends Object3d {
         physicsComponent.setMass(5);
         
         gCollisionDetection.registerCollidable(this, 'player');
-
+        let elementCollider = new Collider("element");
+        elementCollider.setOnCollisionEnter((element) => {
+            let mudSlowdown = 0.4;
+            if (element.getType() == 'mud') {
+                this.physicsComponent.movility[0] = mudSlowdown;
+                this.physicsComponent.movility[2] = mudSlowdown;
+            }
+        });
+        elementCollider.setOnCollisionExit(() => {
+            this.physicsComponent.movility[0] = 1;
+            this.physicsComponent.movility[2] = 1;
+        })
+        this.addCollider(elementCollider);
         this.playerStats = new PlayerStats();
 
         this.weapon = new Weapon();

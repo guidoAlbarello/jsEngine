@@ -14,7 +14,17 @@ class CollisionDetection {
 					let otherObject = collidablesWithSameTag[j];
 					let collision = collider.collides(otherObject.getHitbox());
 					if (collision) {
+						if (!collider.isColliding) {
 						collider.onCollisionEnter(otherObject, collision);
+						collider.isColliding = true;
+						} else {
+							collider.onCollisionStay(otherObject, collision);
+						}
+					}
+	
+					if (collider.isColliding && !collision) {
+						collider.onCollisionExit();
+						collider.isColliding = false;
 					}
 				}
 			}
@@ -50,6 +60,8 @@ class CollisionDetection {
 	removeColliders(objectId) {
 		this.colliders = this.colliders.filter(collider => collider.object.getId() != objectId);
 		this.physicalColliders = this.physicalColliders.filter(collider => collider.object.getId() != objectId);
-		this.collidables = this.collidables.filter(object => object.getId() != objectId);
+		for (let tag in this.collidables) {
+			this.collidables[tag] = this.collidables[tag].filter(object => object.getId() != objectId);
+		}
 	}
 }

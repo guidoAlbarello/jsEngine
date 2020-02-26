@@ -12,7 +12,7 @@ class EnemyFactory {
         return new MeleeEnemy();
     }
 
-    createRangeEnemy() {
-        return new RangeEnemy();
+    createRangeEnemy(player) {
+        return new RangeEnemy(player);
     }
 }

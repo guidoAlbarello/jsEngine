@@ -7,7 +7,7 @@ class MeleeEnemy extends Object3d {
         sphere.setMaterial(material);
         sphere.id = this.id;
         
-        this.setHitbox(new SphericalHitbox(0.5));
+        this.setHitbox(new SphericalHitbox(1.5));
         gCollisionDetection.registerCollidable(this, 'enemy');
         
         this.addChild(sphere);
