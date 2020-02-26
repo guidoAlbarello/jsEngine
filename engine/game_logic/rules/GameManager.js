@@ -1,5 +1,5 @@
 class GameManager extends Object3d {
-    TIME_BETWEEN_WAVES = 1;
+    TIME_BETWEEN_WAVES = 2;
     waveNumber = 0;
     gameStats = {
         'playerKillCount': 0

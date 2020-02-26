@@ -4,12 +4,13 @@ class LevelScene {
     }
 
     build() {        
+        this.setupCameras();
+
         // Create game logic
         let gameManager = new GameManager(this.scene);
         gameManager.init();
         this.scene.addChild(gameManager);
 
-        this.setupCameras();
         this.setupLights();
         this.setupTerrain();
         this.setupSafeplace();
