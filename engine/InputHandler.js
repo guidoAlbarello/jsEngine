@@ -78,7 +78,8 @@ class InputHandler {
 			case "regulate":
 				return this.getTapKey(82); // R
 			case "shoot":
-				return this.getTapKey(90);
+				return this.isMouseDown;
+				//return this.getTapKey(90);
 			default:
 				return false;
 		}
