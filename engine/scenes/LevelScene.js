@@ -14,7 +14,7 @@ class LevelScene {
         this.setupTerrain();
         this.setupSafeplace();
 
-        let skybox = gSurfaceCreator.makeSphere(100, 70);
+        let skybox = gSurfaceCreator.makeSphere(50, 70);
         skybox.setMaterial(new SkyboxMaterial("skybox"));
         this.scene.addChild(skybox);
         

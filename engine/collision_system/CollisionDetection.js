@@ -60,6 +60,8 @@ class CollisionDetection {
 	removeColliders(objectId) {
 		this.colliders = this.colliders.filter(collider => collider.object.getId() != objectId);
 		this.physicalColliders = this.physicalColliders.filter(collider => collider.object.getId() != objectId);
-		this.collidables = this.collidables.filter(object => object.getId() != objectId);
+		for (let tag in this.collidables) {
+			this.collidables[tag] = this.collidables[tag].filter(object => object.getId() != objectId);
+		}
 	}
 }

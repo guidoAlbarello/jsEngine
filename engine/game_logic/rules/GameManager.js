@@ -2,7 +2,7 @@ class GameManager extends Object3d {
     TIME_BETWEEN_WAVES = 10;
     waveNumber = 0;
     gameStats = {
-        'playerKillCount' : 0
+        'playerKillCount': 0
     };
 
     constructor(scene) {
@@ -17,12 +17,14 @@ class GameManager extends Object3d {
 
     update() {
         this.gameStats.playerKillCount = this.scene.getController().getPlayer().playerStats.killCount;
-        // Create new wave if current wave is over and TIME_BETWEEN_WAVES have passed
-        if (this.lastFinishedWave >= this.TIME_BETWEEN_WAVES) {
-            console.log('Load new wave');
-            this.loadWave();
-        } else if (!this.currentWave) {
-            this.lastFinishedWave += gDeltaTime;
+        // Create new wave if current wave is over and TIME_BETWEEN_WAVES have passed        
+        if (!this.currentWave) {
+            if (this.lastFinishedWave >= this.TIME_BETWEEN_WAVES) {
+                console.log('Load new wave');
+                this.loadWave();
+            } else {
+                this.lastFinishedWave += gDeltaTime;
+            }
         }
 
         // Update current wave
@@ -42,7 +44,7 @@ class GameManager extends Object3d {
 
     loadWave() {
         this.currentWave = gWaveFactory.createWave(this.waveNumber);
-        this.currentWave.init();
+        this.currentWave.init(this.gameStats);
         for (let i = 0; i < this.currentWave.enemies.length; i++)
             this.scene.addChild(this.currentWave.enemies[i]);
         for (let i = 0; i < this.currentWave.chasers.length; i++)

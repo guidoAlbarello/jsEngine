@@ -39,9 +39,9 @@ class Wave {
         return true;
     }
 
-    init() {
+    init(gameStats) {
         for (let i = 0; i < this.conditionsToWin.length; i++) {
-            this.conditionsToWin[i].init();
+            this.conditionsToWin[i].init(gameStats);
         }
     }
 
@@ -50,6 +50,7 @@ class Wave {
     }
 
     update() {
-        
+        if (this.enemies.length >0)
+        this.enemies[0].shoot([0,1,0]);
     }
 }

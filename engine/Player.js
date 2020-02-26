@@ -1,6 +1,6 @@
 class Player extends Object3d {
-    JUMP_FORCE = 4;
-    WALK_SPEED = 3;
+    JUMP_FORCE = 6;
+    WALK_SPEED = 7;
     weapon;
     
     constructor() {
