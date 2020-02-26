@@ -5,6 +5,7 @@ class PhysicsComponent {
 	GRAVITY = 9.8;
 	isKinematic = false;
 	movility = [1,1,1];
+	dontFall = false;
 
 	constructor(object) {
 		this.object = object;
@@ -20,8 +21,15 @@ class PhysicsComponent {
 	}
 
 	move() {
-		if (!this.isKinematic)
-			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
+		if (!this.isKinematic) {
+			if (this.dontFall) 
+				this.velocity[1] = 0;
+			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));			
+		}
+	}
+
+	setDontFall(dontFall) {
+		this.dontFall = dontFall;
 	}
 
 	setVelocity(velocity) {

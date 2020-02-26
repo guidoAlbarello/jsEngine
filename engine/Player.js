@@ -5,7 +5,7 @@ class Player extends Object3d {
     
     constructor() {
         super();
-        this.setHitbox(new BoxHitbox(-0.3, 0, -0.1, 0.3, 1.8, 0.1));
+        this.setHitbox(new BoxHitbox(-0.05, 0, -0.01, 0.05, 1.8, 0.01));
         this.addPhysicsCollider();
 
         let physicsComponent = new PhysicsComponent();

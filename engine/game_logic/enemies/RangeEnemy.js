@@ -35,7 +35,9 @@ class RangeEnemyBehaviour extends Behaviour {
 
     // In shoots per second
     MIN_SHOOTING_SPEED = 1;
-    MAX_SHOOTING_SPEED = 2;
+    MAX_SHOOTING_SPEED = 3;
+
+    CHANCE_TO_SHOOT = 0.2;
 
     constructor(actor, player) {
         super();
@@ -114,8 +116,9 @@ class RangeEnemyBehaviour extends Behaviour {
         let targetPos = this.scanForTargets(playerPos, terrainElements);
         this.relocate(targetPos);
 
-        if (this.shootingTimer >=  (1 / this.shooting_speed)) {
-            this.attack(targetPos);
+        if (this.shootingTimer >= (1 / this.shooting_speed)) {
+            if (Math.random() > (1 - this.CHANCE_TO_SHOOT))
+                this.attack(targetPos);
             this.shootingTimer = 0;
         } else {
             this.shootingTimer += gDeltaTime;
@@ -148,6 +151,7 @@ class RangeEnemy extends Object3d {
         gCollisionDetection.registerCollidable(this, 'enemy');
 
         this.setPhysicsComponent(new PhysicsComponent());
+        this.physicsComponent.setDontFall(true);
         this.addChild(sphere);
 
         this.setBehaviour(new RangeEnemyBehaviour(this, player));
