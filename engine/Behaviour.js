@@ -1,5 +1,6 @@
 class Behaviour {
     object;
+    
     init;
     update;
 
