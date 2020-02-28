@@ -1,4 +1,4 @@
-class FirstPersonCamera extends Camera {
+class FirstPersonCamera extends PerspectiveCamera {
 	constructor(position, target) {
 		super(position, target);
 

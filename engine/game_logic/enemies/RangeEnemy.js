@@ -167,8 +167,8 @@ class RangeEnemy extends Object3d {
         projectile.setMaterial(material);
         let collider = new Collider('player');
         collider.setOnCollisionEnter((otherObject) => {
-            alert("Game over. Enemies killed: " + otherObject.playerStats.killCount);
-            otherObject.remove();
+           // alert("Game over. Enemies killed: " + otherObject.playerStats.killCount);
+       //     otherObject.remove();
             projectile.remove();
         });
         projectile.addCollider(collider);

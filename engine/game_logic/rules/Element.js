@@ -8,7 +8,7 @@ class Element extends Object3d {
         model.setMaterial(material);
         model.id = this.id;
 
-        this.setHitbox(new BoxHitbox(-1, -0.05, -1, 1, 0.05, 1));
+        this.setHitbox(new BoxHitbox(-1, -0.05, -1.5, 1, 0.05, 1.5));
         gCollisionDetection.registerCollidable(this, 'element');
 
         this.addChild(model );

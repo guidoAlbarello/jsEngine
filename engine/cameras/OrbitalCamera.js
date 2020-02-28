@@ -1,4 +1,4 @@
-class OrbitalCamera extends Camera {
+class OrbitalCamera extends PerspectiveCamera {
 	MAX_RADIUS = 100;
 	MIN_RADIUS = 1;
 

@@ -1,4 +1,4 @@
-class Camera extends Object3d {
+class PerspectiveCamera extends Object3d {
 	viewMatrix;
 	projectionMatrix;
 	target;

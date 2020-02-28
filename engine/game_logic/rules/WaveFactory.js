@@ -22,12 +22,14 @@ class WaveFactory {
             element2.translate([5, 0, 38])
 
             let element3 = new Element();
+            gDeveloperTools.drawHitbox(element3);
             element3.translate([10, 0, 10]);
             wave.addElement(element).addElement(element2).addElement(element3);
         }
 
         for (let i = 0; i < waveNumber; i++) {
             let range = gEnemyFactory.createRangeEnemy(player, Math.floor(waveNumber));
+            gDeveloperTools.drawHitbox(range);
             range.translate([(10 + Math.random() * 35) * (2 * Math.random() - 1), 0.6, (10 + Math.random() * 35) * (2 * Math.random() - 1)]);
             wave.addRangeEnemy(range);
         }

@@ -200,30 +200,89 @@ class DeveloperTools {
 		}
 	}
 
-	/*drawHitbox(object) {
+	drawHitbox(object) {
 		for (let i = 0; i < object.nodes.length; i++)
 			this.drawHitbox(object.nodes[i]);
 		if (object.hitbox) {
 			let segments = [];
+			let indexBuffer = [];
+			let samples = 90;
+			let step = 2 * Math.PI/samples;
+			if (object.hitbox.getType() == "SPHERICAL_HITBOX") {
+				for (let i = 0; i < 2 * Math.PI; i += step) {
+					segments.push(Math.cos(i) * object.hitbox.getRadius());
+					segments.push(0);
+					segments.push(Math.sin(i) * object.hitbox.getRadius());
+				}
+
+				for (let i = 0; i < 2 * Math.PI; i += step) {
+					segments.push(0);
+					segments.push(Math.cos(i) * object.hitbox.getRadius());
+					segments.push(Math.sin(i) * object.hitbox.getRadius());
+				}
+
+				for (let i = 0; i < samples; i++) {
+					indexBuffer.push(i);
+					indexBuffer.push(i+1);
+				}
+				indexBuffer.push(samples-1);
+				indexBuffer.push(0);
+				
+				for (let i = 0; i < samples; i++) {
+					indexBuffer.push(samples + i);
+					indexBuffer.push(samples + i+1);
+				}
+				indexBuffer.push(2 * samples -1);
+				indexBuffer.push(samples);
+			}
 			if (object.hitbox.getType() == "BOX_HITBOX") {
 				segments = [
-					object.hitbox.getMinX(), object.hitbox.getMinX(), object.hitbox.getMinX(),
-					object.hitbox.getMaxX(), object.hitbox.getMaxX(), object.hitbox.getMaxX(),
-					
-					object.hitbox.getMinY(), object.hitbox.getMinY(), object.hitbox.getMinY(),
-					object.hitbox.getMinZ(), object.hitbox.getMinZ(), object.hitbox.getMinZ(),
-					object.hitbox.getMaxY(), object.hitbox.getMaxY(), object.hitbox.getMaxY(),
-					object.hitbox.getMaxZ(), object.hitbox.getMaxZ(), object.hitbox.getMaxZ(),
+					// Back face
+					object.hitbox.getMinX(), object.hitbox.getMinY(), object.hitbox.getMinZ(),
+					object.hitbox.getMaxX(), object.hitbox.getMinY(), object.hitbox.getMinZ(),
+					object.hitbox.getMinX(), object.hitbox.getMaxY(), object.hitbox.getMinZ(),
+					object.hitbox.getMaxX(), object.hitbox.getMaxY(), object.hitbox.getMinZ(),
+
+					// Front face
+					object.hitbox.getMinX(), object.hitbox.getMinY(), object.hitbox.getMaxZ(),
+					object.hitbox.getMaxX(), object.hitbox.getMinY(), object.hitbox.getMaxZ(),
+					object.hitbox.getMinX(), object.hitbox.getMaxY(), object.hitbox.getMaxZ(),
+					object.hitbox.getMaxX(), object.hitbox.getMaxY(), object.hitbox.getMaxZ(),
+				];
+
+				indexBuffer = [
+					0,
+					1,
+					0,
+					2,
+					2,
+					3,
+					3,
+					1,
+					0,
+					4,
+					1,
+					5,
+					2,
+					6,
+					3,
+					7,
+					4,
+					5,
+					4,
+					6,
+					6,
+					7,
+					7,
+					5
 				];
 			}
 
 			let hitboxVolume = new Object3d();
 			let params = gAssetManager.makeModelParams();
 			params.positions = segments;
-			params.normals = segments;
-			let indexBuffer = [];
-			for (let i = 0; i < segments.length / 3; i++)
-				indexBuffer.push(i);
+			
+
 			hitboxVolume.setModel(
 				gAssetManager.makeModelData(params, indexBuffer, "LINES")
 			);
@@ -231,7 +290,7 @@ class DeveloperTools {
 
 			object.addChild(hitboxVolume);
 		}
-	}*/
+	}
 
 	drawNormals(object) {
 		let normalLength = 0.5;

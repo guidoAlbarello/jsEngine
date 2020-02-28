@@ -38,4 +38,28 @@ class BoxHitbox extends Hitbox {
                 return undefined;
         }
     }
+
+    getMinX() {
+        return this.object.getPosition()[0] + this.minX;
+    }
+
+    getMinY() {
+        return this.object.getPosition()[1] + this.minY;
+    }
+
+    getMinZ() {
+        return this.object.getPosition()[2] + this.minZ;
+    }
+
+    getMaxX() {
+        return this.object.getPosition()[0] + this.maxX;
+    }
+
+    getMaxY() {
+        return this.object.getPosition()[1] + this.maxY;
+    }
+
+    getMaxZ() {
+        return this.object.getPosition()[2] + this.maxZ;
+    }
 }
