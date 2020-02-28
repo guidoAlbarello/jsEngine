@@ -4,19 +4,10 @@ class TestScene {
 	}
 
 	build() {
-		let gameManager = new GameManager(this.scene);
-		gameManager.init();
-		this.scene.addChild(gameManager);
-		
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
-		this.scene.useCamera("fp");
+		this.scene.useCamera("orbital");
 
-		let player = new Player();
-		let playerController = new PlayerController(player);
-		this.scene.setController(playerController);
-		this.scene.addChild(player);
-		
-		this.scene.addCamera(new FirstPersonCamera([0,1.5,0] , [0,1,3]), "fp", player);
+	
 
 		// Keep point light here for now. Maybe later move it as something of dev view.
 		let pointLight = new PointLight([-0.5, 3.0, -2.0], [1.9, 0.2, 0]);
@@ -27,21 +18,11 @@ class TestScene {
 		light.intensity = [2, 2, 2];
 		this.scene.addDirectionalLight(light);
 
-
-		// Create Enemy
-		let enemy = gSurfaceCreator.makeSphere(2, 70);
-		enemy.translate([10,0,0]);
-		enemy.setHitbox(new SphericalHitbox(2));
-		gCollisionDetection.registerCollidable(enemy, "enemy");
-
-		this.scene.addChild(enemy);
-
-		
 		// Create bouncing sphere
 		let bounce = gSurfaceCreator.makeSphere(2, 70);
 		bounce.setPhysicsComponent(new PhysicsComponent());
-		bounce.translate([15, 0,0])
 		bounce.setHitbox(new SphericalHitbox(2));
+		bounce.physicsComponent.setGravity(1);
 		bounce.addPhysicsCollider();
 		this.scene.addChild(bounce);
 
