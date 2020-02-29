@@ -5,9 +5,6 @@ class TestScene {
 
 	build() {
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
-		this.scene.useCamera("orbital");
-
-	
 
 		// Keep point light here for now. Maybe later move it as something of dev view.
 		let pointLight = new PointLight([-0.5, 3.0, -2.0], [1.9, 0.2, 0]);
@@ -26,6 +23,11 @@ class TestScene {
 		bounce.addPhysicsCollider();
 		this.scene.addChild(bounce);
 
+		this.scene.addCamera(new OrtographicCamera([0,0,100]), "ortho", bounce);
+		this.scene.useCamera("ortho");
+
+	
+
 		// Create walls
 		let structure = new Object3d();
 		let length = 10;
@@ -35,11 +37,11 @@ class TestScene {
 		let floor = gSurfaceCreator.makeCube(length, width, length);
 		floor.translate([0, -length / 2, 0]);
 		floor.setPhysicsComponent(new PhysicsComponent());
-		floor.addPhysicsCollider();
+		/*floor.addPhysicsCollider();
 		floor.setHitbox(new BoxHitbox(-5, -0.15, -5, 5, 0.15, 5));
 		floor.physicsComponent.setIsKinematic(true);	
 		floor.physicsComponent.setMass(1000);
-		floor.physicsComponent.setMovility([0,0,0]);
+		floor.physicsComponent.setMovility([0,0,0]);*/
 		let wall2 = gSurfaceCreator.makeCube(length, length, width);
 		wall2.translate([0, 0, -length / 2]);
 
