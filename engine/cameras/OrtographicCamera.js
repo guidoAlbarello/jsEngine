@@ -1,5 +1,5 @@
 class OrtographicCamera extends Object3d {    
-    constructor(position, target, UP) {
+    constructor(position, target, UP, height, width) {
         super();
         this.projectionMatrix = mat4.create();
         this.viewMatrix = mat4.create();
@@ -9,8 +9,8 @@ class OrtographicCamera extends Object3d {
         this.UP = UP || [0.0, 1.0, 0.0];
         this.binormal = vec3.create();
 
-        this.width = 20;
-        this.height = 20.0;
+        this.width = width || 30;
+        this.height = height || 30;
         this.near = 100;
         this.far = -100;
 

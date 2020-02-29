@@ -1,5 +1,5 @@
 class OrbitalCamera extends PerspectiveCamera {
-	MAX_RADIUS = 100;
+	MAX_RADIUS = 1000;
 	MIN_RADIUS = 1;
 
 	constructor(radius, target) {
