@@ -18,6 +18,7 @@ class TextureManager {
 		if (texturesToLoad) {
 			for (let i = 0; i < texturesToLoad.length; i++) {
 				let texture = texturesToLoad[i].split(",");
+				texture = texture.map(element => element.trim());
 				texture_loading.push(
 					this.loadTexture(
 						texture[0],
@@ -26,7 +27,7 @@ class TextureManager {
 				);
 			}
 		}
-		texture_loading.push(this.loadCubemap("skybox", this.TEXTURES_DIRECTORY+"skybox/"));
+		//texture_loading.push(this.loadCubemap("skybox", this.TEXTURES_DIRECTORY+"skybox/"));
 		await Promise.all(texture_loading);
 	}
 

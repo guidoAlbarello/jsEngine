@@ -49,6 +49,11 @@ class MaterialManager {
 			this.SHADERS_DIRECTORY + "skyboxVS.glsl",
 			this.SHADERS_DIRECTORY + "skyboxFS.glsl"
 		]);
+		materialPrograms.push([
+			DefaultSpriteMaterial,
+			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
+			this.SHADERS_DIRECTORY + "defaultSpriteFS.glsl"
+		]);
 
 		return materialPrograms;
 	}

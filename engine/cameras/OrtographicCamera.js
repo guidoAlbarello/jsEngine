@@ -4,13 +4,13 @@ class OrtographicCamera extends Object3d {
         this.projectionMatrix = mat4.create();
         this.viewMatrix = mat4.create();
 
-        this.position = position || [0, 0, 0];
+        this.position = position || [0, 0, 100];
         this.target = target || [0, 0, 0];
         this.UP = UP || [0.0, 1.0, 0.0];
         this.binormal = vec3.create();
 
-        this.width = width || 30;
-        this.height = height || 30;
+        this.width = width || 50;
+        this.height = height || 50;
         this.near = 100;
         this.far = -100;
 

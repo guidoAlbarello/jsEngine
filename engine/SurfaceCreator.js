@@ -548,21 +548,27 @@ class SurfaceCreator {
 		return surface;
 	}
 
-	makeQuad(w, d) {
-		return {
-			positions: [
-				[0, d / 2, -w / 2],
-				[0, d / 2, w / 2],
-				[0, -d / 2, w / 2],
-				[0, -d / 2, -w / 2]
-			],
-			normals: [
-				[1, 1, 1],
-				[1, 1, 1],
-				[1, 1, 1],
-				[1, 1, 1]
-			],
-			amountOfVertices: 4
-		};
+	makeQuad(w, h, scaleX, scaleY) {
+		let params = gAssetManager.makeModelParams();
+		params.positions = [
+				-w/2, -h/2, 0,
+				w/2, -h/2, 0,
+				-w/2, h/2, 0,
+				w/2, h/2, 0
+			];
+		params.normals = [
+				0,0,1,
+				0,0,1,
+				0,0,1,
+				0,0,1
+			];
+		params.textureCoordinates = [
+				0,scaleY,
+				scaleX,scaleY,
+				0,0,
+				scaleX,0
+			];
+			
+		return gAssetManager.makeModelData(params, [0,1,2,3], "TRIANGLE_STRIP");
 	}
 }
