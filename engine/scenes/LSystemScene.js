@@ -1,4 +1,4 @@
-class LevelScene {
+class LSystemScene {
     constructor() {
         this.scene = new Scene();
     }
@@ -20,6 +20,6 @@ class LevelScene {
     }
 }
 
-LevelScene.loadScene = () => {
-    return new LevelScene().build();
+LSystemScene.loadScene = () => {
+    return new LSystemScene().build();
 };

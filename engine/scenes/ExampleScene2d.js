@@ -23,6 +23,8 @@ class ExampleScene2d {
                              .setTexture("tilemap")
                              .build();
 
+        tileMap.translate([-16, -16, 0]);
+        
         tileMap.addTag("dirt", 4, 6);
         tileMap.addTag("water", 3, 21);
 
