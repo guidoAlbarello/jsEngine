@@ -13,7 +13,7 @@ class Object3d {
 		this.worldModelMatrix = mat4.create();
 		this.animations = [];
 		this.id = Object3d.generateId();
-		this.behaviour = new Behaviour(this);
+		this.behaviours = [];
 		this.colliders = [];
 	}
 
@@ -33,16 +33,16 @@ class Object3d {
 	setCamera(camera) {
 		this.camera = camera;
 	}
-	
+
 	setModel(modelData) {
 		this.mesh = gAssetManager.loadData(modelData);
 		this.setMeshDataLocationsInMaterial();
 	}
 
-	setBehaviour(behaviour) {
+	addBehaviour(behaviour) {
 		behaviour.setObject(this);
 		behaviour.init();
-		this.behaviour = behaviour;
+		this.behaviours.push(behaviour);
 	}
 
 	setPhysicsComponent(component) {
@@ -136,13 +136,12 @@ class Object3d {
 	}
 
 	update(fatherModelMatrix) {
-		this.behaviour.update(fatherModelMatrix);
-		if (this.physicsComponent) {
-			this.physicsComponent.update();
+		for (let i = 0; i < this.behaviours.length; i++) {
+			this.behaviours[i].update(fatherModelMatrix);
 		}
 
-		for (let i = 0; i < this.animations.length; i++) {
-			this.animations[i].update();
+		if (this.physicsComponent) {
+			this.physicsComponent.update();
 		}
 
 		mat4.multiply(
@@ -185,8 +184,8 @@ class Object3d {
 		for (let i = 0; i < this.nodes.length; i++) {
 			if (this.nodes[i].getId() == objectId) {
 				gCollisionDetection.removeColliders(objectId);
-				this.nodes.splice(i, 1);	
-			} 
+				this.nodes.splice(i, 1);
+			}
 		}
 	}
 

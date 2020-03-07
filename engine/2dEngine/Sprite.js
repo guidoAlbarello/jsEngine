@@ -20,6 +20,17 @@ class Sprite extends Object3d {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
     }
+
+    setAnimationManager(animationManager) {
+        this.animationManager = animationManager;
+        let animationBehaviour = new Behaviour(this);
+        animationBehaviour.setUpdate(() => {
+            this.animationManager.update();
+            let frame = this.animationManager.getCurrentAnimation().getCurrentFrame();
+            this.setTextureOffset(frame.offsetX, frame.offsetY);
+        });
+        this.behaviours.push(animationBehaviour);
+    }
 }
 
 

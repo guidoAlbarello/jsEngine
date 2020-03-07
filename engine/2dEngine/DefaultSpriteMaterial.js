@@ -2,7 +2,8 @@ class DefaultSpriteMaterial extends Material {
 	constructor(texture) {
         super();
         this.setTextureAtlas(texture || "white");
-        this.setVertexNormals([0,1,0]);
+		this.setVertexNormals([0,1,0]);
+		this.setTextureOffset(0,0);
 	}
 
 	Id() {

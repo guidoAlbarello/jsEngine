@@ -1,9 +1,4 @@
 class PlayerController {
-    FORWARD = Math.PI;
-    BACKWARDS = 0;
-    LEFT = Math.PI/2;
-    RIGHT = -Math.PI/2;
-
     constructor(player) {
         this.player = player;
     }
@@ -17,13 +12,12 @@ class PlayerController {
     }
     
     update() {
-        if (gInputHandler.getInput("forward")) this.player.walk(this.FORWARD);
-        if (gInputHandler.getInput("backwards")) this.player.walk(this.BACKWARDS);
-        if (gInputHandler.getInput("left")) this.player.walk(this.LEFT);
-        if (gInputHandler.getInput("right")) this.player.walk(this.RIGHT);
+        let movingDirection = [0, 0];
+        if (gInputHandler.getInput("forward")) movingDirection[1] = 1;
+        if (gInputHandler.getInput("backwards")) movingDirection[1] = -1;
+        if (gInputHandler.getInput("left")) movingDirection[0] = -1;
+        if (gInputHandler.getInput("right")) movingDirection[0] = 1;
 
-        if (gInputHandler.getInput("jump")) this.player.jump();
-        if (gInputHandler.getInput("shoot")) this.player.shoot();
-        if (gInputHandler.getInput("regulate")) this.player.regulate();
+        this.player.walk(movingDirection);
     }
 }

@@ -16,7 +16,9 @@ class OrtographicCamera extends Object3d {
 
         mat4.ortho(this.projectionMatrix, -this.width/2, this.width/2, -this.height/2, this.height/2, this.near, this.far);
         mat4.lookAt(this.viewMatrix, this.position, this.target, this.UP);
-        this.behaviour.setUpdate(this.buildModelMatrix);
+        let behaviour = new Behaviour(this);
+        behaviour.setUpdate(this.buildModelMatrix);
+        this.addBehaviour(behaviour);
     }
 
     updateController() {}

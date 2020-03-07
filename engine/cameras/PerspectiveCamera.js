@@ -32,8 +32,9 @@ class PerspectiveCamera extends Object3d {
 		);
 		mat4.lookAt(this.viewMatrix, this.position, this.target, this.UP);
 
-		this.behaviour.update = this.buildModelMatrix;
-	}
+        let behaviour = new Behaviour(this);
+        behaviour.setUpdate(this.buildModelMatrix);
+        this.addBehaviour(behaviour);	}
 
 	updateMyself(fatherModelMatrix) {
 		this.buildModelMatrix(fatherModelMatrix);
