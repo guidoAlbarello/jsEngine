@@ -50,6 +50,8 @@ var gInputHandler = new InputHandler();
 var gMaterialManager = new MaterialManager();
 var gModelMaker = new ModelMaker();
 var gCollisionDetection = new CollisionDetection();
+var gEntityManager = new EntityManager();
+var gQuerySystem = new QuerySystem();
 
 var gDeltaTime = 0.0;
 const IDENTITY = mat4.identity(mat4.create());

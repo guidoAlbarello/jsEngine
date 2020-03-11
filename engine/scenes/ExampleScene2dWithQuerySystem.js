@@ -1,4 +1,4 @@
-class ExampleScene2d {
+class ExampleScene2dWithQuerySystem {
     constructor() {
         this.scene = new Scene();
     }
@@ -166,6 +166,6 @@ class ExampleScene2d {
     }
 }
 
-ExampleScene2d.loadScene = () => {
-    return new ExampleScene2d().build();
+ExampleScene2dWithQuerySystem.loadScene = () => {
+    return new ExampleScene2dWithQuerySystem().build();
 };
