@@ -12,6 +12,9 @@ class Renderer {
 	constructor() {
 		this.elementsToDraw = [];
 		this.currentSampler = 0;
+
+		this.modelViewMatrixTmp = mat4.create();
+		this.normalMatrixTmp = mat4.create();
 	}
 
 	init(canvas) {
@@ -248,19 +251,17 @@ class Renderer {
 				let material = renderData.material;
 
 				// Load matrix into material. This can be done in the draw face. If we do that, we can't instantiate multiple objects with the same mesh. Need to see if it's worth.
-				let modelViewMatrix = mat4.create();
-				let normalMatrix = mat4.create();
 
 				mat4.multiply(
-					modelViewMatrix,
+					this.modelViewMatrixTmp,
 					this.viewMatrix,
 					renderData.modelMatrix
 				);
-				mat4.invert(normalMatrix, renderData.modelMatrix);
-				mat4.transpose(normalMatrix, normalMatrix);
+				mat4.invert(this.normalMatrixTmp, renderData.modelMatrix);
+				mat4.transpose(this.normalMatrixTmp, this.normalMatrixTmp);
 
-				material.setModelViewMatrix(modelViewMatrix);
-				material.setNormalMatrix(normalMatrix);
+				material.setModelViewMatrix(this.modelViewMatrixTmp);
+				material.setNormalMatrix(this.normalMatrixTmp);
 				material.setWorldMatrix(renderData.modelMatrix);
 
 				// Load per object uniforms

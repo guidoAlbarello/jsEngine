@@ -16,7 +16,7 @@ class Material {
 
 	addUniform(name, type, data) {
 		let index = this.uniformsLookUp[name];
-		let uniform = { name: name, type: type, data: data };
+		let uniform = { 'name': name, 'type': type, 'data': data };
 		if (index == undefined) {
 			this.uniformsLookUp[name] = this.uniforms.push(uniform) - 1;
 		} else {
@@ -27,9 +27,9 @@ class Material {
 	addAttribute(name, data, valuesPerVertex) {
 		let index = this.attributesLookUp[name];
 		let attribute = {
-			name: name,
-			location: data,
-			valuesPerVertex: valuesPerVertex
+			'name': name,
+			'location': data,
+			'valuesPerVertex': valuesPerVertex
 		};
 		if (index == undefined) {
 			this.attributesLookUp[name] = this.attributes.push(attribute) - 1;
@@ -41,9 +41,9 @@ class Material {
 	addSampler(name, textureObject) {
 		let index = this.texturesLookUp[name];
 		let texture = {
-			name: name,
-			data: textureObject.data,
-			type: textureObject.type
+			'name': name,
+			'data': textureObject.data,
+			'type': textureObject.type
 		};
 		if (index == undefined) {
 			this.texturesLookUp[name] = this.textures.push(texture) - 1;
@@ -53,6 +53,6 @@ class Material {
 	}
 
 	static makeUniform(name, type, data) {
-		return { name: name, type: type, data: data };
+		return { 'name': name, 'type': type, 'data': data };
 	}
 }

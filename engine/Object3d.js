@@ -11,6 +11,7 @@ class Object3d {
 		this.material = new DefaultMaterial([0.5, 0.5, 0.5]);
 		this.modelMatrix = mat4.identity(mat4.create());
 		this.worldModelMatrix = mat4.create();
+		this.modelMatrixTmp = mat4.create();
 		this.animations = [];
 		this.id = Object3d.generateId();
 		this.behaviours = [];
@@ -167,16 +168,15 @@ class Object3d {
 	}
 
 	drawAt(fatherModelMatrix) {
-		let modelMatrix = mat4.create();
-		mat4.multiply(modelMatrix, fatherModelMatrix, this.modelMatrix);
+		mat4.multiply(this.modelMatrixTmp, fatherModelMatrix, this.modelMatrix);
 
 		// Other uniforms may be passed.
 		if (this.mesh) {
-			gRenderer.draw(this.mesh, this.material, modelMatrix);
+			gRenderer.draw(this.mesh, this.material, this.modelMatrixTmp);
 		}
 
 		for (let i = 0; i < this.nodes.length; i++) {
-			this.nodes[i].drawAt(modelMatrix);
+			this.nodes[i].drawAt(this.modelMatrixTmp);
 		}
 	}
 
