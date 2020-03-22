@@ -58,7 +58,7 @@ class DeveloperTools {
 	make2dGrid() {
 		let positions = [];
 		let normals = [];
-		let length = 50;
+		let length = 70;
 		for (let i = 0; i < length; i++) {
 			positions.push(-(length - 1.0) / 2.0); // x
 			positions.push(0.5 + (length - 1.0) / 2.0 - i); // y

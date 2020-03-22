@@ -5,7 +5,7 @@ class Overview {
 
     build() {
         // Set up cameras
-        this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 30, 30), "ortho");
+        this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), "ortho");
         this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
         this.scene.useCamera("ortho");
 
@@ -21,16 +21,19 @@ class Overview {
         let tomb = platformFactory.create(PlatformType.TOMB);
         let bouncyPlatform = platformFactory.create(PlatformType.BOUNCY);
         let destroyablePlatform = platformFactory.create(PlatformType.DESTROYABLE);
+        let player = gEntityManager.instantiateObject(Player);
 
-        zombie.translate([0, 1 + zombie.getHeight() / 2, 0])
-        dragon.translate([-3, 1 + dragon.getHeight() / 2, 0])
-        wolf.translate([-6, 1 + wolf.getHeight() / 2, 0])
-        guard.translate([-9, 1 + guard.getHeight() / 2, 0])
-        platform.translate([3, 1 + platform.getHeight() / 2, 0])
-        tomb.translate([6, 1 + tomb.getHeight() / 2, 0])
-        bouncyPlatform.translate([9, 1 + bouncyPlatform.getHeight() / 2, 0])
-        destroyablePlatform.translate([12, 1 + destroyablePlatform.getHeight() / 2, 0])
+        player.translate([0, 1 + player.getHeight()/2, 0]);
+        zombie.translate([-4, 1 + zombie.getHeight() / 2, 0])
+        dragon.translate([-8, 1 + dragon.getHeight() / 2, 0])
+        wolf.translate([-12, 1 + wolf.getHeight() / 2, 0])
+        guard.translate([-16, 1 + guard.getHeight() / 2, 0])
+        platform.translate([4, 1 + platform.getHeight() / 2, 0])
+        tomb.translate([8, 1 + tomb.getHeight() / 2, 0])
+        bouncyPlatform.translate([12, 1 + bouncyPlatform.getHeight() / 2, 0])
+        destroyablePlatform.translate([16, 1 + destroyablePlatform.getHeight() / 2, 0])
 
+        this.scene.addChild(player);
         this.scene.addChild(zombie);
         this.scene.addChild(dragon);
         this.scene.addChild(wolf);
@@ -45,7 +48,7 @@ class Overview {
         this.scene.setController(editorController);
 
         // Create support plane
-        let plane = gSurfaceCreator.makeCube(30, 0.2, 5, 1, 1);
+        let plane = gSurfaceCreator.makeCube(40, 0.2, 5, 1, 1);
 
         // Set skybox
         let skybox = gSurfaceCreator.makeSphere(100, 70);

@@ -9,8 +9,8 @@ class OrtographicCamera extends Object3d {
         this.UP = UP || [0.0, 1.0, 0.0];
         this.binormal = vec3.create();
 
-        this.width = width || 50;
-        this.height = height || 50;
+        this.width = width || 36;
+        this.height = height || 64;
         this.near = 100;
         this.far = -100;
 

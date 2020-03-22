@@ -1,6 +1,6 @@
 class Platform extends Sprite {
     constructor() {
         super();
-        this.init(1,0.2,"green", 1,1);
+        this.init(3,0.5,"egyptian_color", 1,1);
     }
 }

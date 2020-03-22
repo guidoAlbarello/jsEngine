@@ -1,6 +1,6 @@
 class Wolf extends Enemy {
     constructor() {
         super();
-        this.init(1.5,1,"black_red", 1,1);
+        this.init(2,1,"red_color", 1,1);
     }
 }
