@@ -5,6 +5,7 @@ class PlayerController {
         this.velocity = [0,0];
         this.walkSpeed = 0.8;
         this.walkSpeedMax = 4;
+        this.jumpSpeed = 5;
     }
 
     setPlayer(player) {
@@ -17,15 +18,17 @@ class PlayerController {
     }
     
     update() {
-        let movingDirection = [0, 0];
-        if (gInputHandler.getInput("forward")) movingDirection[1] = 1;
-        if (gInputHandler.getInput("backwards")) movingDirection[1] = -1;
-        if (gInputHandler.getInput("left")) movingDirection[0] = this.walk(-1);
-        if (gInputHandler.getInput("right")) movingDirection[0] = this.walk(1);
-        if (movingDirection[0]==0) movingDirection[0] = this.walk(0);
+        let velocity = [0, 0];
+
+        if (gInputHandler.getInput("jump")) velocity[1] = 1;
+        if (gInputHandler.getInput("left")) velocity[0] = this.walk(-1);
+        if (gInputHandler.getInput("right")) velocity[0] = this.walk(1);
+        if (velocity[0]==0) velocity[0] = this.walk(0);
         
-        this.velocity = movingDirection;
-        this.player.walk(movingDirection);
+        this.velocity = velocity;
+        
+        this.player.walk(velocity);
+        this.player.jump(this.jumpSpeed*velocity[1]);
     }
 
     walk(direction){

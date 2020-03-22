@@ -6,8 +6,8 @@ class PhysicsComponent2d extends PhysicsComponent {
     setVelocity(velocity) {
         if (velocity[1] > 0)
             this.gravityMultiplier = this.gravityInteraction;
-        else if (velocity[1] == 0)
-            this.gravityMultiplier = 0;
+        /*else if (velocity[1] == 0)
+            this.gravityMultiplier = 0;*/
     
 
         this.velocity = [velocity[0], velocity[1], 0];
