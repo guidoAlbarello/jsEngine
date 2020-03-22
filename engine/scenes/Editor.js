@@ -10,8 +10,9 @@ class Editor {
         this.scene.useCamera("ortho");
 
         // Create entity to edit
-        let entity = gEntityManager.instantiateObjectWithTag("zombie", Zombie);
-        
+        let entity = gEntityManager.instantiateObjectWithTag("player", Player);
+        entity.translate([0,5,0]);
+
         // Create controller of the editor and add it to the scene
         let editorController = new EditorController(entity);
         this.scene.setController(editorController);
@@ -20,8 +21,14 @@ class Editor {
 
         // Create support plane
         let plane = gSurfaceCreator.makeCube(5, 0.2, 5, 1, 1);
-        
+        plane.setHitbox(new BoxHitbox(-2.5, -0.1, -2.5, 2.5, 0.1, 2.5));
+        plane.setPhysicsComponent(new PhysicsComponent());
+        plane.addPhysicsCollider();
+        plane.physicsComponent.setIsKinematic(true);
+        plane.physicsComponent.setMass(1000);
+        plane.physicsComponent.setMovility([0, 0, 0]);
         this.scene.addChild(plane);
+
         return this.scene;
     }
 }
