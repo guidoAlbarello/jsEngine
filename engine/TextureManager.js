@@ -171,16 +171,41 @@ class TextureManager {
 			new Uint8Array([255, 0, 0])
 		);
 		gTextureManager.createTextureFromArray(
-			"black_red",
-			new Uint8Array([55, 0, 0])
+			"space_color",
+			new Uint8Array([29, 41, 81])
 		);
 		gTextureManager.createTextureFromArray(
-			"grey_red",
-			new Uint8Array([255, 100, 100])
+			"egyptian_color",
+			new Uint8Array([16, 52, 166])
 		);
 		gTextureManager.createTextureFromArray(
-			"green_red",
-			new Uint8Array([255, 120, 0])
+			"sapphire_color",
+			new Uint8Array([15, 82, 186])
+		);
+		gTextureManager.createTextureFromArray(
+			"blue_color",
+			new Uint8Array([63, 224, 208])
+		);
+		
+		gTextureManager.createTextureFromArray(
+			"rust_color",
+			new Uint8Array([157, 58, 22])
+		);
+		gTextureManager.createTextureFromArray(
+			"crimson_color",
+			new Uint8Array([184, 15, 10])
+		);
+		gTextureManager.createTextureFromArray(
+			"hibiscus_color",
+			new Uint8Array([180, 55, 87])
+		);
+		gTextureManager.createTextureFromArray(
+			"red_color",
+			new Uint8Array([234, 60, 83])
+		);
+		gTextureManager.createTextureFromArray(
+			"lime_color",
+			new Uint8Array([199, 234, 70])
 		);
 		gTextureManager.createTextureCubemapFromArray(
 			"white_cubemap",

@@ -24,7 +24,7 @@ class Overview {
 
     setupCameras() {
         // Set up cameras
-        this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 30, 30), "ortho");
+        this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), "ortho");
         this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
         this.scene.useCamera("ortho");
     }
@@ -115,11 +115,11 @@ class Overview {
         let wolf = enemyFactory.create(EnemyType.WOLF);
         let guard = enemyFactory.create(EnemyType.GUARD);
         
-        zombie.translate([0, 1 + zombie.getHeight() / 2, 0])
-        dragon.translate([-3, 1 + dragon.getHeight() / 2, 0])
-        wolf.translate([-6, 1 + wolf.getHeight() / 2, 0])
-        guard.translate([-9, 1 + guard.getHeight() / 2, 0])
-        
+        zombie.translate([-4, 1 + zombie.getHeight() / 2, 0])
+        dragon.translate([-8, 1 + dragon.getHeight() / 2, 0])
+        wolf.translate([-12, 1 + wolf.getHeight() / 2, 0])
+        guard.translate([-16, 1 + guard.getHeight() / 2, 0])
+ 
         this.scene.addChild(zombie);
         this.scene.addChild(dragon);
         this.scene.addChild(wolf);

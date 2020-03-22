@@ -1,6 +1,6 @@
 class Dragon extends Enemy {
     constructor() {
         super();
-        this.init(2, 2 ,"red", 1,1);
+        this.init(3, 3,"crimson_color", 1,1);
     }
 }

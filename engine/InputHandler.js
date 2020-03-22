@@ -78,7 +78,8 @@ class InputHandler {
 			case "hide_horizontal_grid":
 				return this.getTapKey(84); //Y
 			case "jump":
-				return this.getTapKey(32, 0.0166); // Space
+				return this.getKey(87); //W
+				//return this.getTapKey(32, 0.0166); // Space
 			case "regulate":
 				return this.getTapKey(82); // R
 			case "shoot":
