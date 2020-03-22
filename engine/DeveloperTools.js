@@ -4,7 +4,7 @@ class DeveloperTools {
 	makeGrid() {
 		let positions = [];
 		let normals = [];
-		let length = 1000;
+		let length = 50;
 		for (let i = 0; i < length; i++) {
 			positions.push(-(length - 1.0) / 2.0); // x
 			positions.push(0.0); // y
@@ -50,7 +50,61 @@ class DeveloperTools {
 		plane.setModel(
 			gAssetManager.makeModelData(params, indexBuffer, "LINES")
 		);
-		plane.setMaterial(new DefaultMaterial([0.5, 0.3, 0.5]));
+		plane.setMaterial(new DefaultMaterial([0.7, 0.7, 0.7]));
+
+		return plane;
+	}
+
+	make2dGrid() {
+		let positions = [];
+		let normals = [];
+		let length = 50;
+		for (let i = 0; i < length; i++) {
+			positions.push(-(length - 1.0) / 2.0); // x
+			positions.push(0.5 + (length - 1.0) / 2.0 - i); // y
+			positions.push(0.0); // z
+
+			normals.push(0);
+			normals.push(0);
+			normals.push(1);
+
+			positions.push((length - 1.0) / 2.0); // x
+			positions.push(0.5 + (length - 1.0) / 2.0 - i); // y
+			positions.push(0.0); // z
+
+			normals.push(0);
+			normals.push(1);
+			normals.push(0);
+		}
+
+		for (let i = 0; i < length; i++) {
+			positions.push(i - (length - 1.0) / 2.0); // x	
+			positions.push(0.5 + (length - 1.0) / 2.0); // y
+			positions.push(0.0); // z
+
+			normals.push(0);
+			normals.push(0);
+			normals.push(1);
+
+			positions.push(i - (length - 1.0) / 2.0); // x
+			positions.push(0.5 + -(length - 1.0) / 2.0); // y
+			positions.push(0.0); // z
+
+			normals.push(0);
+			normals.push(0);
+			normals.push(1);
+		}
+
+		let plane = new Object3d();
+		let params = gAssetManager.makeModelParams();
+		params.positions = positions;
+		params.normals = normals;
+		let indexBuffer = [];
+		for (let i = 0; i < 4 * length; i++) indexBuffer.push(i);
+		plane.setModel(
+			gAssetManager.makeModelData(params, indexBuffer, "LINES")
+		);
+		plane.setMaterial(new DefaultMaterial([0.3, 0.3, 0.3]));
 
 		return plane;
 	}
@@ -179,11 +233,11 @@ class DeveloperTools {
 			if (!pointLight.mesh) this.addModelToPointLight(pointLight);
 		}
 
-		for (let cameraName in scene.cameras) {
+		/*for (let cameraName in scene.cameras) {
 			let camera = scene.cameras[cameraName];
 			if (camera.nodes.length == 0 && cameraName != scene.currentCamera)
 				this.addModelToCamera(camera);
-		}
+		}*/
 	}
 
 	removeDeveloperModels(scene) {

@@ -1,8 +1,16 @@
 class Sprite extends Object3d {
-    constructor(width, height, textureAtlas, scaleX, scaleY) {
+    constructor(...args) {
         super();
         this.offsetX = 0;
         this.offsetY = 0;
+        if (args.length == 5) {
+            this.init(...args);
+        }
+    }
+
+    init(width, height, textureAtlas, scaleX, scaleY) {
+        this.height = height;
+        this.width = width;
         this.scaleX = scaleX || 1;
         this.scaleY = scaleY || 1;
         this.setHitbox(new BoxHitbox2d(-width/2, -height/2, width/2, height/2));
@@ -10,6 +18,14 @@ class Sprite extends Object3d {
         this.setMaterial(new DefaultSpriteMaterial(textureAtlas));
     }
 
+    getHeight() {
+        return this.height;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+    
     setTextureOffset(x,y) {
         this.offsetX = x;
         this.offsetY = y;

@@ -11,7 +11,7 @@ class GraphicApplication {
 	}
 
 	update(timeStamp) {
-		gDeltaTime = (timeStamp - this.previousTimeStamp)/1000;
+		gDeltaTime = (timeStamp - this.previousTimeStamp) / 1000;
 		this.previousTimeStamp = timeStamp;
 
 		this.handleInput();
@@ -34,7 +34,12 @@ class GraphicApplication {
 					activeCamera.id
 				);
 			}
-			this.developerTools.grid.draw();
+			if (!this.developerTools.commands.hideHorizontalGrid) {
+				this.developerTools.grid.draw();
+			}
+			if (!this.developerTools.commands.hideVerticalGrid) {
+				this.developerTools.verticalGrid.draw();
+			}
 		}
 
 		gRenderer.setProjectionMatrix(activeCamera.projectionMatrix);
@@ -52,7 +57,7 @@ class GraphicApplication {
 		loadMaterialsPromise.then(() => {
 			gTextureManager.loadDefaultArrayTextures();
 			gRenderer.initMaterials();
-			this.scene = new LoadingScene(this, ExampleScene2d).build();
+			this.scene = new LoadingScene(this, Overview).build();
 
 			this.initDeveloperStuff();
 
@@ -93,11 +98,20 @@ class GraphicApplication {
 		if (gInputHandler.getInput("hide_axis"))
 			this.developerTools.commands.hideAxis = !this.developerTools
 				.commands.hideAxis;
+
+		if (gInputHandler.getInput("hide_vertical_grid"))
+			this.developerTools.commands.hideVerticalGrid = !this.developerTools
+				.commands.hideVerticalGrid;
+
+		if (gInputHandler.getInput("hide_horizontal_grid"))
+			this.developerTools.commands.hideHorizontalGrid = !this.developerTools
+				.commands.hideHorizontalGrid;
 		this.scene.updateController();
 	}
 
 	initDeveloperStuff() {
 		this.developerTools.grid = gDeveloperTools.makeGrid(1000, 1000);
+		this.developerTools.verticalGrid = gDeveloperTools.make2dGrid();
 		this.developerTools.axis = gDeveloperTools.makeTranslationAxisTern();
 		this.developerTools.commands.hideAxis = false;
 

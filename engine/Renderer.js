@@ -191,7 +191,6 @@ class Renderer {
 	}
 
 	draw(mesh, material, modelMatrix) {
-		// Maybe mesh isn't needed anymore
 		this.elementsToDraw[material.Id()].push(
 			new RenderData(mesh, material, modelMatrix)
 		);

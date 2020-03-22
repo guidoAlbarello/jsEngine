@@ -73,13 +73,17 @@ class InputHandler {
 				return this.getTapKey(66); //B
 			case "hide_axis":
 				return this.getTapKey(88); //H
+			case "hide_vertical_grid":
+				return this.getTapKey(89); //Y
+			case "hide_horizontal_grid":
+				return this.getTapKey(84); //Y
 			case "jump":
 				return this.getTapKey(32, 0.0166); // Space
 			case "regulate":
 				return this.getTapKey(82); // R
 			case "shoot":
 				return this.isMouseDown;
-				//return this.getTapKey(90);
+			//return this.getTapKey(90);
 			default:
 				return false;
 		}

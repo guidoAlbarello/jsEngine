@@ -27,7 +27,7 @@ class TextureManager {
 				);
 			}
 		}
-		//texture_loading.push(this.loadCubemap("skybox", this.TEXTURES_DIRECTORY+"skybox/"));
+		texture_loading.push(this.loadCubemap("skybox", this.TEXTURES_DIRECTORY+"skybox/"));
 		await Promise.all(texture_loading);
 	}
 
@@ -169,6 +169,18 @@ class TextureManager {
 		gTextureManager.createTextureFromArray(
 			"red",
 			new Uint8Array([255, 0, 0])
+		);
+		gTextureManager.createTextureFromArray(
+			"black_red",
+			new Uint8Array([55, 0, 0])
+		);
+		gTextureManager.createTextureFromArray(
+			"grey_red",
+			new Uint8Array([255, 100, 100])
+		);
+		gTextureManager.createTextureFromArray(
+			"green_red",
+			new Uint8Array([255, 120, 0])
 		);
 		gTextureManager.createTextureCubemapFromArray(
 			"white_cubemap",

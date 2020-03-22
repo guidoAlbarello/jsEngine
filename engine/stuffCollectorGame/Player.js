@@ -1,6 +1,6 @@
 class Player extends Sprite {
     constructor() {
-        super(1,1, "entity", 64/256, 64/256);
+        super(1,1, "violet", 1, 1);
         this.setPhysicsComponent(new PhysicsComponent2d());
     }
 

@@ -8,7 +8,7 @@ class Object3d {
 	constructor() {
 		this.worldPosition = vec3.create();
 		this.nodes = [];
-		this.material = new DefaultMaterial([0.5, 0.5, 0.5]);
+		this.material = new DefaultMaterial([0.8, 0.78, 0.78]);
 		this.modelMatrix = mat4.identity(mat4.create());
 		this.worldModelMatrix = mat4.create();
 		this.modelMatrixTmp = mat4.create();
