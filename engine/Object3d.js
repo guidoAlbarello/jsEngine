@@ -16,6 +16,7 @@ class Object3d {
 		this.id = Object3d.generateId();
 		this.behaviours = [];
 		this.colliders = [];
+		this.inverseFatherModelMatrix = mat4.create();
 	}
 
 	static generateId() {
@@ -140,6 +141,27 @@ class Object3d {
 		return this.worldModelMatrix.slice(12,15);
 	}
 
+	translateWorldPosition(movement) {
+		this.worldModelMatrix[12] += movement[0];
+		this.worldModelMatrix[13] += movement[1];
+		this.worldModelMatrix[14] += movement[2];
+
+		for (let i = 0; i < this.nodes.length; i++) {
+			this.nodes[i].update(this.worldModelMatrix);
+		}
+	}
+
+	setWorldPosition(position) {
+		this.worldModelMatrix[12] = position[0];
+		this.worldModelMatrix[13] = position[1];
+		this.worldModelMatrix[14] = position[2];
+
+		mat4.mul(this.modelMatrix, this.inverseFatherModelMatrix, this.worldModelMatrix);
+		for (let i = 0; i < this.nodes.length; i++) {
+			this.nodes[i].update(this.worldModelMatrix);
+		}
+	}
+
 	update(fatherModelMatrix) {
 		for (let i = 0; i < this.behaviours.length; i++) {
 			this.behaviours[i].update(fatherModelMatrix);
@@ -148,6 +170,8 @@ class Object3d {
 		if (this.physicsComponent) {
 			this.physicsComponent.update();
 		}
+		
+		mat4.invert(this.inverseFatherModelMatrix, fatherModelMatrix);
 
 		mat4.multiply(
 			this.worldModelMatrix,

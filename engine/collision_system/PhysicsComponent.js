@@ -7,9 +7,7 @@ class PhysicsComponent {
 	isKinematic = false;
 	movility = [1, 1, 1];
 	dontFall = false;
-	isFalling = false;
 	isOnSurface = false;
-	surfaceDirection = [0, 0, 0];
 
 	constructor(object) {
 		this.object = object;
@@ -45,25 +43,11 @@ class PhysicsComponent {
 	checkMovementConstraints(axis) {
 		let i = axis == "x_axis" ? 0 : 1;
 		if (this.gravity[i] != 0) {
-			if (this.dontFall || (this.isFalling && this.velocity[i] * this.surfaceDirection[i] > 0))
+			if (this.dontFall)
 				this.velocity[i] = 0;
-			if ((this.velocity[i] * this.gravity[i] > 0))
-				this.isFalling = true;
 		}
 	}
-	stopFalling() {
-		this.isFalling = false;
-	}
-
-	setIsOnSurface(isOnSurface, surfaceDirection) {
-		this.surfaceDirection = surfaceDirection;
-		this.isOnSurface = isOnSurface;
-	}
-
-	setDontFall(dontFall) {
-		this.dontFall = dontFall;
-	}
-
+	
 	setVelocity(velocity) {
 		if (velocity[1] > 0)
 			this.gravityMultiplier = this.gravityInteraction;
