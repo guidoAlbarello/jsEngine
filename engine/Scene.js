@@ -1,71 +1,76 @@
 class Scene extends Object3d {
-	controller;
-	constructor() {
-		super();
-		this.cameras = [];
-		this.pointLights = [];
-		this.currentCamera = "";
-		this.cameraNames = [];
-		this.currentCameraIndex = 0;
-	}
+  controller;
+  constructor() {
+    super();
+    this.cameras = [];
+    this.pointLights = [];
+    this.currentCamera = '';
+    this.cameraNames = [];
+    this.currentCameraIndex = 0;
+  }
 
-	addCamera(camera, cameraName, object) {
-		object = object || this;
-		if (this.cameras[cameraName] == undefined) {
-			this.cameraNames.push(cameraName);
-			this.cameras[cameraName] = camera;
-			object.addChild(camera);
-			object.setCamera(camera);
-		}
-	}
+  addCamera(camera, cameraName, object) {
+    object = object || this;
+    if (this.cameras[cameraName] == undefined) {
+      this.cameraNames.push(cameraName);
+      this.cameras[cameraName] = camera;
+      object.addChild(camera);
+      object.setCamera(camera);
+    }
+  }
 
-	getCamera() {
-		return this.cameras[this.currentCamera];
-	}
+  getCamera() {
+    return this.cameras[this.currentCamera];
+  }
 
-	useCamera(cameraName) {
-		this.currentCamera = cameraName;
-	}
+  useCamera(cameraName) {
+    this.currentCamera = cameraName;
+  }
 
-	useNextCamera() {
-		for (let i = 0; i < this.cameraNames.length; i++) {
-			if (this.cameraNames[i] == this.currentCamera) {
-				this.currentCamera = this.cameraNames[
-					(i + 1) % this.cameraNames.length
-				];
-				break;
-			}
-		}
-	}
+  useNextCamera() {
+    for (let i = 0; i < this.cameraNames.length; i++) {
+      if (this.cameraNames[i] == this.currentCamera) {
+        this.currentCamera = this.cameraNames[
+          (i + 1) % this.cameraNames.length
+        ];
+        break;
+      }
+    }
+  }
 
-	getController() {
-		return this.controller;
-	}
-	
-	setController(controller) {
-		this.controller = controller;
-	}
+  getController() {
+    return this.controller;
+  }
 
-	updateController() {
-		if (this.controller)
-			this.controller.update();
-	}
+  setController(controller) {
+    this.controller = controller;
+  }
 
-	addDirectionalLight(light) {
-		PBRMaterial.setLight(light);
-	}
+  updateController() {
+    if (this.controller)
+      this.controller.update();
+  }
 
-	// Refactor to keep lights as part of the scene.
-	addPointLight(light, object) {
-		object = object || this;
-		this.pointLights.push(light);
-		object.addChild(light);
-	}
+  addDirectionalLight(light) {
+    PBRMaterial.setLight(light);
+  }
 
-	drawScene() {
-		PBRMaterial.setCameraPosition(this.getCamera().worldPosition);
-		PBRMaterial.setPointLights(this.pointLights);
+  // Refactor to keep lights as part of the scene.
+  addPointLight(light, object) {
+    object = object || this;
+    this.pointLights.push(light);
+    object.addChild(light);
+  }
 
-		this.draw();
-	}
+  drawScene() {
+    PBRMaterial.setCameraPosition(this.getCamera().worldPosition);
+    PBRMaterial.setPointLights(this.pointLights);
+
+    this.draw();
+  }
+
+  destroy() {
+    this.nodes = [];
+  }
+
 }
