@@ -24,6 +24,7 @@ class Editor {
 
         // Create support plane
         let plane = gSurfaceCreator.makeCube(5, 0.2, 5, 1, 1);
+        plane.translate([0, 2, 0]);
         plane.setHitbox(new BoxHitbox(-2.5, -0.1, -2.5, 2.5, 0.1, 2.5));
         plane.setPhysicsComponent(new PhysicsComponent());
         plane.addPhysicsCollider();
