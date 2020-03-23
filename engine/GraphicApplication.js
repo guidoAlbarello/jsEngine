@@ -1,121 +1,125 @@
 class GraphicApplication {
-	scene;
-	DEVELOPER_MODE = "DEVELOPER_MODE";
-	GAME_MODE = "GAME_MODE";
-	modes = [this.DEVELOPER_MODE, this.GAME_MODE];
-	gui;
+  scene;
+  DEVELOPER_MODE = "DEVELOPER_MODE";
+  GAME_MODE = "GAME_MODE";
+  modes = [this.DEVELOPER_MODE, this.GAME_MODE];
+  gui;
 
-	constructor(mode) {
-		this.currentMode = mode == this.DEVELOPER_MODE ? 0 : 1;
-		this.developerTools = { commands: {} };
-	}
+  constructor(mode) {
+    this.currentMode = mode == this.DEVELOPER_MODE ? 0 : 1;
+    this.developerTools = {
+      commands: {},
+    };
+  }
 
-	update(timeStamp) {
-		gDeltaTime = (timeStamp - this.previousTimeStamp) / 1000;
-		this.previousTimeStamp = timeStamp;
+  update(timeStamp) {
+    gDeltaTime = (timeStamp - this.previousTimeStamp) / 1000;
+    this.previousTimeStamp = timeStamp;
 
-		this.handleInput();
+    this.handleInput();
 
-		let activeCamera = this.scene.getCamera();
-		activeCamera.updateController();
+    let activeCamera = this.scene.getCamera();
+    activeCamera.updateController();
 
-		this.scene.update(IDENTITY);
+    this.scene.update(IDENTITY);
 
-		gCollisionDetection.update();
+    gCollisionDetection.update();
 
-		// Refactor so that the if is not checked every cycle.?
-		// Also be ware of recursive call. For now is fine.
-		this.scene.drawScene();
-		if (this.modes[this.currentMode] == this.DEVELOPER_MODE) {
-			if (!this.developerTools.commands.hideAxis) {
-				this.drawAxis(
-					this.scene.nodes,
-					this.scene.worldModelMatrix,
-					activeCamera.id
-				);
-			}
-			if (!this.developerTools.commands.hideHorizontalGrid) {
-				this.developerTools.grid.draw();
-			}
-			if (!this.developerTools.commands.hideVerticalGrid) {
-				this.developerTools.verticalGrid.draw();
-			}
-		}
+    // Refactor so that the if is not checked every cycle.?
+    // Also be ware of recursive call. For now is fine.
+    this.scene.drawScene();
+    if (this.modes[this.currentMode] == this.DEVELOPER_MODE) {
+      if (!this.developerTools.commands.hideAxis) {
+        this.drawAxis(
+          this.scene.nodes,
+          this.scene.worldModelMatrix,
+          activeCamera.id
+        );
+      }
 
-		gRenderer.setProjectionMatrix(activeCamera.projectionMatrix);
-		gRenderer.setViewMatrix(activeCamera.viewMatrix);
-		gRenderer.drawScene();
+      if (!this.developerTools.commands.hideHorizontalGrid) {
+        this.developerTools.grid.draw();
+      }
 
-		requestAnimationFrame(step => this.update(step));
-	}
+      if (!this.developerTools.commands.hideVerticalGrid) {
+        this.developerTools.verticalGrid.draw();
+      }
+    }
 
-	init(canvas) {
-		gInputHandler.init(canvas);
-		gRenderer.init(canvas);
-		let loadMaterialsPromise = gMaterialManager.loadMaterials();
+    gRenderer.setProjectionMatrix(activeCamera.projectionMatrix);
+    gRenderer.setViewMatrix(activeCamera.viewMatrix);
+    gRenderer.drawScene();
 
-		loadMaterialsPromise.then(() => {
-			gTextureManager.loadDefaultArrayTextures();
-			gRenderer.initMaterials();
-			this.scene = new LoadingScene(this, Overview).build();
+    requestAnimationFrame(step => this.update(step));
+  }
 
-			this.initDeveloperStuff();
+  init(canvas) {
+    gInputHandler.init(canvas);
+    gRenderer.init(canvas);
+    let loadMaterialsPromise = gMaterialManager.loadMaterials();
 
-			requestAnimationFrame(step => {
-				this.previousTimeStamp = step;
-				this.update(step);
-			});
-		});
-	}
+    loadMaterialsPromise.then(() => {
+      gTextureManager.loadDefaultArrayTextures();
+      gRenderer.initMaterials();
+      this.scene = new LoadingScene(this, Overview).build();
 
-	drawAxis(nodes, fatherTransform, activeCameraId) {
-		this.developerTools.axis.drawAt(fatherTransform);
-		if (nodes.length <= 0) return;
-		for (let i = 0; i < nodes.length; i++) {
-			// Don't draw an axis in the active camera.
-			if (nodes[i].id != activeCameraId) {
-				let transform = mat4.create();
-				mat4.multiply(transform, fatherTransform, nodes[i].modelMatrix);
-				this.drawAxis(
-					nodes[i].nodes,
-					nodes[i].worldModelMatrix,
-					activeCameraId
-				);
-			}
-		}
-	}
+      this.initDeveloperStuff();
 
-	handleInput() {
-		if (gInputHandler.getInput("change_camera")) this.scene.useNextCamera();
+      requestAnimationFrame(step => {
+        this.previousTimeStamp = step;
+        this.update(step);
+      });
+    });
+  }
 
-		if (gInputHandler.getInput("change_mode")) {
-			this.currentMode = (this.currentMode + 1) % this.modes.length;
-			if (this.modes[this.currentMode] == this.DEVELOPER_MODE)
-				gDeveloperTools.addDeveloperModels(this.scene);
-			else gDeveloperTools.removeDeveloperModels(this.scene);
-		}
+  drawAxis(nodes, fatherTransform, activeCameraId) {
+    this.developerTools.axis.drawAt(fatherTransform);
+    if (nodes.length <= 0) return;
+    for (let i = 0; i < nodes.length; i++) {
+      // Don't draw an axis in the active camera.
+      if (nodes[i].id != activeCameraId) {
+        let transform = mat4.create();
+        mat4.multiply(transform, fatherTransform, nodes[i].modelMatrix);
+        this.drawAxis(
+          nodes[i].nodes,
+          nodes[i].worldModelMatrix,
+          activeCameraId
+        );
+      }
+    }
+  }
 
-		if (gInputHandler.getInput("hide_axis"))
-			this.developerTools.commands.hideAxis = !this.developerTools
-				.commands.hideAxis;
+  handleInput() {
+    if (gInputHandler.getInput("change_camera")) this.scene.useNextCamera();
 
-		if (gInputHandler.getInput("hide_vertical_grid"))
-			this.developerTools.commands.hideVerticalGrid = !this.developerTools
-				.commands.hideVerticalGrid;
+    if (gInputHandler.getInput("change_mode")) {
+      this.currentMode = (this.currentMode + 1) % this.modes.length;
+      if (this.modes[this.currentMode] == this.DEVELOPER_MODE)
+        gDeveloperTools.addDeveloperModels(this.scene);
+      else gDeveloperTools.removeDeveloperModels(this.scene);
+    }
 
-		if (gInputHandler.getInput("hide_horizontal_grid"))
-			this.developerTools.commands.hideHorizontalGrid = !this.developerTools
-				.commands.hideHorizontalGrid;
-		this.scene.updateController();
-	}
+    if (gInputHandler.getInput("hide_axis"))
+      this.developerTools.commands.hideAxis = !this.developerTools
+      .commands.hideAxis;
 
-	initDeveloperStuff() {
-		this.developerTools.grid = gDeveloperTools.makeGrid(1000, 1000);
-		this.developerTools.verticalGrid = gDeveloperTools.make2dGrid();
-		this.developerTools.axis = gDeveloperTools.makeTranslationAxisTern();
-		this.developerTools.commands.hideAxis = false;
+    if (gInputHandler.getInput("hide_vertical_grid"))
+      this.developerTools.commands.hideVerticalGrid = !this.developerTools
+      .commands.hideVerticalGrid;
 
-		if (this.modes[this.currentMode] == this.DEVELOPER_MODE)
-			gDeveloperTools.addDeveloperModels(this.scene);
-	}
+    if (gInputHandler.getInput("hide_horizontal_grid"))
+      this.developerTools.commands.hideHorizontalGrid = !this.developerTools
+      .commands.hideHorizontalGrid;
+    this.scene.updateController();
+  }
+
+  initDeveloperStuff() {
+    this.developerTools.grid = gDeveloperTools.makeGrid(1000, 1000);
+    this.developerTools.verticalGrid = gDeveloperTools.make2dGrid();
+    this.developerTools.axis = gDeveloperTools.makeTranslationAxisTern();
+    this.developerTools.commands.hideAxis = false;
+
+    if (this.modes[this.currentMode] == this.DEVELOPER_MODE)
+      gDeveloperTools.addDeveloperModels(this.scene);
+  }
 }
