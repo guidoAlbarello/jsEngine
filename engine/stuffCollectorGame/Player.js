@@ -3,7 +3,9 @@ class Player extends Sprite {
     super(1, 1.8, 'lime_color', 1, 1);
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.physicsComponent.setGravity(1);
-    this.hp = 100;
+    this.hp = new HealthPoints(gConfiguration.playerHP);
+    this.hp.translate([0, this.getHeight()/2+0.3*this.getHeight(), 0]);
+    this.addChild(this.hp);
     this.organsCollected = new Map();
     gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
@@ -18,7 +20,15 @@ class Player extends Sprite {
   }
 
   getHP() {
-    return this.hp;
+    return this.hp.getHP();
+  }
+
+  setHP(newHP){
+    this.hp.setHP(newHP);
+  }
+
+  takeDamage(damage=1){
+    this.hp.subtract(damage);
   }
 
   getInventory() {

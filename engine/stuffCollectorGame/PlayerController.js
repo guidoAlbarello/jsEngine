@@ -38,6 +38,8 @@ class PlayerController {
         this.velocity = actualVelocity;
 
         this.player.walk(velocityX);
+
+        //this.player.setHP(this.player.getHP()-1);
     }
 
     walk(direction) {

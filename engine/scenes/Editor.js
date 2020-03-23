@@ -1,6 +1,11 @@
 class Editor {
     constructor() {
         this.scene = new Scene();
+        this.objective = new Map([
+          ['liver', 1],
+          ['brain', 1],
+          ['heart', 1],
+        ]);
     }
 
     build() {
@@ -8,6 +13,13 @@ class Editor {
         this.scene.addCamera(new OrtographicCamera([0,0,20], [0,0,0], [0,1,0], 45, 80), "ortho");
         this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
         this.scene.useCamera("ortho");
+
+        //ENEMY
+        let enemyFactory = new EnemyFactory();
+        let zombie = enemyFactory.create(EnemyType.ZOMBIE);
+        zombie.translate([-4, 1 + zombie.getHeight() / 2, 0]);
+        this.scene.addChild(zombie);
+        
 
         // Create playground
         let platformFactory = new PlatformFactory();
@@ -54,6 +66,14 @@ class Editor {
         plane2.addChild(geometryVolume);
 
         this.scene.addChild(plane2);
+
+
+        
+
+
+        let gameManager = new GameManager(this.scene, this.objective);
+        gameManager.init();
+        this.scene.addChild(gameManager);
 
         return this.scene;
     }
