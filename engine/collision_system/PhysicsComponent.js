@@ -3,7 +3,7 @@ class PhysicsComponent {
 	object;
 	gravityInteraction = 0;
 	gravity = [0, -1];
-	GRAVITY_VALUE = 2.2 * 9.8
+	GRAVITY_VALUE =  5
 	isKinematic = false;
 	movility = [1, 1, 1];
 	dontFall = false;
@@ -19,8 +19,8 @@ class PhysicsComponent {
 	}
 
 	update() {
-		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
-		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
+		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
+		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
 
 		vec3.mul(this.velocity, this.velocity, this.movility);
 		this.move();
