@@ -136,6 +136,10 @@ class Object3d {
 		this.animations.push(animation);
 	}
 
+	getWorldPosition() {
+		return this.worldModelMatrix.slice(12,15);
+	}
+
 	update(fatherModelMatrix) {
 		for (let i = 0; i < this.behaviours.length; i++) {
 			this.behaviours[i].update(fatherModelMatrix);

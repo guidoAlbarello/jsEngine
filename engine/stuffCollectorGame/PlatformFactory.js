@@ -11,7 +11,7 @@ class PlatformFactory {
             case PlatformType.BOUNCY:
                 return gEntityManager.instantiateObjectWithTag("BouncyPlatform", BouncyPlatform);
             case PlatformType.NORMAL:
-                return gEntityManager.instantiateObjectWithTag("Platform", Platform);
+                return gEntityManager.instantiateObjectWithTag("Platform", Platform, true);
             case PlatformType.DESTROYABLE:
                 return gEntityManager.instantiateObjectWithTag("DestroyablePlatform", DestroyablePlatform);
             case PlatformType.TOMB:

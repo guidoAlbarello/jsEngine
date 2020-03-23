@@ -23,7 +23,7 @@ class CollisionDetection {
 					}
 	
 					if (collider.isColliding && !collision) {
-						collider.onCollisionExit();
+						collider.onCollisionExit(otherObject);
 						collider.isColliding = false;
 					}
 				}

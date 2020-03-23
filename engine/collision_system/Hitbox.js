@@ -15,6 +15,6 @@ class Hitbox {
     }
 
     getPosition() {
-        return this.object.getPosition();
+        return this.object.getWorldPosition();
     }
 }

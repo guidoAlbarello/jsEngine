@@ -14,9 +14,9 @@ class BoxHitbox extends Hitbox {
     intersects(otherHitbox) {
         if (otherHitbox.getType() == "SPHERICAL_HITBOX") {
             // get box closest point to sphere center by clamping
-            let x = Math.max(this.object.getPosition()[0] + this.minX, Math.min(otherHitbox.getPosition()[0], this.object.getPosition()[0] + this.maxX));
-            let y = Math.max(this.object.getPosition()[1] + this.minY, Math.min(otherHitbox.getPosition()[1], this.object.getPosition()[1] + this.maxY));
-            let z = Math.max(this.object.getPosition()[2] + this.minZ, Math.min(otherHitbox.getPosition()[2], this.object.getPosition()[2] + this.maxZ));
+            let x = Math.max(this.getPosition()[0] + this.minX, Math.min(otherHitbox.getPosition()[0], this.getPosition()[0] + this.maxX));
+            let y = Math.max(this.getPosition()[1] + this.minY, Math.min(otherHitbox.getPosition()[1], this.getPosition()[1] + this.maxY));
+            let z = Math.max(this.getPosition()[2] + this.minZ, Math.min(otherHitbox.getPosition()[2], this.getPosition()[2] + this.maxZ));
 
             // this is the same as isPointInsideSphere
             let distance = vec3.create();
@@ -30,36 +30,37 @@ class BoxHitbox extends Hitbox {
         }
 
         if (otherHitbox.getType() == "BOX_HITBOX") {
-            if ((this.object.getPosition()[0] + this.minX <= otherHitbox.getPosition()[0] + otherHitbox.maxX && this.object.getPosition()[0] + this.maxX >= otherHitbox.getPosition()[0] + otherHitbox.minX) &&
-                (this.object.getPosition()[1] + this.minY <= otherHitbox.getPosition()[1] + otherHitbox.maxY && this.object.getPosition()[1] + this.maxY >= otherHitbox.getPosition()[1] + otherHitbox.minY) &&
-                (this.object.getPosition()[2] + this.minZ <= otherHitbox.getPosition()[2] + otherHitbox.maxZ && this.object.getPosition()[2] + this.maxZ >= otherHitbox.getPosition()[2] + otherHitbox.minZ))
+            if ((this.getPosition()[0] + this.minX <= otherHitbox.getPosition()[0] + otherHitbox.maxX && this.getPosition()[0] + this.maxX >= otherHitbox.getPosition()[0] + otherHitbox.minX) &&
+                (this.getPosition()[1] + this.minY <= otherHitbox.getPosition()[1] + otherHitbox.maxY && this.getPosition()[1] + this.maxY >= otherHitbox.getPosition()[1] + otherHitbox.minY) &&
+                (this.getPosition()[2] + this.minZ <= otherHitbox.getPosition()[2] + otherHitbox.maxZ && this.getPosition()[2] + this.maxZ >= otherHitbox.getPosition()[2] + otherHitbox.minZ)) {
                 return true;
+            }
             else
                 return undefined;
         }
     }
 
     getMinX() {
-        return this.object.getPosition()[0] + this.minX;
+        return this.getPosition()[0] + this.minX;
     }
 
     getMinY() {
-        return this.object.getPosition()[1] + this.minY;
+        return this.getPosition()[1] + this.minY;
     }
 
     getMinZ() {
-        return this.object.getPosition()[2] + this.minZ;
+        return this.getPosition()[2] + this.minZ;
     }
 
     getMaxX() {
-        return this.object.getPosition()[0] + this.maxX;
+        return this.getPosition()[0] + this.maxX;
     }
 
     getMaxY() {
-        return this.object.getPosition()[1] + this.maxY;
+        return this.getPosition()[1] + this.maxY;
     }
 
     getMaxZ() {
-        return this.object.getPosition()[2] + this.maxZ;
+        return this.getPosition()[2] + this.maxZ;
     }
 }
