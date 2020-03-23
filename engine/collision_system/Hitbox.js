@@ -1,20 +1,20 @@
 class Hitbox {
-    type;
-    object;
+  type;
+  object;
 
-    constructor(type) {
-        this.type = type;
-    }
+  constructor(type) {
+    this.type = type;
+  }
 
-    setObject(object) {
-        this.object = object;
-    }
+  setObject(object) {
+    this.object = object;
+  }
 
-    getType() {
-        return this.type;
-    }
+  getType() {
+    return this.type;
+  }
 
-    getPosition() {
-        return this.object.getWorldPosition();
-    }
+  getPosition() {
+    return this.object.getWorldPosition();
+  }
 }

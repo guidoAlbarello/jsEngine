@@ -1,157 +1,163 @@
 class Overview {
-    constructor() {
-        this.scene = new Scene();
-    }
+  constructor() {
+    this.scene = new Scene();
+    this.objective = new Map([
+      ['liver', 1],
+      ['brain', 1],
+      ['heart', 1],
+    ]);
+  }
 
-    build() {
-        
-        this.setupCameras();
-        this.setupPlayer();
-        //this.setupEnemy();
-        this.setupPlatform();
+  build() {
 
-        // Create support plane
-        let plane = gSurfaceCreator.makeCube(30, 0.2, 5, 1, 1);
+    this.setupCameras();
+    this.setupPlayer();
+    //this.setupEnemy();
+    this.setupPlatform();
+    let gameManager = new GameManager(this.scene, this.objective);
+    gameManager.init();
+    this.scene.addChild(gameManager);
+    // Create support plane
+    let plane = gSurfaceCreator.makeCube(30, 0.2, 5, 1, 1);
 
-        // Set skybox
-        let skybox = gSurfaceCreator.makeSphere(100, 70);
-        skybox.setMaterial(new SkyboxMaterial("skybox"));
-        this.scene.addChild(skybox);
+    // Set skybox
+    let skybox = gSurfaceCreator.makeSphere(100, 70);
+    skybox.setMaterial(new SkyboxMaterial('skybox'));
+    this.scene.addChild(skybox);
 
-        this.scene.addChild(plane);
-        return this.scene;
-    }
+    this.scene.addChild(plane);
+    return this.scene;
+  }
 
-    setupCameras() {
-        // Set up cameras
-        this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), "ortho");
-        this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
-        this.scene.useCamera("ortho");
-    }
+  setupCameras() {
+    // Set up cameras
+    this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), 'ortho');
+    this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), 'orbital');
+    this.scene.useCamera('ortho');
+  }
 
-    setupPlayer() {
-        // Create the player
-        let player = gEntityManager.instantiateObjectWithTag("player", Player);
-        player.translate([0,1 + player.getHeight() / 2,0]);
-        
-        // Create a player controller and set the player to it. 
-        // This way we can control the player with input.
-        let playerController = new PlayerController(player);
-        this.scene.setController(playerController);
+  setupPlayer() {
+    // Create the player
+    let player = gEntityManager.instantiateObjectWithTag('player', Player);
+    player.translate([0, 1 + player.getHeight() / 2, 0]);
 
-        // Add animation maanger for player
-        //player.setAnimationManager(this.createAnimations(player));
+    // Create a player controller and set the player to it.
+    // This way we can control the player with input.
+    let playerController = new PlayerController(player);
+    this.scene.setController(playerController);
+
+    // Add animation maanger for player
+    //player.setAnimationManager(this.createAnimations(player));
 
 
-        // Added player to the scene
-        this.scene.addChild(player);
-    }
+    // Added player to the scene
+    this.scene.addChild(player);
+  }
 
-    createAnimations(object) {
-        let animationManager = new AnimationManager();
+  createAnimations(object) {
+    let animationManager = new AnimationManager();
 
-        // Create animation's frames and add them to animation manager
-        let forwardAnimation = new Animation2d();
-        forwardAnimation.addFrame(0, 0, 0.2);
-        forwardAnimation.addFrame(1, 0, 0.2);
-        forwardAnimation.addFrame(2, 0, 0.2);
-        forwardAnimation.addFrame(3, 0, 0.2);
-        animationManager.addAnimation("forward", forwardAnimation);
+    // Create animation's frames and add them to animation manager
+    let forwardAnimation = new Animation2d();
+    forwardAnimation.addFrame(0, 0, 0.2);
+    forwardAnimation.addFrame(1, 0, 0.2);
+    forwardAnimation.addFrame(2, 0, 0.2);
+    forwardAnimation.addFrame(3, 0, 0.2);
+    animationManager.addAnimation('forward', forwardAnimation);
 
-        let backwardsAnimation = new Animation2d();
-        backwardsAnimation.addFrame(0, 3, 0.2);
-        backwardsAnimation.addFrame(1, 3, 0.2);
-        backwardsAnimation.addFrame(2, 3, 0.2);
-        backwardsAnimation.addFrame(3, 3, 0.2);
-        animationManager.addAnimation("backwards", backwardsAnimation);
+    let backwardsAnimation = new Animation2d();
+    backwardsAnimation.addFrame(0, 3, 0.2);
+    backwardsAnimation.addFrame(1, 3, 0.2);
+    backwardsAnimation.addFrame(2, 3, 0.2);
+    backwardsAnimation.addFrame(3, 3, 0.2);
+    animationManager.addAnimation('backwards', backwardsAnimation);
 
-        let leftAnimation = new Animation2d();
-        leftAnimation.addFrame(0, 1, 0.2);
-        leftAnimation.addFrame(1, 1, 0.2);
-        leftAnimation.addFrame(2, 1, 0.2);
-        leftAnimation.addFrame(3, 1, 0.2);
-        animationManager.addAnimation("left", leftAnimation);
+    let leftAnimation = new Animation2d();
+    leftAnimation.addFrame(0, 1, 0.2);
+    leftAnimation.addFrame(1, 1, 0.2);
+    leftAnimation.addFrame(2, 1, 0.2);
+    leftAnimation.addFrame(3, 1, 0.2);
+    animationManager.addAnimation('left', leftAnimation);
 
-        let rightAnimation = new Animation2d();
-        rightAnimation.addFrame(0, 2, 0.2);
-        rightAnimation.addFrame(1, 2, 0.2);
-        rightAnimation.addFrame(2, 2, 0.2);
-        rightAnimation.addFrame(3, 2, 0.2);
-        animationManager.addAnimation("right", rightAnimation);
+    let rightAnimation = new Animation2d();
+    rightAnimation.addFrame(0, 2, 0.2);
+    rightAnimation.addFrame(1, 2, 0.2);
+    rightAnimation.addFrame(2, 2, 0.2);
+    rightAnimation.addFrame(3, 2, 0.2);
+    animationManager.addAnimation('right', rightAnimation);
 
-        // Create transition conditions for the animations.
-        let conditionLeft = new AnimationTransitionCondition(object);
-         conditionLeft.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[0] <= 0;
-        });
-        let conditionRight= new AnimationTransitionCondition(object);
-        conditionRight.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[0] > 0;
-        });
-        let conditionForward= new AnimationTransitionCondition(object);
-        conditionForward.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[1] > 0;
-        });
-        let conditionBackwards = new AnimationTransitionCondition(object);
-        conditionBackwards.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[1] < 0;
-        });
-        animationManager.addTransitionToEveryAnimation("forward", conditionForward);
-        animationManager.addTransitionToEveryAnimation("backwards", conditionBackwards);
-        animationManager.addTransitionToEveryAnimation("left", conditionLeft);
-        animationManager.addTransitionToEveryAnimation("right", conditionRight);
+    // Create transition conditions for the animations.
+    let conditionLeft = new AnimationTransitionCondition(object);
+    conditionLeft.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[0] <= 0;
+    });
+    let conditionRight = new AnimationTransitionCondition(object);
+    conditionRight.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[0] > 0;
+    });
+    let conditionForward = new AnimationTransitionCondition(object);
+    conditionForward.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[1] > 0;
+    });
+    let conditionBackwards = new AnimationTransitionCondition(object);
+    conditionBackwards.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[1] < 0;
+    });
+    animationManager.addTransitionToEveryAnimation('forward', conditionForward);
+    animationManager.addTransitionToEveryAnimation('backwards', conditionBackwards);
+    animationManager.addTransitionToEveryAnimation('left', conditionLeft);
+    animationManager.addTransitionToEveryAnimation('right', conditionRight);
 
-        animationManager.setCurrentAnimation("backwards");
+    animationManager.setCurrentAnimation('backwards');
 
-        return animationManager;
-    }
+    return animationManager;
+  }
 
-    setupEnemy() {
-        let enemyFactory = new EnemyFactory();
-        
-        // Create entities to showcase
-        let zombie = enemyFactory.create(EnemyType.ZOMBIE);
-        let dragon = enemyFactory.create(EnemyType.DRAGON);
-        let wolf = enemyFactory.create(EnemyType.WOLF);
-        let guard = enemyFactory.create(EnemyType.GUARD);
-        
-        zombie.translate([-4, 1 + zombie.getHeight() / 2, 0])
-        dragon.translate([-8, 1 + dragon.getHeight() / 2, 0])
-        wolf.translate([-12, 1 + wolf.getHeight() / 2, 0])
-        guard.translate([-16, 1 + guard.getHeight() / 2, 0])
- 
-        this.scene.addChild(zombie);
-        this.scene.addChild(dragon);
-        this.scene.addChild(wolf);
-        this.scene.addChild(guard);
-        
-        // Create controller
-        let editorController = new EditorController(zombie);
-        this.scene.setController(editorController);
-    }
+  setupEnemy() {
+    let enemyFactory = new EnemyFactory();
 
-    setupPlatform(){
-        let platformFactory = new PlatformFactory();
+    // Create entities to showcase
+    let zombie = enemyFactory.create(EnemyType.ZOMBIE);
+    let dragon = enemyFactory.create(EnemyType.DRAGON);
+    let wolf = enemyFactory.create(EnemyType.WOLF);
+    let guard = enemyFactory.create(EnemyType.GUARD);
 
-        let platform = platformFactory.create(PlatformType.NORMAL);
-        let tomb = platformFactory.create(PlatformType.TOMB);
-        let bouncyPlatform = platformFactory.create(PlatformType.BOUNCY);
-        let destroyablePlatform = platformFactory.create(PlatformType.DESTROYABLE);
+    zombie.translate([-4, 1 + zombie.getHeight() / 2, 0]);
+    dragon.translate([-8, 1 + dragon.getHeight() / 2, 0]);
+    wolf.translate([-12, 1 + wolf.getHeight() / 2, 0]);
+    guard.translate([-16, 1 + guard.getHeight() / 2, 0]);
 
-        platform.translate([3, 1 + platform.getHeight() / 2, 0])
-        tomb.translate([6, 1 + tomb.getHeight() / 2, 0])
-        bouncyPlatform.translate([9, 1 + bouncyPlatform.getHeight() / 2, 0])
-        destroyablePlatform.translate([12, 1 + destroyablePlatform.getHeight() / 2, 0])
+    this.scene.addChild(zombie);
+    this.scene.addChild(dragon);
+    this.scene.addChild(wolf);
+    this.scene.addChild(guard);
 
-        this.scene.addChild(platform);
-        this.scene.addChild(tomb);
-        this.scene.addChild(bouncyPlatform);
-        this.scene.addChild(destroyablePlatform);
-    }
+    // Create controller
+    let editorController = new EditorController(zombie);
+    this.scene.setController(editorController);
+  }
+
+  setupPlatform() {
+    let platformFactory = new PlatformFactory();
+
+    let platform = platformFactory.create(PlatformType.NORMAL);
+    let tomb = platformFactory.create(PlatformType.TOMB);
+    let bouncyPlatform = platformFactory.create(PlatformType.BOUNCY);
+    let destroyablePlatform = platformFactory.create(PlatformType.DESTROYABLE);
+
+    platform.translate([3, 1 + platform.getHeight() / 2, 0]);
+    tomb.translate([6, 1 + tomb.getHeight() / 2, 0]);
+    bouncyPlatform.translate([9, 1 + bouncyPlatform.getHeight() / 2, 0]);
+    destroyablePlatform.translate([12, 1 + destroyablePlatform.getHeight() / 2, 0]);
+
+    this.scene.addChild(platform);
+    this.scene.addChild(tomb);
+    this.scene.addChild(bouncyPlatform);
+    this.scene.addChild(destroyablePlatform);
+  }
 
 }
 
-
 Overview.loadScene = () => {
-    return new Overview().build();
+  return new Overview().build();
 };

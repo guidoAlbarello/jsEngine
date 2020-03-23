@@ -8,6 +8,7 @@ class PhysicsComponent {
 	movility = [1, 1, 1];
 	dontFall = false;
 	isOnSurface = false;
+	MAX_VELOCITY = [20, 15];
 
 	constructor(object) {
 		this.object = object;
@@ -29,6 +30,14 @@ class PhysicsComponent {
 			this.checkMovementConstraints("x_axis");
 			this.checkMovementConstraints("y_axis");
 			//this.checkMovementConstraints("z_axis");
+
+			// Clamp velocity to max values
+			if (Math.abs(this.velocity[0]) > this.MAX_VELOCITY[0]){
+				this.velocity[0] = Math.sign(this.velocity[0]) * this.MAX_VELOCITY[0];
+			}
+			if (Math.abs(this.velocity[1]) > this.MAX_VELOCITY[1]){
+				this.velocity[1] = Math.sign(this.velocity[1]) * this.MAX_VELOCITY[1];
+			}
 
 			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
 		}
