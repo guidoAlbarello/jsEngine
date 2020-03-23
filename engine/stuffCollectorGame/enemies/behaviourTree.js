@@ -50,6 +50,24 @@ class CompositeNode {
 
 }
 
+class Selector extends CompositeNode {
+  constructor(decorators) {
+    super();
+  }
+
+  tick(blackboard) {
+    for (var tag of this.decorators.keys()) {
+
+      let ret = this.decorators.get(tag).tick(blackboard);
+      if (ret !== returnStatement.SUCCESS) {
+        return ret;
+      }
+    }
+
+    return returnStatement.FAILED;
+  }
+
+}
 class ActionNode {
   constructor(action) {
     this.action = action;
