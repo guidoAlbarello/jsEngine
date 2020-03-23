@@ -2,138 +2,145 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <title>WebGL Framework</title>
-    <style>
-        body {
-            background-color: grey;
-        }
+  <meta charset="utf-8" />
+  <title>WebGL Framework</title>
+  <style>
+    body {
+      background-color: grey;
+    }
 
-        canvas {
-            background-color: white;
-        }
+    canvas {
+      background-color: white;
+    }
 
-        textarea {
-            background-color: black;
-            foreground-color: white;
-        }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="thirdParty/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="thirdParty/glMatrix/dist/gl-matrix-min.js"></script>
-    <script type="text/javascript" src="thirdParty/dat.gui.min.js"></script>
+    textarea {
+      background-color: black;
+      foreground-color: white;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="thirdParty/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript" src="thirdParty/glMatrix/dist/gl-matrix-min.js"></script>
+  <script type="text/javascript" src="thirdParty/dat.gui.min.js"></script>
 
-    <script type="text/javascript" src="InputHandler.js"></script>
-    <script type="text/javascript" src="Renderer.js"></script>
-    <script type="text/javascript" src="ShaderManager.js"></script>
-    <script type="text/javascript" src="ModelMaker.js"></script>
-    <script type="text/javascript" src="MaterialManager.js"></script>
-    <script type="text/javascript" src="AssetManager.js"></script>
-    <script type="text/javascript" src="TextureManager.js"></script>
-    <script type="text/javascript" src="EntityManager.js"></script>
-    <script type="text/javascript" src="QuerySystem.js"></script>
+  <script type="text/javascript" src="InputHandler.js"></script>
+  <script type="text/javascript" src="Renderer.js"></script>
+  <script type="text/javascript" src="ShaderManager.js"></script>
+  <script type="text/javascript" src="ModelMaker.js"></script>
+  <script type="text/javascript" src="MaterialManager.js"></script>
+  <script type="text/javascript" src="AssetManager.js"></script>
+  <script type="text/javascript" src="TextureManager.js"></script>
+  <script type="text/javascript" src="EntityManager.js"></script>
+  <script type="text/javascript" src="QuerySystem.js"></script>
 
-    <script type="text/javascript" src="Object3d.js"></script>
-    <script type="text/javascript" src="curves/Curve.js"></script>
-    <script type="text/javascript" src="curves/CubicBezierCurve.js"></script>
-    <script type="text/javascript" src="curves/BezierCurve.js"></script>
-    <script type="text/javascript" src="curves/CubicBSplineCurve.js"></script>
-    <script type="text/javascript" src="curves/BSplineCurve.js"></script>
+  <script type="text/javascript" src="Object3d.js"></script>
+  <script type="text/javascript" src="curves/Curve.js"></script>
+  <script type="text/javascript" src="curves/CubicBezierCurve.js"></script>
+  <script type="text/javascript" src="curves/BezierCurve.js"></script>
+  <script type="text/javascript" src="curves/CubicBSplineCurve.js"></script>
+  <script type="text/javascript" src="curves/BSplineCurve.js"></script>
 
-    <script type="text/javascript" src="SurfaceCreator.js"></script>
-    <script type="text/javascript" src="DeveloperTools.js"></script>
-    <script type="text/javascript" src="materials/Material.js"></script>
+  <script type="text/javascript" src="SurfaceCreator.js"></script>
+  <script type="text/javascript" src="DeveloperTools.js"></script>
+  <script type="text/javascript" src="materials/Material.js"></script>
 
-    <script type="text/javascript" src="materials/DefaultMaterial.js"></script>
-    <script type="text/javascript" src="materials/BlinnPhongMaterial.js"></script>
-    <script type="text/javascript" src="materials/PBRMaterial.js"></script>
-    <script type="text/javascript" src="materials/SkyboxMaterial.js"></script>
+  <script type="text/javascript" src="materials/DefaultMaterial.js"></script>
+  <script type="text/javascript" src="materials/BlinnPhongMaterial.js"></script>
+  <script type="text/javascript" src="materials/PBRMaterial.js"></script>
+  <script type="text/javascript" src="materials/SkyboxMaterial.js"></script>
 
-    <script type="text/javascript" src="collision_system/CollisionDetection.js"></script>
-    <script type="text/javascript" src="collision_system/Collider.js"></script>
-    <script type="text/javascript" src="collision_system/PhysicsCollider.js"></script>
-    <script type="text/javascript" src="collision_system/GeometryVolume.js"></script>
-    <script type="text/javascript" src="collision_system/Hitbox.js"></script>
-    <script type="text/javascript" src="collision_system/BoxHitbox.js"></script>
-    <script type="text/javascript" src="collision_system/SphereHitbox.js"></script>
+  <script type="text/javascript" src="collision_system/CollisionDetection.js"></script>
+  <script type="text/javascript" src="collision_system/Collider.js"></script>
+  <script type="text/javascript" src="collision_system/PhysicsCollider.js"></script>
+  <script type="text/javascript" src="collision_system/GeometryVolume.js"></script>
+  <script type="text/javascript" src="collision_system/Hitbox.js"></script>
+  <script type="text/javascript" src="collision_system/BoxHitbox.js"></script>
+  <script type="text/javascript" src="collision_system/SphereHitbox.js"></script>
 
-    <script type="text/javascript" src="stuffCollectorGame/PlayerController.js"></script>
-    <script type="text/javascript" src="EditorController.js"></script>
-    <script type="text/javascript" src="Behaviour.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/PlayerController.js"></script>
+  <script type="text/javascript" src="EditorController.js"></script>
+  <script type="text/javascript" src="Behaviour.js"></script>
 
-    <script type="text/javascript" src="GraphicApplication.js"></script>
-    <script type="text/javascript" src="Globals.js"></script>
-    <script type="text/javascript" src="Animation.js"></script>
+  <script type="text/javascript" src="GraphicApplication.js"></script>
+  <script type="text/javascript" src="Globals.js"></script>
+  <script type="text/javascript" src="Animation.js"></script>
 
-    <script type="text/javascript" src="BlinnPhongLight.js"></script>
-    <script type="text/javascript" src="DirectionalLight.js"></script>
-    <script type="text/javascript" src="PointLight.js"></script>
+  <script type="text/javascript" src="BlinnPhongLight.js"></script>
+  <script type="text/javascript" src="DirectionalLight.js"></script>
+  <script type="text/javascript" src="PointLight.js"></script>
 
-    <script type="text/javascript" src="Mesh.js"></script>
-    <script type="text/javascript" src="RenderData.js"></script>
-    <script type="text/javascript" src="collision_system/PhysicsComponent.js"></script>
+  <script type="text/javascript" src="Mesh.js"></script>
+  <script type="text/javascript" src="RenderData.js"></script>
+  <script type="text/javascript" src="collision_system/PhysicsComponent.js"></script>
 
-    <script type="text/javascript" src="cameras/PerspectiveCamera.js"></script>
-    <script type="text/javascript" src="cameras/OrbitalCamera.js"></script>
-    <script type="text/javascript" src="cameras/FirstPersonCamera.js"></script>
-    <script type="text/javascript" src="cameras/OrtographicCamera.js"></script>
+  <script type="text/javascript" src="cameras/PerspectiveCamera.js"></script>
+  <script type="text/javascript" src="cameras/OrbitalCamera.js"></script>
+  <script type="text/javascript" src="cameras/FirstPersonCamera.js"></script>
+  <script type="text/javascript" src="cameras/OrtographicCamera.js"></script>
 
-    <script type="text/javascript" src="2dEngine/AnimationTransitionCondition.js"></script>
-    <script type="text/javascript" src="2dEngine/AnimationManager.js"></script>
-    <script type="text/javascript" src="2dEngine/Animation2d.js"></script>
-    <script type="text/javascript" src="2dEngine/BoxHitbox2d.js"></script>
-    <script type="text/javascript" src="2dEngine/CircularHitbox.js"></script>
-    <script type="text/javascript" src="2dEngine/DefaultSpriteMaterial.js"></script>
-    <script type="text/javascript" src="2dEngine/PhysicsComponent2d.js"></script>
-    <script type="text/javascript" src="2dEngine/Sprite.js"></script>
-    <script type="text/javascript" src="2dEngine/Tile.js"></script>
-    <script type="text/javascript" src="2dEngine/TileMap.js"></script>
+  <script type="text/javascript" src="2dEngine/AnimationTransitionCondition.js"></script>
+  <script type="text/javascript" src="2dEngine/AnimationManager.js"></script>
+  <script type="text/javascript" src="2dEngine/Animation2d.js"></script>
+  <script type="text/javascript" src="2dEngine/BoxHitbox2d.js"></script>
+  <script type="text/javascript" src="2dEngine/CircularHitbox.js"></script>
+  <script type="text/javascript" src="2dEngine/DefaultSpriteMaterial.js"></script>
+  <script type="text/javascript" src="2dEngine/PhysicsComponent2d.js"></script>
+  <script type="text/javascript" src="2dEngine/Sprite.js"></script>
+  <script type="text/javascript" src="2dEngine/Tile.js"></script>
+  <script type="text/javascript" src="2dEngine/TileMap.js"></script>
 
-    <script type="text/javascript" src="stuffCollectorGame/Player.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/enemies/Enemy.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/enemies/Dragon.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/enemies/Guard.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/enemies/Wolf.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/enemies/Zombie.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/platforms/Platform.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/platforms/BouncyPlatform.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/platforms/DestroyablePlatform.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/platforms/Tomb.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/PlatformFactory.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/EnemyFactory.js"></script>
-    <script type="text/javascript" src="stuffCollectorGame/GameManager.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/Player.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/behaviourTree.js"></script>
+  <script type="text/javascript" src="tests/behaviourTreeTest.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/Enemy.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/Dragon.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/Guard.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/Wolf.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/enemies/Zombie.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/platforms/Platform.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/platforms/BouncyPlatform.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/platforms/DestroyablePlatform.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/platforms/Tomb.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/PlatformFactory.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/EnemyFactory.js"></script>
+  <script type="text/javascript" src="stuffCollectorGame/GameManager.js"></script>
 
-    <script type="text/javascript" src="pcg/LSystem.js"></script>
-    <script type="text/javascript" src="pcg/FractalPlantInterpreter.js"></script>
+  <script type="text/javascript" src="pcg/LSystem.js"></script>
+  <script type="text/javascript" src="pcg/FractalPlantInterpreter.js"></script>
 
-    <script type="text/javascript" src="scenes/LoadingScene.js"></script>
-    <script type="text/javascript" src="scenes/TestScene.js"></script>
-    <script type="text/javascript" src="scenes/FinalScene.js"></script>
-    <script type="text/javascript" src="scenes/LevelScene.js"></script>
-    <script type="text/javascript" src="scenes/ExampleScene2d.js"></script>
-    <script type="text/javascript" src="scenes/ExampleScene2dWithQuerySystem.js"></script>
-    <script type="text/javascript" src="scenes/LSystemScene.js"></script>
-    <script type="text/javascript" src="scenes/Editor.js"></script>
-    <script type="text/javascript" src="scenes/stuffCollectorGame/ForestLevel.js"></script>
-    <script type="text/javascript" src="scenes/stuffCollectorGame/GraveyardLevel.js"></script>
-    <script type="text/javascript" src="scenes/stuffCollectorGame/Overview.js"></script>
-    <script type="text/javascript" src="Scene.js"></script>
+  <script type="text/javascript" src="scenes/LoadingScene.js"></script>
+  <script type="text/javascript" src="scenes/TestScene.js"></script>
+  <script type="text/javascript" src="scenes/FinalScene.js"></script>
+  <script type="text/javascript" src="scenes/LevelScene.js"></script>
+  <script type="text/javascript" src="scenes/ExampleScene2d.js"></script>
+  <script type="text/javascript" src="scenes/ExampleScene2dWithQuerySystem.js"></script>
+  <script type="text/javascript" src="scenes/LSystemScene.js"></script>
+  <script type="text/javascript" src="scenes/Editor.js"></script>
+  <script type="text/javascript" src="scenes/stuffCollectorGame/ForestLevel.js"></script>
+  <script type="text/javascript" src="scenes/stuffCollectorGame/GraveyardLevel.js"></script>
+  <script type="text/javascript" src="scenes/stuffCollectorGame/Overview.js"></script>
+  <script type="text/javascript" src="Scene.js"></script>
 </head>
 
 <body>
-    <script type="text/javascript">
-        $(() => {
-            let canvas = $("#my-canvas")[0];
-            var app = new GraphicApplication("");
-            app.init(canvas);
-        });
-
-    </script>
-    <center>
-        <canvas id="my-canvas" width="1355" height="650">
-            Your browser does not support the HTML5 canvas element.
-            </scanvas>
-    </center>
+  <!-- <script type="text/javascript">
+    $(() => {
+      let canvas = $("#my-canvas")[0];
+      var app = new GraphicApplication("");
+      app.init(canvas);
+    });
+  </script> -->
+  <script type="text/javascript">
+    $(() => {
+      testActionNodes();
+      testDecoratorNodes();
+    });
+  </script>
+  <center>
+    <canvas id="my-canvas" width="1355" height="650">
+      Your browser does not support the HTML5 canvas element.
+      </scanvas>
+  </center>
 </body>
 
 </html>
