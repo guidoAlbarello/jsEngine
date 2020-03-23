@@ -84,8 +84,8 @@ class TextureManager {
 		this.gl.texImage2D(
 			this.gl.TEXTURE_2D,
 			0,
-			this.gl.RGB,
-			this.gl.RGB,
+			this.gl.RGBA,
+			this.gl.RGBA,
 			this.gl.UNSIGNED_BYTE,
 			image
 		);
