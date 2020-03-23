@@ -33,6 +33,16 @@ class Editor {
         plane.physicsComponent.setMovility([0, 0, 0]);
         this.scene.addChild(plane);
 
+        let plane2 = gSurfaceCreator.makeCube(5, 0.2, 5, 1, 1);
+        plane2.translate([-3, -1, 0]);
+        plane2.setHitbox(new BoxHitbox(-2.5, -0.1, -2.5, 2.5, 0.1, 2.5));
+        plane2.setPhysicsComponent(new PhysicsComponent());
+        plane2.addPhysicsCollider();
+        plane2.physicsComponent.setIsKinematic(true);
+        plane2.physicsComponent.setMass(1000);
+        plane2.physicsComponent.setMovility([0, 0, 0]);
+        this.scene.addChild(plane2);
+
         return this.scene;
     }
 }
