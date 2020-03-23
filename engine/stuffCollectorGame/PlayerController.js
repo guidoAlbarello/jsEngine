@@ -5,7 +5,10 @@ class PlayerController {
         this.velocity = [0,0];
         this.walkSpeed = 0.8;
         this.walkSpeedMax = 4;
+
         this.jumpSpeed = 0.5;
+        this.jumping = false;
+        this.maxHeightJump=this.jumpSpeed*12;
     }
 
     setPlayer(player) {
@@ -19,15 +22,21 @@ class PlayerController {
     
     update() {
         let velocity = [0, 0];
+        let velocityX = 0;
+        let actualVelocity = this.player.getVelocity();
+        if (actualVelocity[1] == 0) this.jumping = false;
 
-        if (gInputHandler.getInput("jump")) this.player.jump(this.jumpSpeed);
-        if (gInputHandler.getInput("left")) velocity[0] = this.walk(-1);
-        if (gInputHandler.getInput("right")) velocity[0] = this.walk(1);
-        if (velocity[0]==0) velocity[0] = this.walk(0);
+        if (gInputHandler.getInput("jump") && !this.jumping){
+            if(actualVelocity[1]<this.maxHeightJump) this.player.jump(this.jumpSpeed);
+            else this.jumping = true;
+        } else this.jumping=true;
+        if (gInputHandler.getInput("left")) velocityX = this.walk(-1);
+        if (gInputHandler.getInput("right")) velocityX = this.walk(1);
+        if (velocityX==0) velocityX = this.walk(0);
         
-        this.velocity = velocity;
+        this.velocity = actualVelocity;
         
-        this.player.walk(velocity[0]);
+        this.player.walk(velocityX);
     }
 
     walk(direction){
