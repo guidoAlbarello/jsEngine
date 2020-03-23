@@ -12,7 +12,7 @@ class Player extends Sprite {
     }
 
     jump(height){
-    	this.physicsComponent.addImpulse([this.physicsComponent.gravity[0] * height, this.physicsComponent.gravity[1] * height]);
+    	this.physicsComponent.addImpulse([-this.physicsComponent.gravity[0] * height, -this.physicsComponent.gravity[1] * height]);
     }
 
     getVelocity(){

@@ -3,12 +3,12 @@ class PlayerController {
         this.player = player;
 
         this.velocity = [0,0];
-        this.walkSpeed = 0.8;
-        this.walkSpeedMax = 4;
+        this.walkSpeed = 10;
+        this.walkSpeedMax = 15;
 
-        this.jumpSpeed = 0.5;
+        this.jumpSpeed = 2;
         this.jumping = false;
-        this.maxHeightJump=this.jumpSpeed*12;
+        this.maxHeightJump=this.jumpSpeed*7;
     }
 
     setPlayer(player) {
@@ -21,7 +21,6 @@ class PlayerController {
     }
     
     update() {
-        let velocity = [0, 0];
         let velocityX = 0;
         let actualVelocity = this.player.getVelocity();
         if (actualVelocity[1] == 0) this.jumping = false;
@@ -36,13 +35,13 @@ class PlayerController {
         
         this.velocity = actualVelocity;
         
-        this.player.walk(velocityX);
+        this.player.walk((this.jumping ? 1 : 0.6) * velocityX);
     }
 
     walk(direction){
         if(this.velocity[0] != 0 && (direction==0 || Math.sign(direction)!= Math.sign(this.velocity[0]))){
             //decelerate
-            let decelerate = this.velocity[0]-Math.sign(this.velocity[0])*this.walkSpeedMax * gDeltaTime;
+            let decelerate = this.velocity[0]-Math.sign(this.velocity[0])*0.05*this.walkSpeedMax;
             if(Math.sign(decelerate)!=Math.sign(this.velocity[0])){
                 return 0;
             }else{
@@ -51,7 +50,7 @@ class PlayerController {
         }
         
         //accelerate
-        return direction* Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction))+ this.walkSpeed * gDeltaTime, this.walkSpeedMax);
+        return direction* Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction))+ (this.jumping ? 0.02 : 1) *this.walkSpeed, this.walkSpeedMax);
     }
 
 }

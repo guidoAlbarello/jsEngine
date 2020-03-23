@@ -2,8 +2,8 @@ class PhysicsComponent {
 	velocity;
 	object;
 	gravityInteraction = 0;
-	gravity = [0, 1];
-	GRAVITY_VALUE = 9.8
+	gravity = [0, -1];
+	GRAVITY_VALUE = 2.2 * 9.8
 	isKinematic = false;
 	movility = [1, 1, 1];
 	dontFall = false;
@@ -19,8 +19,8 @@ class PhysicsComponent {
 	}
 
 	update() {
-		this.velocity[0] -= gDeltaTime * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
-		this.velocity[1] -= gDeltaTime * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
+		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
+		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
 
 		vec3.mul(this.velocity, this.velocity, this.movility);
 		this.move();
@@ -45,7 +45,7 @@ class PhysicsComponent {
 	checkMovementConstraints(axis) {
 		let i = axis == "x_axis" ? 0 : 1;
 		if (this.gravity[i] != 0) {
-			if (this.dontFall || this.velocity[i] * this.surfaceDirection[i] > 0)
+			if (this.dontFall || (this.isFalling && this.velocity[i] * this.surfaceDirection[i] > 0))
 				this.velocity[i] = 0;
 			if ((this.velocity[i] * this.gravity[i] > 0))
 				this.isFalling = true;
