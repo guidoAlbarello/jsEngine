@@ -15,12 +15,15 @@ class PhysicsComponent {
 		this.velocity = [0, 0, 0];
 		this.mass = 1;
 		this.gravityMultiplier = this.gravityInteraction;
+		this.impulse = [0,0];
 	}
 
 	update() {
-		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
-		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
+		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier + this.impulse[0];
+		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier + this.impulse[1];
 
+		this.impulse = [0,0];
+		
 		vec3.mul(this.velocity, this.velocity, this.movility);
 		this.move();
 	}
