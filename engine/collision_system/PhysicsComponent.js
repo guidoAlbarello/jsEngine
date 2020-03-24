@@ -9,6 +9,7 @@ class PhysicsComponent {
 	dontFall = false;
 	isOnSurface = false;
 	MAX_VELOCITY = [20, 15];
+	impulse = [0,0];
 
 	constructor(object) {
 		this.object = object;

@@ -1,11 +1,14 @@
 class Enemy extends Sprite {
     constructor() {
         super();
-        gCollisionDetection.registerCollidable(this, "walker");
+
+        //gCollisionDetection.registerCollidable(this, "walker");
         gCollisionDetection.registerCollidable(this, "enemy");
+
         this.setPhysicsComponent(new PhysicsComponent2d());
         this.hp = new HealthPoints(gConfiguration.enemyHP);
     	this.hp.translate([0, this.getHeight()/2+0.3*this.getHeight(), 0]);
+    	this.addChild(this.hp);
     	this.dead = false;
 
 
