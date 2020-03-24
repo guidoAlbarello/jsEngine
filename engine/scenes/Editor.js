@@ -49,7 +49,7 @@ class Editor {
 
         // Create entity to edit
         let entity = gEntityManager.instantiateObjectWithTag("player", Player);
-        //entity.translate([4, 3, 0]);
+        entity.translate([0, 3, 0]);
         
         let playerController = new PlayerController(entity);
         this.scene.setController(playerController);
