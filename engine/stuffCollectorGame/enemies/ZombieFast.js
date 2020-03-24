@@ -18,7 +18,7 @@ class ZombieFast extends Zombie {
         assaultBehaviour.setUpdate(() => {
             if(assaultBehaviour.object.isDead()){
                 if(this.durationDeath <= 0) this.remove();
-                this.durationDeath-=1*gDeltaTime;
+                this.durationDeath-=gDeltaTime;
             }
 
             let player = gQuerySystem.getPlayer();

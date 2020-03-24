@@ -14,20 +14,6 @@ class Player extends Sprite {
     gCollisionDetection.registerCollidable(this, 'walker');
     gCollisionDetection.registerCollidable(this, 'player');
     this.dead = false;
-
-
-    let collider = new Collider("enemy");
-    collider.setOnCollisionStay((otherObject) => {
-      otherObject.takeDamage(gConfiguration.playerDamage);
-      });
-      collider.setOnCollisionEnter((otherObject) => {
-        let otherObjectPosition = otherObject.getWorldPosition();
-        let myPosition = this.getWorldPosition();
-        if(otherObjectPosition[0]<myPosition[0]) otherObject.physicsComponent.addImpulse([-otherObject.getWidth()*10,0]);
-        else otherObject.physicsComponent.addImpulse([otherObject.getWidth()*10,0]);
-        otherObject.takeDamage(gConfiguration.playerDamage);
-      });
-    this.addCollider(collider);
   }
 
   walk(velocityX) {

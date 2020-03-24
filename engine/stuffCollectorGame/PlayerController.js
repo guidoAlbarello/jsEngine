@@ -9,6 +9,9 @@ class PlayerController {
         this.jumpSpeed = 3;
         this.jumping = false;
         this.maxHeightJump = this.jumpSpeed * 4.5;
+
+        this.timeShoot = 0;
+        this.direction = [0,0];
     }
 
     setPlayer(player) {
@@ -22,8 +25,24 @@ class PlayerController {
 
     update() {
         if(this.player.isDead()) this.player.remove();
+
         let velocityX = 0;
         let actualVelocity = this.player.getVelocity();
+
+        if (gInputHandler.getInput("shoot")){
+            if (this.timeShoot > 0){
+                this.timeShoot -= gDeltaTime;
+                return;
+            }
+            this.timeShoot = gDeltaTime*10;
+            
+            let shot = new Shot([this.direction[0],this.direction[1]]);
+            shot.translate(this.player.getWorldPosition());
+            this.player.addOrphanChild(shot);
+            //this.player.addChild(shot);
+        }
+
+        
         if (actualVelocity[1] == 0) this.jumping = false;
 
         if (gInputHandler.getInput("jump") && !this.jumping) {
@@ -39,6 +58,8 @@ class PlayerController {
         this.velocity = actualVelocity;
 
         this.player.walk(velocityX);
+
+        this.calculateDirection();
     }
 
     walk(direction) {
@@ -60,4 +81,9 @@ class PlayerController {
         return direction * Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction)) + (this.jumping ? 0.02 : 1) * this.walkSpeed, this.walkSpeedMax);
     }
 
+
+    calculateDirection(){
+        if (this.velocity[0]>0) this.direction[0]=1;
+        if (this.velocity[0]<0) this.direction[0]=-1;
+    }
 }
