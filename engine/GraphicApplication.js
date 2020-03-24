@@ -16,40 +16,41 @@ class GraphicApplication {
     gDeltaTime = (timeStamp - this.previousTimeStamp) / 1000;
     this.previousTimeStamp = timeStamp;
 
-    this.handleInput();
+    if (!checkIfFrameIsFreezed()) {
+      this.handleInput();
 
-    let activeCamera = this.scene.getCamera();
-    activeCamera.updateController();
+      let activeCamera = this.scene.getCamera();
+      activeCamera.updateController();
 
-    this.scene.update(IDENTITY);
+      this.scene.update(IDENTITY);
 
-    gCollisionDetection.update();
+      gCollisionDetection.update();
 
-    // Refactor so that the if is not checked every cycle.?
-    // Also be ware of recursive call. For now is fine.
-    this.scene.drawScene();
-    if (this.modes[this.currentMode] == this.DEVELOPER_MODE) {
-      if (!this.developerTools.commands.hideAxis) {
-        this.drawAxis(
-          this.scene.nodes,
-          this.scene.worldModelMatrix,
-          activeCamera.id
-        );
+      // Refactor so that the if is not checked every cycle.?
+      // Also be ware of recursive call. For now is fine.
+      this.scene.drawScene();
+      if (this.modes[this.currentMode] == this.DEVELOPER_MODE) {
+        if (!this.developerTools.commands.hideAxis) {
+          this.drawAxis(
+            this.scene.nodes,
+            this.scene.worldModelMatrix,
+            activeCamera.id
+          );
+        }
+
+        if (!this.developerTools.commands.hideHorizontalGrid) {
+          this.developerTools.grid.draw();
+        }
+
+        if (!this.developerTools.commands.hideVerticalGrid) {
+          this.developerTools.verticalGrid.draw();
+        }
       }
 
-      if (!this.developerTools.commands.hideHorizontalGrid) {
-        this.developerTools.grid.draw();
-      }
-
-      if (!this.developerTools.commands.hideVerticalGrid) {
-        this.developerTools.verticalGrid.draw();
-      }
+      gRenderer.setProjectionMatrix(activeCamera.projectionMatrix);
+      gRenderer.setViewMatrix(activeCamera.viewMatrix);
+      gRenderer.drawScene();
     }
-
-    gRenderer.setProjectionMatrix(activeCamera.projectionMatrix);
-    gRenderer.setViewMatrix(activeCamera.viewMatrix);
-    gRenderer.drawScene();
-
     requestAnimationFrame(step => this.update(step));
   }
 
@@ -101,15 +102,15 @@ class GraphicApplication {
 
     if (gInputHandler.getInput('hide_axis'))
       this.developerTools.commands.hideAxis = !this.developerTools
-      .commands.hideAxis;
+        .commands.hideAxis;
 
     if (gInputHandler.getInput('hide_vertical_grid'))
       this.developerTools.commands.hideVerticalGrid = !this.developerTools
-      .commands.hideVerticalGrid;
+        .commands.hideVerticalGrid;
 
     if (gInputHandler.getInput('hide_horizontal_grid'))
       this.developerTools.commands.hideHorizontalGrid = !this.developerTools
-      .commands.hideHorizontalGrid;
+        .commands.hideHorizontalGrid;
     this.scene.updateController();
   }
 

@@ -62,4 +62,24 @@ var gConfiguration = {
 }
 
 var gDeltaTime = 0.0;
+var gDeltaTimeMultiplier = 1.0;
+var skipFrame = false;
+
+const freezeFrame = () => {
+	skipFrame = true;
+};
+
+const freezeFrameWithBackoff = (backoffSpeed) => {
+	 freezeFrame();
+	 gDeltaTimeMultiplier = backoffSpeed || 0.1;
+};
+
+const checkIfFrameIsFreezed = () => {
+	let isFreezingActive = skipFrame;
+	skipFrame = false;
+	gDeltaTimeMultiplier = Math.min(gDeltaTimeMultiplier + gDeltaTimeMultiplier, 1);
+	gDeltaTime *= gDeltaTimeMultiplier;
+	return isFreezingActive;
+};
+
 const IDENTITY = mat4.identity(mat4.create());
