@@ -130,16 +130,11 @@ class Object3d {
 	addChild(node) {
 		node.parent = this;
 		this.nodes.push(node);
-		console.log(this);
 	}
 
 	addOrphanChild(node) {
-		if(this.parent){
-			this.parent.addOrphanChild(node);
-		}else{
-			this.addChild(node);
-		}
-		
+		if(this.parent)	this.parent.addOrphanChild(node);
+		else this.addChild(node);
 	}
 
 	addAnimation(animation) {

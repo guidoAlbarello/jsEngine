@@ -1,19 +1,18 @@
-class Shot extends Sprite {
+class Sword extends Sprite {
   constructor(direction=[1,0], speed=5) {
-    super(0.33, 0.25, 'red', 1, 1);
+    super(0.75, 0.25, 'violet', 1, 1);
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.addBehaviour(this.createBehaviour(this));
     this.direction = direction;
-    this.duration = 1;
-    this.speed = speed;
+    this.duration = 2*gDeltaTime;
 
 
     let collider = new Collider("enemy");
     collider.setOnCollisionStay((otherObject) => {
-      this.remove();
+      otherObject.takeDamage(gConfiguration.swordDamage);
     });
     collider.setOnCollisionEnter((otherObject) => {
-      otherObject.takeDamage(gConfiguration.shotDamage);
+      otherObject.takeDamage(gConfiguration.swordDamage);
     });
     this.addCollider(collider);
   }
@@ -23,12 +22,9 @@ class Shot extends Sprite {
 
     behaviour.setUpdate(() => {
         if(behaviour.object.duration<=0) behaviour.object.remove();
-        
-        behaviour.object.physicsComponent.setVelocity([behaviour.object.direction[0]*behaviour.object.speed, behaviour.object.direction[1]*behaviour.object.speed]);
         behaviour.object.duration-=gDeltaTime;
     });
 
     return behaviour;
   }
-
 }

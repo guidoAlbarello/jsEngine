@@ -57,7 +57,8 @@ var gConfiguration = {
 	"enemyHP": 10,
 	"zombieHP":20,
 	"enemyDamage":1,
-	"shotDamage":2
+	"shotDamage":2,
+	"swordDamage":3
 }
 
 var gDeltaTime = 0.0;

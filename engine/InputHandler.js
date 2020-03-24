@@ -86,6 +86,8 @@ class InputHandler {
 				return this.getKey(81); //Q
 				//return this.isMouseDown;
 			//return this.getTapKey(90);
+			case "sword":
+				return this.getKey(69); //E
 			default:
 				return false;
 		}

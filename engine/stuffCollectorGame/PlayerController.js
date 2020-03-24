@@ -11,7 +11,7 @@ class PlayerController {
         this.maxHeightJump = this.jumpSpeed * 4.5;
 
         this.timeShoot = 0;
-        this.direction = [0,0];
+        this.direction = [1,0];
     }
 
     setPlayer(player) {
@@ -40,6 +40,13 @@ class PlayerController {
             shot.translate(this.player.getWorldPosition());
             this.player.addOrphanChild(shot);
             //this.player.addChild(shot);
+        }
+
+        if (gInputHandler.getInput("sword")){
+            let sword = new Sword([this.direction[0],this.direction[1]],this.walkSpeedMax+2);
+            sword.translate([this.direction[0]*(this.player.getWidth()/2+0.3*sword.getWidth()),0,0]);
+            //+
+            this.player.addChild(sword);
         }
 
         

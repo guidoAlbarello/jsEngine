@@ -6,6 +6,7 @@ class ZombieFast extends Zombie {
         this.setAnimationManager(this.createAnimations(this));
         this.addBehaviour(this.createAssaultBehaviour(this));
         gCollisionDetection.registerCollidable(this, "zombie");
+        this.durationDeath = 1;
     }
 
     createAssaultBehaviour(object) {
