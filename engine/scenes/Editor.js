@@ -50,7 +50,13 @@ class Editor {
         // Create entity to edit
         let entity = gEntityManager.instantiateObjectWithTag("player", Player);
         entity.translate([0, 3, 0]);
+
+        let zombie = gEntityManager.instantiateObjectWithTag("zombie", Zombie);
+        zombie.translate([10, 1, 0]);
         
+        let zombieF = gEntityManager.instantiateObjectWithTag("zombieF", ZombieFast);
+        zombieF.translate([-11, 1, 0]);
+
         let playerController = new PlayerController(entity);
         this.scene.setController(playerController);
 
@@ -59,6 +65,8 @@ class Editor {
         //this.scene.setController(editorController);
         entity.translate([0, entity.getHeight()/2, 0]);
         this.scene.addChild(entity);
+        this.scene.addChild(zombie);
+        this.scene.addChild(zombieF);
 
         let plane2 = gSurfaceCreator.makeCube(55, 0.2, 5, 1, 1);
         plane2.setHitbox(new BoxHitbox(-22.5, -0.1, -2.5, 22.5, 0.1, 2.5));
