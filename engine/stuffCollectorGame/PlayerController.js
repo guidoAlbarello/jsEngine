@@ -52,10 +52,12 @@ class PlayerController {
         
         if (actualVelocity[1] == 0) this.jumping = false;
 
-        if (gInputHandler.getInput("jump") && !this.jumping) {
-            if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
+        
+        if (gInputHandler.getInput("jump") && !this.jumping){
+            if(actualVelocity[1]<this.maxHeightJump) this.player.jump(this.jumpSpeed);
             else this.jumping = true;
-        }
+        } else this.jumping=true;
+        
 
         if (gInputHandler.getInput("left")) velocityX = this.walk(-1);
         if (gInputHandler.getInput("right")) velocityX = this.walk(1);
