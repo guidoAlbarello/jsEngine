@@ -45,7 +45,7 @@ class GeometryVolume extends Object3d {
             }
 
             if (!((otherObject.getWorldPosition()[0] >= this.getWorldPosition()[0] - width / 2) && (otherObject.getWorldPosition()[0] <= this.getWorldPosition()[0] + width / 2))) {
-                if (enemyCameFromTheRightSide) {
+                if (enemyCameFromTheRightSide && !enemyCameFromAbove) {
                     otherObject.setWorldPosition([this.getWorldPosition()[0] + width / 2 + otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                     // Check if the collider object is the player, if so, allow wall jump in left direction.
                     if (gQuerySystem.objectHasTag("player", otherObject)) {
@@ -55,7 +55,7 @@ class GeometryVolume extends Object3d {
                         }
                     }
                 } else {
-                    if (enemyCameFromTheLeftSide) {
+                    if (enemyCameFromTheLeftSide && !enemyCameFromAbove) {
                         otherObject.setWorldPosition([this.getWorldPosition()[0] - width / 2 - otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                         // Check if the collider object is the player, if so, allow wall jump in right direction.
                         if (gQuerySystem.objectHasTag("player", otherObject)) {

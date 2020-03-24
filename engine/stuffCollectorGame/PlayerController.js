@@ -25,6 +25,11 @@ class PlayerController {
         let actualVelocity = this.player.getVelocity();
         if (actualVelocity[1] == 0) this.jumping = false;
 
+        // When unlocking new skill, comment this.
+        if (this.player.physicsComponent.velocity[1] < 0) {
+            this.jumping = true;
+        }
+        
         if (gInputHandler.getInput("jump") && !this.jumping) {
             if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
             else this.jumping = true;
