@@ -36,7 +36,7 @@ class PlayerController {
             }
             this.timeShoot = gDeltaTime*10;
             
-            let shot = new Shot([this.direction[0],this.direction[1]]);
+            let shot = new Shot([this.direction[0],this.direction[1]],this.walkSpeedMax+2);
             shot.translate(this.player.getWorldPosition());
             this.player.addOrphanChild(shot);
             //this.player.addChild(shot);

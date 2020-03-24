@@ -1,11 +1,11 @@
 class Shot extends Sprite {
-  constructor(direction=[1,0]) {
+  constructor(direction=[1,0], speed=5) {
     super(0.33, 0.25, 'red', 1, 1);
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.addBehaviour(this.createPatrolBehaviour(this));
     this.direction = direction;
     this.duration = 5;
-    this.speed = 13+2;
+    this.speed = speed;
 
 
     let collider = new Collider("enemy");
