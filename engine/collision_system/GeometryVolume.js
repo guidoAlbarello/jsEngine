@@ -49,14 +49,14 @@ class GeometryVolume extends Object3d {
                     otherObject.setWorldPosition([this.getWorldPosition()[0] + width / 2 + otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                     // Check if the collider object is the player, if so, allow wall jump in left direction.
                     if (gQuerySystem.objectHasTag("player", otherObject)) {
-                        otherObject.allowWallJump([-1, 0]);
+                        otherObject.allowWallJump([1, 0]);
                     }
                 } else {
                     if (enemyCameFromTheLeftSide) {
                         otherObject.setWorldPosition([this.getWorldPosition()[0] - width / 2 - otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                         // Check if the collider object is the player, if so, allow wall jump in right direction.
                         if (gQuerySystem.objectHasTag("player", otherObject)) {
-                            otherObject.allowWallJump([1, 0]);
+                            otherObject.allowWallJump([-1, 0]);
                         }
                     }
                 }
