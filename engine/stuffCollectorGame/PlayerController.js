@@ -8,7 +8,7 @@ class PlayerController {
 
         this.jumpSpeed = 3;
         this.jumping = false;
-        this.maxHeightJump = this.jumpSpeed * 4.5;
+        this.maxHeightJump = this.jumpSpeed * 5;
     }
 
     setPlayer(player) {
@@ -52,7 +52,7 @@ class PlayerController {
         }
         
         if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
-            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 1000]);
+            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 19]);
         }
 
         //accelerate

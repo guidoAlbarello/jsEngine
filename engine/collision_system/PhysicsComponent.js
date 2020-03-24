@@ -8,7 +8,7 @@ class PhysicsComponent {
 	movility = [1, 1, 1];
 	dontFall = false;
 	isOnSurface = false;
-	MAX_VELOCITY = [20, 15];
+	MAX_VELOCITY = [20, 170];
 	impulse = [0,0];
 
 	constructor(object) {
@@ -38,10 +38,14 @@ class PhysicsComponent {
 			if (Math.abs(this.velocity[0]) > this.MAX_VELOCITY[0]){
 				this.velocity[0] = Math.sign(this.velocity[0]) * this.MAX_VELOCITY[0];
 			}
-			if (Math.abs(this.velocity[1]) > this.MAX_VELOCITY[1]){
-				this.velocity[1] = Math.sign(this.velocity[1]) * this.MAX_VELOCITY[1];
+			
+			if (this.velocity[1] > this.MAX_VELOCITY[1]){
+				this.velocity[1] = this.MAX_VELOCITY[1];
 			}
 
+			if (this.velocity[1] < 0 && Math.abs(this.velocity[1]) > this.MAX_VELOCITY[1] * 0.9) {
+				this.velocity[1] = - this.MAX_VELOCITY[1] * 0.9;
+			}
 			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
 		}
 	}

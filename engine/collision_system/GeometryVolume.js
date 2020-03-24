@@ -6,7 +6,7 @@ class GeometryVolume extends Object3d {
         let collider = new Collider("walker");
 
         collider.setOnCollisionEnter((otherObject) => {
-            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 0.2 >= this.getWorldPosition()[1] + height / 2;
+            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && (otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 0.5 >= this.getWorldPosition()[1] + height / 2);
             let enemyCameFromBelow = (otherObject.getWorldPosition()[1] < this.getWorldPosition()[1]) && (otherObject.getWorldPosition()[1] + otherObject.getHeight() / 2 >= this.getWorldPosition()[1] - height / 2);
             let enemyCameFromTheRightSide = (otherObject.getWorldPosition()[0] > this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] - otherObject.getWidth() / 2 < this.getWorldPosition()[0] + width / 2);
             let enemyCameFromTheLeftSide = (otherObject.getWorldPosition()[0] < this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] + otherObject.getWidth() / 2 >= this.getWorldPosition()[0] - width / 2);
@@ -18,7 +18,7 @@ class GeometryVolume extends Object3d {
                 }
             } else {
                 if (enemyCameFromBelow) {
-                    otherObject.physicsComponent.addImpulse([0, -50]);
+                    otherObject.physicsComponent.addImpulse([0, -otherObject.physicsComponent.velocity[1]]);
                 }
             }
             if (!((otherObject.getWorldPosition()[0] >= this.getWorldPosition()[0] - width / 2) && (otherObject.getWorldPosition()[0] <= this.getWorldPosition()[0] + width / 2))) {
@@ -33,7 +33,7 @@ class GeometryVolume extends Object3d {
             }
         });
         collider.setOnCollisionStay((otherObject) => {
-            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 0.2 >= this.getWorldPosition()[1] + height / 2;
+            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && (otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 0.5 >= this.getWorldPosition()[1] + height / 2);
             let enemyCameFromTheRightSide = (otherObject.getWorldPosition()[0] > this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] - otherObject.getWidth() / 2 < this.getWorldPosition()[0] + width / 2);
             let enemyCameFromTheLeftSide = (otherObject.getWorldPosition()[0] < this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] + otherObject.getWidth() / 2 >= this.getWorldPosition()[0] - width / 2);
 
@@ -50,6 +50,9 @@ class GeometryVolume extends Object3d {
                     // Check if the collider object is the player, if so, allow wall jump in left direction.
                     if (gQuerySystem.objectHasTag("player", otherObject)) {
                         otherObject.allowWallJump([1, 0]);
+                        if (otherObject.physicsComponent.velocity[1] < 0) {
+                            otherObject.physicsComponent.velocity[1] *= 0.7;
+                        }
                     }
                 } else {
                     if (enemyCameFromTheLeftSide) {
@@ -57,6 +60,9 @@ class GeometryVolume extends Object3d {
                         // Check if the collider object is the player, if so, allow wall jump in right direction.
                         if (gQuerySystem.objectHasTag("player", otherObject)) {
                             otherObject.allowWallJump([-1, 0]);
+                            if (otherObject.physicsComponent.velocity[1] < 0) {
+                                otherObject.physicsComponent.velocity[1] *= 0.7;
+                            }
                         }
                     }
                 }

@@ -4,10 +4,6 @@ class Editor {
     }
 
     build() {
-        // Set up cameras
-        this.scene.addCamera(new OrtographicCamera([0,0,20], [0,0,0], [0,1,0], 45, 80), "ortho");
-        this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
-        this.scene.useCamera("ortho");
 
         // Create playground
         let platformFactory = new PlatformFactory();
@@ -39,6 +35,10 @@ class Editor {
         let entity = gEntityManager.instantiateObjectWithTag("player", Player);
         entity.translate([0, 3, 0]);
 
+        // Set up cameras
+        this.scene.addCamera(new OrtographicCamera([0,0,20], [0,0,0], [0,1,0], 45, 80), "ortho", entity);
+        this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
+        this.scene.useCamera("ortho");
         let zombie = gEntityManager.instantiateObjectWithTag("zombie", Zombie);
         zombie.translate([10, 1, 0]);
         
