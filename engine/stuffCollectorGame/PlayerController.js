@@ -21,6 +21,7 @@ class PlayerController {
     }
 
     update() {
+        if(this.player.isDead()) this.player.remove();
         let velocityX = 0;
         let actualVelocity = this.player.getVelocity();
         if (actualVelocity[1] == 0) this.jumping = false;

@@ -1,4 +1,4 @@
-class ZombieFast extends Enemy {
+class ZombieFast extends Zombie {
     constructor() {
         super();
         this.init(2,2.5,"zombie",64/1024,64/1024);
@@ -17,8 +17,8 @@ class ZombieFast extends Enemy {
 
         assaultBehaviour.setUpdate(() => {
             if(assaultBehaviour.object.isDead()){
-                assaultBehaviour.object.physicsComponent.setVelocity([0, 0]);
-                return;
+                if(this.durationDeath <= 0) this.remove();
+                this.durationDeath-=1*gDeltaTime;
             }
 
             let player = gQuerySystem.getPlayer();
@@ -47,65 +47,4 @@ class ZombieFast extends Enemy {
         return assaultBehaviour;
     }
 
-    createAnimations(object) {
-        let animationManager = new AnimationManager();
-
-        let idleAnimation = new Animation2d();
-        idleAnimation.addFrame(0, 0, 0.2);
-        idleAnimation.addFrame(1, 0, 0.2);
-        idleAnimation.addFrame(2, 0, 0.2);
-        idleAnimation.addFrame(3, 0, 0.2);
-        animationManager.addAnimation("idle", idleAnimation);
-
-        let leftAnimation = new Animation2d();
-        leftAnimation.addFrame(7, 9, 0.2);
-        leftAnimation.addFrame(6, 9, 0.2);
-        leftAnimation.addFrame(5, 9, 0.2);
-        leftAnimation.addFrame(4, 9, 0.2);
-        animationManager.addAnimation("left", leftAnimation);
-
-        let rightAnimation = new Animation2d();
-        rightAnimation.addFrame(0, 1, 0.2);
-        rightAnimation.addFrame(1, 1, 0.2);
-        rightAnimation.addFrame(2, 1, 0.2);
-        rightAnimation.addFrame(3, 1, 0.2);
-        animationManager.addAnimation("right", rightAnimation);
-
-        let deathAnimation = new Animation2d();
-        deathAnimation.addFrame(0, 3, 0.1);
-        deathAnimation.addFrame(1, 3, 0.1);
-        deathAnimation.addFrame(2, 3, 0.1);
-        deathAnimation.addFrame(3, 3, 0.1);
-        deathAnimation.addFrame(4, 3, 0.1);
-        deathAnimation.addFrame(5, 3, 0.1);
-        deathAnimation.addFrame(6, 3, 0.1);
-        deathAnimation.addFrame(7, 3, 0.1);
-        animationManager.addAnimation("death", deathAnimation);
-
-        let conditionIdle= new AnimationTransitionCondition(object);
-        conditionIdle.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[0] == 0;
-        });
-        let conditionLeft = new AnimationTransitionCondition(object);
-         conditionLeft.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[0] < 0;
-        });
-        let conditionRight= new AnimationTransitionCondition(object);
-        conditionRight.setEvaluate((condition) => {
-            return condition.object.physicsComponent.velocity[0] > 0;
-        });
-        let conditionDeath= new AnimationTransitionCondition(object);
-        conditionDeath.setEvaluate((condition) => {
-            return condition.object.isDead();
-        });
-        
-        animationManager.addTransitionToEveryAnimation("idle", conditionIdle);
-        animationManager.addTransitionToEveryAnimation("left", conditionLeft);
-        animationManager.addTransitionToEveryAnimation("right", conditionRight);
-        animationManager.addTransitionToEveryAnimation("death", conditionDeath);
-
-        animationManager.setCurrentAnimation("idle");
-
-        return animationManager;
-    }
 }

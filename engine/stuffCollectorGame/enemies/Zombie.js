@@ -6,6 +6,7 @@ class Zombie extends Enemy {
         this.setAnimationManager(this.createAnimations(this));
         this.addBehaviour(this.createPatrolBehaviour(this));
         gCollisionDetection.registerCollidable(this, "zombie");
+        this.durationDeath = 1;
     }
 
     createPatrolBehaviour(object){
@@ -18,8 +19,8 @@ class Zombie extends Enemy {
 
         patrolBehaviour.setUpdate(() => {
             if(patrolBehaviour.object.isDead()){
-                patrolBehaviour.object.physicsComponent.setVelocity([0, 0]);
-                return;
+                if(this.durationDeath <= 0) this.remove();
+                this.durationDeath-=1*gDeltaTime;
             }
             patrolBehaviour.object.timer += gDeltaTime;
             if (patrolBehaviour.object.timer >= 8) {
