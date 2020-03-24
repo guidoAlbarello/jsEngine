@@ -51,10 +51,12 @@ function testDecoratorNodes() {
   let action = new ActionNode(() => {
     return returnStatement.RUNNING;
   });
-  let child = new CompositeNode(new Map(
-    [
-      ['action', action],
-    ])); //so it fails if condition is true
+  let child = new Map([
+    ['', new Sequence(new Map(
+      [
+        ['action', action],
+      ]))]
+  ]); //so it fails if condition is true
 
   playerPos = 5;
   let condition = () => { //hace algo si el player está cerca
@@ -65,8 +67,8 @@ function testDecoratorNodes() {
     return false;
   };
 
-  let decorator = new DecoratorNode(condition, child);
-  assertEQ(returnStatement.SUCCESS, decorator.tick({}),
+  let decorator = new DecoratorNode(child, condition);
+  assertEQ(returnStatement.FAILED, decorator.tick({}),
     'Decorator evalueates condition succesfully if false');
   playerPos = 1;
   assertEQ(returnStatement.RUNNING, decorator.tick({}),
@@ -78,10 +80,12 @@ function treeTests() {
   let action = new ActionNode(() => {
     return returnStatement.RUNNING;
   });
-  let child = new CompositeNode(new Map(
-    [
-      ['action', action],
-    ])); //so it fails if condition is true
+  let child = new Map([
+    ['', new Sequence(new Map(
+      [
+        ['action', action],
+      ]))]
+  ]); //so it fails if condition is true
 
   playerPos = 5;
   let condition = () => { //hace algo si el player está cerca
@@ -92,7 +96,7 @@ function treeTests() {
     return false;
   };
 
-  let decorator = new DecoratorNode(condition, child);
+  let decorator = new DecoratorNode(child, condition);
   assertEQ(returnStatement.SUCCESS, decorator.tick({}),
     'Decorator evalueates condition succesfully if false');
   playerPos = 1;

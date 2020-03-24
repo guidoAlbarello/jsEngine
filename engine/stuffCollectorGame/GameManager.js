@@ -10,6 +10,10 @@ class GameManager extends Object3d {
   }
 
   generateGuards() {
+    let entity = gEntityManager.instantiateObjectWithTag('guard1', Guard);
+    entity.setPatrollCenter([8, 3, 0]);
+    entity.translate([8, 3, 0]);
+    this.scene.addChild(entity);
     return;
   }
 
@@ -17,6 +21,7 @@ class GameManager extends Object3d {
     const player = gQuerySystem.getPlayer();
     const hp = player.getHP();
     const organsCollected = player.getInventory();
+
     //console.log(organsCollected);
     //debugger;
     if (this._gameOver(hp, organsCollected)) {

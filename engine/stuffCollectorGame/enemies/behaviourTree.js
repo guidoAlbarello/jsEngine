@@ -3,11 +3,27 @@ returnStatement = {
   FAILED: 'fail',
   RUNNING: 'running',
 };
+class Node {
+  constructor(children) {
+    console.log(children);
+    this.children = children || new Map();
+    if (this.children.keys().length > 0) {
+      this.children.setParent(this);
+      for (var tag of this.children.keys()) {
+        this.children.get(tag).setParent(this);
+      }
+    }
+  }
 
-class DecoratorNode {
-  constructor(condition, child) {
+  setParent(p) {
+    this.parent = p;
+  }
+}
+class DecoratorNode extends Node {
+  constructor(child, condition) {
+    super(child);
     this.condition = condition;
-    this.child = child;
+    this.child = Array.from(this.children.values())[0];
   }
 
   tick(blackboard) {
@@ -15,23 +31,46 @@ class DecoratorNode {
       return this.child.tick(blackboard);
     }
 
-    return returnStatement.SUCCESS;
+    return returnStatement.FAILED;
+  }
+
+  resume(blackboard, returnValue) {
+    return this.parent.resume(blackboard, returnValue);
   }
 }
 
-class CompositeNode {
+class CompositeNode extends Node {
 
+  //decorators is a Map instance wit ('tag', node instance) pairs
+  constructor(children) {
+    super(children);
+  }
+
+  //d = ('tag', instance)
+  addDecorator(d) {
+    this.children[d[0]] = d[1];
+  }
+
+  removeDecorator(tag) {
+    this.children.delete(tag);
+  }
+
+}
+
+class Sequence extends CompositeNode {
   //decorators is a Map instance wit ('tag', decorator instance) pairs
   constructor(decorators) {
-    this.decorators = decorators;
+    super(decorators);
+    //this.children = decorators;
+    this.current = null;
   }
 
   tick(blackboard) {
-    //excecutes all decorators until one returns as running
-    for (var tag of this.decorators.keys()) {
-
-      let ret = this.decorators.get(tag).tick(blackboard);
-      if (ret == returnStatement.RUNNING) {
+    //tick all children until one returns as FAIL
+    for (var tag of this.children.keys()) {
+      this.current = tag;
+      let ret = this.children.get(tag).tick(blackboard);
+      if (ret !== returnStatement.SUCCESS) {
         return ret;
       }
     }
@@ -39,32 +78,62 @@ class CompositeNode {
     return returnStatement.SUCCESS;
   }
 
-  //d = ('tag', instance)
-  addDecorator(d) {
-    this.decorators[d[0]] = d[1];
-  }
+  resume(blackboard, returnValue) {
+    let catchUp = false;
+    for (var tag of this.children.keys()) {
+      this.current = tag;
+      if ((tag === this.current) && !catchUp) {
+        catchUp = true;
+        continue;
+      }
 
-  removeDecorator(tag) {
-    this.decorators.delete(tag);
+      let ret = this.children.get(tag).tick(blackboard);
+      if (ret === returnStatement.FAILED) {
+        return this.parent.resume(blackboard, ret);
+      }
+    }
+
+    return this.parent.resume(blackboard, returnStatement.SUCCESS);
   }
 
 }
 
 class Selector extends CompositeNode {
   constructor(decorators) {
-    super();
+    super(decorators);
+    //    this.children = decorators;
   }
 
   tick(blackboard) {
-    for (var tag of this.decorators.keys()) {
-
-      let ret = this.decorators.get(tag).tick(blackboard);
-      if (ret !== returnStatement.SUCCESS) {
+    for (var tag of this.children.keys()) {
+      let ret = this.children.get(tag).tick(blackboard);
+      if (ret === returnStatement.SUCCESS) {
         return ret;
       }
     }
 
     return returnStatement.FAILED;
+  }
+
+  resume(blackboard, returnValue) {
+    if (returnValue === returnStatement.SUCCESS) {
+      return this.parent.resume(blackboard, returnValue);
+    }
+
+    let catchUp = false;
+    for (var tag of this.children.keys()) {
+      if ((tag === this.current) && !catchUp) {
+        catchUp = true;
+        continue;
+      }
+
+      let ret = this.children.get(tag).tick(blackboard);
+      if (ret === returnStatement.SUCCESS) {
+        return this.parent.resume(blackboard, ret);
+      }
+    }
+
+    return this.parent.resume(blackboard, returnStatement.FAILED);
   }
 
 }
@@ -86,15 +155,26 @@ class ActionNode {
 class BehaviourTree {
   constructor(root) {
     this.root = root;
-    this.running = root;
+    this.root.parent = this;
+    this.blackboard = {};
+    this.blackboard.running = null;
   }
 
   tick() {
-    let ret = this.running.tick(blackboard);
-    if (this.running === null) {
-      this.running = this.root;
+    if (this.blackboard.running === null) {
+      return this.root.tick(this.blackboard);
     }
 
+    let ret = this.blackboard.running.tick(this.blackboard);
+    if (this.ret !== returnStatement.RUNNING) {
+      this.blackboard.running.parent.continue(ret);
+      this.blackboard.running = this.root;
+    }
+
+  }
+
+  resume(blackboard, ret) {
+    return ret;
   }
 
 }
