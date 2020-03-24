@@ -10,6 +10,10 @@ class Guard extends Enemy {
   setPatrollCenter(pc) {
     this.patrollCenter = pc;
   }
+
+  walk(p) {
+    return;
+  };
 }
 class GuardBehaviour extends Behaviour {
   constructor(object) {
@@ -21,11 +25,27 @@ class GuardBehaviour extends Behaviour {
       };
   }
 
-  makeTree() {
-    const isPlayerClose = (guard, player) => {
-      return distance(player.getPosition(), guard.getPosition()) < 10;
-    };
+  patrollBehaviour() {
+    let patroll = new ActionNode(() => {
+      if (distance(this.object.patrollCenter, this.object.getPosition()) > 3) {
+        let d = (this.object.getPosition()[0] - this.object.patrollCenter[0]) > 0 ? -1 : 1;
+        this.object.direction = d;
+      }
 
+      this.object.physicsComponent.setVelocityX(this.object.direction * 5);
+      return returnStatement.SUCCESS;
+    });
+
+    new Selector(
+      new Map([
+        //      ['gotoPatrollPosition', gotoPatrollPos],
+        ['patroll', patroll],
+      ])
+    );
+    return patroll;
+  }
+
+  engageBehaviour() {
     const move = new ActionNode(() => {
       //move towards player
       let player = gQuerySystem.getPlayer();
@@ -53,28 +73,27 @@ class GuardBehaviour extends Behaviour {
         ['moveTowards', move],
       ])
     );
+
     let engage = new DecoratorNode(
       new Map([
         ['', chooseAtackOrMove],
       ]),
-      isPlayerClose.bind(null, this.object, gQuerySystem.getPlayer())
-    );
-
-    let patroll = new ActionNode(() => {
-      //move left and right;
-      let player = gQuerySystem.getPlayer();
-      if (distance(this.object.patrollCenter, this.object.getPosition()) > 3) {
-        this.object.direction *= -1;
+      () => { //if player close engage
+        let playerPos = gQuerySystem.getPlayer().getPosition();
+        let guardPos = this.object.getPosition();
+        return distance(playerPos, guardPos) < 10;
       }
+    );
+    return engage;
+  }
 
-      this.object.physicsComponent.setVelocityX(this.object.direction * 5);
-      return returnStatement.SUCCESS;
-    });
+  makeTree() {
+
     let root = new Selector(
       new Map([
-        ['engage', engage],
-        ['patroll', patroll],
-      ], null)
+        ['engage', this.engageBehaviour()],
+        ['patroll', this.patrollBehaviour()],
+      ])
     );
     this.tree = new BehaviourTree(root);
   }
