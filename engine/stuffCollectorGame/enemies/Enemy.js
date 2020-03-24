@@ -15,11 +15,9 @@ class Enemy extends Sprite {
         collider.setOnCollisionEnter((otherObject) => {
         	let otherObjectPosition = otherObject.getWorldPosition();
         	let myPosition = this.getWorldPosition();
-        	if(otherObjectPosition[0]<myPosition[0]){
-        		otherObject.physicsComponent.addImpulse([-otherObject.getWidth()*2,0]);
-        	}else{
-        		otherObject.physicsComponent.addImpulse([otherObject.getWidth()*2,0]);
-        	}
+        	if(otherObjectPosition[0]<myPosition[0]) otherObject.physicsComponent.addImpulse([-otherObject.getWidth()*20,0]);
+        	else otherObject.physicsComponent.addImpulse([otherObject.getWidth()*20,0]);
+        	otherObject.takeDamage(gConfiguration.enemyDamage);
         });
     	this.addCollider(collider);
     }
