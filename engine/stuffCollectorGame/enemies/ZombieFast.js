@@ -1,16 +1,11 @@
 class ZombieFast extends Enemy {
     constructor() {
         super();
-        this.init(1,1.5,"zombie",64/1024,64/1024);
+        this.init(2,2.5,"zombie",64/1024,64/1024);
         this.setPhysicsComponent(new PhysicsComponent2d());
         this.setAnimationManager(this.createAnimations(this));
         this.addBehaviour(this.createAssaultBehaviour(this));
         gCollisionDetection.registerCollidable(this, "zombie");
-    }
-
-    isDeath(object) {
-        //TODO Condition
-        return false;
     }
 
     createAssaultBehaviour(object) {
@@ -21,6 +16,11 @@ class ZombieFast extends Enemy {
         });
 
         assaultBehaviour.setUpdate(() => {
+            if(assaultBehaviour.object.isDead()){
+                assaultBehaviour.object.physicsComponent.setVelocity([0, 0]);
+                return;
+            }
+
             let player = gQuerySystem.getPlayer();
             let distance = vec3.create();
             let moveTo = 0;
@@ -96,8 +96,7 @@ class ZombieFast extends Enemy {
         });
         let conditionDeath= new AnimationTransitionCondition(object);
         conditionDeath.setEvaluate((condition) => {
-            // isDeath()
-            return false;
+            return condition.object.isDead();
         });
         
         animationManager.addTransitionToEveryAnimation("idle", conditionIdle);

@@ -56,7 +56,8 @@ var gConfiguration = {
 	"playerHP":100,
 	"enemyHP": 10,
 	"zombieHP":20,
-	"enemyDamage":1
+	"enemyDamage":1,
+	"playerDamage":2
 }
 
 var gDeltaTime = 0.0;

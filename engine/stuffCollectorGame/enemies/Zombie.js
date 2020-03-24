@@ -1,19 +1,15 @@
 class Zombie extends Enemy {
     constructor() {
         super();
-        this.init(1,1.5,"zombie",64/1024,64/1024);
+        this.init(2,2.5,"zombie",64/1024,64/1024);
         this.setPhysicsComponent(new PhysicsComponent2d());
         this.setAnimationManager(this.createAnimations(this));
         this.addBehaviour(this.createPatrolBehaviour(this));
         gCollisionDetection.registerCollidable(this, "zombie");
     }
 
-    isDeath(object) {
-        //TODO Condition
-        return false;
-    }
-
     createPatrolBehaviour(object){
+
         let patrolBehaviour = new Behaviour(object);
         patrolBehaviour.setInit(() => {
             patrolBehaviour.object.timer = 0;
@@ -21,6 +17,10 @@ class Zombie extends Enemy {
         });
 
         patrolBehaviour.setUpdate(() => {
+            if(patrolBehaviour.object.isDead()){
+                patrolBehaviour.object.physicsComponent.setVelocity([0, 0]);
+                return;
+            }
             patrolBehaviour.object.timer += gDeltaTime;
             if (patrolBehaviour.object.timer >= 8) {
                 patrolBehaviour.object.direction = 0;
@@ -89,7 +89,7 @@ class Zombie extends Enemy {
         });
         let conditionDeath= new AnimationTransitionCondition(object);
         conditionDeath.setEvaluate((condition) => {
-            return condition.object.isDeath();
+            return condition.object.isDead();
         });
         
         animationManager.addTransitionToEveryAnimation("idle", conditionIdle);

@@ -22,7 +22,7 @@ class GeometryVolume extends Object3d {
             }
         });
         collider.setOnCollisionExit((otherObject) => {
-            console.log("Exit");
+            //console.log("Exit");
         });
         this.addCollider(collider);
     }
