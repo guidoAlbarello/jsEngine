@@ -1,10 +1,10 @@
-class Zombie extends Enemy {
+class ZombieFast extends Enemy {
     constructor() {
         super();
         this.init(1,1.5,"zombie",64/1024,64/1024);
         this.setPhysicsComponent(new PhysicsComponent2d());
         this.setAnimationManager(this.createAnimations(this));
-        this.addBehaviour(this.createPatrolBehaviour(this));
+        this.addBehaviour(this.createAssaultBehaviour(this));
         gCollisionDetection.registerCollidable(this, "zombie");
     }
 
@@ -13,31 +13,38 @@ class Zombie extends Enemy {
         return false;
     }
 
-    createPatrolBehaviour(object){
-        let patrolBehaviour = new Behaviour(object);
-        patrolBehaviour.setInit(() => {
-            patrolBehaviour.object.timer = 0;
-            patrolBehaviour.object.direction = 0;
+    createAssaultBehaviour(object) {
+        let assaultBehaviour = new Behaviour(object);
+        assaultBehaviour.setInit(() => {
+            assaultBehaviour.object.timer = 0;
+            assaultBehaviour.object.direction = 0;
         });
 
-        patrolBehaviour.setUpdate(() => {
-            patrolBehaviour.object.timer += gDeltaTime;
-            if (patrolBehaviour.object.timer >= 8) {
-                patrolBehaviour.object.direction = 0;
-                patrolBehaviour.object.timer = 0;
-            } else if (patrolBehaviour.object.timer >= 6) {
-                patrolBehaviour.object.direction = -5;
-            } else if (patrolBehaviour.object.timer >= 4) {
-                patrolBehaviour.object.direction = 0;
-            } else if (patrolBehaviour.object.timer >= 2) {
-                patrolBehaviour.object.direction = 5;
-            } else if (patrolBehaviour.object.timer >= 0) {
-                patrolBehaviour.object.direction = 0;
+        assaultBehaviour.setUpdate(() => {
+            let player = gQuerySystem.getPlayer();
+            let distance = vec3.create();
+            let moveTo = 0;
+
+            vec3.scaleAndAdd(distance, object.getWorldPosition(), player.getWorldPosition(), -1);
+            if (vec3.length(distance) < 10) {
+                
+                if(distance[0] < 0) {
+                    moveTo = 1;
+                } else if (distance[0] > 0) {
+                    moveTo = -1;
+                } else {
+                    moveTo = 0;
+                }
+                assaultBehaviour.object.direction = 5 * moveTo;
+
+            } else {
+                assaultBehaviour.object.direction = 0;
             }
-            patrolBehaviour.object.physicsComponent.setVelocity([patrolBehaviour.object.direction, 0]);
-        });
 
-        return patrolBehaviour;
+            assaultBehaviour.object.physicsComponent.setVelocity([assaultBehaviour.object.direction, 0]);
+            });
+
+        return assaultBehaviour;
     }
 
     createAnimations(object) {
@@ -89,7 +96,8 @@ class Zombie extends Enemy {
         });
         let conditionDeath= new AnimationTransitionCondition(object);
         conditionDeath.setEvaluate((condition) => {
-            return condition.object.isDeath();
+            // isDeath()
+            return false;
         });
         
         animationManager.addTransitionToEveryAnimation("idle", conditionIdle);
