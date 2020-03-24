@@ -4,6 +4,7 @@ class Player extends Sprite {
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.physicsComponent.setGravity(1);
     this.hp = 100;
+    this.wallJumpDirection = [0,0];
     this.organsCollected = new Map();
     gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
@@ -15,6 +16,10 @@ class Player extends Sprite {
 
   jump(height) {
     this.physicsComponent.addImpulse([-this.physicsComponent.gravity[0] * height, -this.physicsComponent.gravity[1] * height]);
+  }
+
+  allowWallJump(direction) {
+      this.wallJumpDirection = direction;
   }
 
   getHP() {

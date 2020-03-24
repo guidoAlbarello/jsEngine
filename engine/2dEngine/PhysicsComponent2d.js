@@ -17,6 +17,6 @@ class PhysicsComponent2d extends PhysicsComponent {
     }
 
 	addImpulse(impulse) {
-		this.setVelocity([this.velocity[0] + impulse[0], this.velocity[1] + impulse[1]]); 
+		this.impulse = impulse; 
 	}
 }

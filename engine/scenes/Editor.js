@@ -62,6 +62,25 @@ class Editor {
         plane2.addChild(geometryVolume);
 
         this.scene.addChild(plane2);
+        let volume3 = new GeometryVolume(1, 5, 1);
+        volume3.translate([-5, 5,0]);
+        gDeveloperTools.drawHitbox(volume3);
+        this.scene.addChild(volume3);
+
+        let volume4 = new GeometryVolume(1, 5, 1);
+        volume4.translate([-12, 8,0]);
+        gDeveloperTools.drawHitbox(volume4);
+        this.scene.addChild(volume4);
+
+        let volume5 = new GeometryVolume(1, 5, 1);
+        volume5.translate([-5, 14,0]);
+        gDeveloperTools.drawHitbox(volume5);
+        this.scene.addChild(volume5);
+
+        let volume6 = new GeometryVolume(5, 1, 1);
+        volume6.translate([-14, 16,0]);
+        gDeveloperTools.drawHitbox(volume6);
+        this.scene.addChild(volume6);
 
         return this.scene;
     }
