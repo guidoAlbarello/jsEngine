@@ -101,10 +101,11 @@ class ForestLevel {
         this.createLavaAt(34, baseY,d_x - 51, d_y - 13);
         this.createPlatformFromSizeAt(4, 0.8, d_x - 20, d_y + 8); // Hook Platform
         this.createHookAt(d_x -19, d_y -2);
+        this.createTombAt(d_x - 20, d_y + 8);
         increaseDisplacement(-5 - 54, 0);
         this.createPlatformFromSizeAt(25, baseY, d_x, d_y);
 
-        
+
         
     }
 
