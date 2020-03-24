@@ -9,6 +9,7 @@ class Player extends Sprite {
     this.organsCollected = new Map();
     gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
+    gCollisionDetection.registerCollidable(this, 'player');
   }
 
   walk(velocityX) {
