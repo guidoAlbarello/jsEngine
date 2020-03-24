@@ -50,6 +50,10 @@ class PlayerController {
                 return decelerate;
             }
         }
+        
+        if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
+            this.player.physicsComponent.addImpulse([1000 * -this.player.wallJumpDirection[0], 1000]);
+        }
 
         //accelerate
         return direction * Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction)) + (this.jumping ? 0.02 : 1) * this.walkSpeed, this.walkSpeedMax);

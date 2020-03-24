@@ -9,4 +9,9 @@ class QuerySystem {
   getAllObjectsWithTag(tag) {
     return gEntityManager.getEntitiesByTag()[tag];
   }
+
+  objectHasTag(tag, object) {
+    let objectsWithTag = this.getAllObjectsWithTag(tag);
+    return objectsWithTag.filter(anObject => anObject.getId() == object.getId()).length > 0;
+  }
 }
