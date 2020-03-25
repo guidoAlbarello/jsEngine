@@ -4,7 +4,7 @@ class PlayerController {
 
         this.velocity = [0, 0];
         this.walkSpeed = 4;
-        this.walkSpeedMax = 13;
+        this.walkSpeedMax = 17;
 
         this.jumpSpeed = 3;
         this.jumping = false;
@@ -87,11 +87,11 @@ class PlayerController {
         }
         
         if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
-            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 22]);
+            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 16]);
         }
 
         //accelerate
-        return direction * Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction)) + (this.jumping ? 0.02 : 1) * this.walkSpeed, this.walkSpeedMax);
+        return direction * Math.min(Math.max(Math.abs(this.velocity[0]), Math.abs(direction)) + (this.jumping ? 0.02 : 3) * this.walkSpeed, this.walkSpeedMax);
     }
 
 
