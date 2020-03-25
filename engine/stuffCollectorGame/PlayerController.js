@@ -57,7 +57,7 @@ class PlayerController {
         }
         
         if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
-            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 19]);
+            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 22]);
         }
 
         //accelerate
