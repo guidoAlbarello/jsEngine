@@ -21,7 +21,7 @@ class PerspectiveCamera extends Object3d {
 		this.fov = 45;
 		this.aspectRatio = this.width / this.height;
 		this.near = 0.1;
-		this.far = 300.0;
+		this.far = 1000.0;
 
 		mat4.perspective(
 			this.projectionMatrix,

@@ -200,6 +200,10 @@ class TextureManager {
 			new Uint8Array([180, 55, 87])
 		);
 		gTextureManager.createTextureFromArray(
+			"lava_color",
+			new Uint8Array([207, 96, 16])
+		);
+		gTextureManager.createTextureFromArray(
 			"red_color",
 			new Uint8Array([234, 60, 83])
 		);

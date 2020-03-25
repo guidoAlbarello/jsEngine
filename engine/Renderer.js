@@ -56,7 +56,7 @@ class Renderer {
 	setupWebGL() {
 		//set the clear color
 		//        this.gl.clearColor(0.32, 0.41, 0.46, 1.0);
-		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		this.gl.clearColor(0.0, 0.65, 0.2, 0.4);
 		this.gl.enable(this.gl.DEPTH_TEST);
 		this.gl.depthFunc(this.gl.LEQUAL);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPxTH_BUFFER_BIT);

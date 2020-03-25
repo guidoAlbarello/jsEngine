@@ -1,9 +1,10 @@
 class Platform extends Sprite {
-    constructor(createCollisionVolume) {
+    constructor(width, height, createCollisionVolume) {
         super();
-        this.init(3,0.7,"egyptian_color", 1,1);
+        this.init(width || 3, height || 0.7,"egyptian_color", 1,1);
+        this.translate([width/2, -height/2, 0]);
         if (createCollisionVolume) {
-            this.addChild(new GeometryVolume(3, 0.7, 2));
+            this.addChild(new GeometryVolume(width || 3, height || 0.7, 2));
         }
     }
 }

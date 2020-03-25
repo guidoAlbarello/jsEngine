@@ -8,10 +8,14 @@ class PlayerController {
 
         this.jumpSpeed = 3;
         this.jumping = false;
+<<<<<<< HEAD
         this.maxHeightJump = this.jumpSpeed * 4.5;
 
         this.timeShoot = 0;
         this.direction = [1,0];
+=======
+        this.maxHeightJump = this.jumpSpeed * 5;
+>>>>>>> jam02-levelDesign
     }
 
     setPlayer(player) {
@@ -52,9 +56,13 @@ class PlayerController {
         
         if (actualVelocity[1] == 0) this.jumping = false;
 
+        // When unlocking new skill, comment this.
+        if (this.player.physicsComponent.velocity[1] < 0) {
+            this.jumping = true;
+        }
         
-        if (gInputHandler.getInput("jump") && !this.jumping){
-            if(actualVelocity[1]<this.maxHeightJump) this.player.jump(this.jumpSpeed);
+        if (gInputHandler.getInput("jump") && !this.jumping) {
+            if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
             else this.jumping = true;
         } else this.jumping=true;
         
@@ -83,7 +91,7 @@ class PlayerController {
         }
         
         if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
-            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 1000]);
+            this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 22]);
         }
 
         //accelerate
