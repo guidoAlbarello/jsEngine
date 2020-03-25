@@ -31,7 +31,7 @@ const sphericalToXYZ = (radius, alfa, beta) => {
 	];
 };
 
-(function() {
+(function () {
 	var requestAnimationFrame =
 		window.requestAnimationFrame ||
 		window.mozRequestAnimationFrame ||
@@ -53,31 +53,51 @@ var gCollisionDetection = new CollisionDetection();
 var gEntityManager = new EntityManager();
 var gQuerySystem = new QuerySystem();
 var gConfiguration = {
-	"playerHP":100,
+	"playerHP": 100,
 	"enemyHP": 10,
-	"zombieHP":20,
-	"enemyDamage":1,
-	"shotDamage":2,
-	"swordDamage":3
+	"zombieHP": 20,
+	"enemyDamage": 1,
+	"shotDamage": 2,
+	"swordDamage": 3
 }
 
 var gDeltaTime = 0.0;
 var gDeltaTimeMultiplier = 1.0;
 var skipFrame = false;
+var backoff_type = "none";
+var gBackoffSpeed = 1;
 
 const freezeFrame = () => {
 	skipFrame = true;
 };
 
-const freezeFrameWithBackoff = (backoffSpeed) => {
-	 freezeFrame();
-	 gDeltaTimeMultiplier = backoffSpeed || 0.1;
+const freezeFrameWithExponentialBackoff = (backoffSpeed) => {
+	freezeFrame();
+	gDeltaTimeMultiplier = backoffSpeed || 0.1;
+	backoff_type = "exponential";
 };
+
+const freezeFrameWithLinearBackoff = (backoffSpeed) => {
+	freezeFrame();
+	gDeltaTimeMultiplier = 0;
+	gBackoffSpeed = backoffSpeed || 0.1;
+	backoff_type = "linear";
+};
+
 
 const checkIfFrameIsFreezed = () => {
 	let isFreezingActive = skipFrame;
 	skipFrame = false;
-	gDeltaTimeMultiplier = Math.min(gDeltaTimeMultiplier + gDeltaTimeMultiplier, 1);
+	switch (backoff_type) {
+		case "exponential":
+			gDeltaTimeMultiplier = Math.min(gDeltaTimeMultiplier + gDeltaTimeMultiplier, 1);
+			break;
+		case "linear":
+			gDeltaTimeMultiplier = Math.min(gDeltaTimeMultiplier + gBackoffSpeed, 1);
+			break;
+		default:
+			gDeltaTimeMultiplier = 1;
+	}
 	gDeltaTime *= gDeltaTimeMultiplier;
 	return isFreezingActive;
 };
