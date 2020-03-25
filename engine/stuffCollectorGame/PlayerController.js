@@ -8,14 +8,10 @@ class PlayerController {
 
         this.jumpSpeed = 3;
         this.jumping = false;
-<<<<<<< HEAD
-        this.maxHeightJump = this.jumpSpeed * 4.5;
+        this.maxHeightJump = this.jumpSpeed * 5;
 
         this.timeShoot = 0;
         this.direction = [1,0];
-=======
-        this.maxHeightJump = this.jumpSpeed * 5;
->>>>>>> jam02-levelDesign
     }
 
     setPlayer(player) {
