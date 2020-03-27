@@ -22,7 +22,7 @@ class ForestLevel {
     setupPlayer() {
         // Create the player
         let player = gEntityManager.instantiateObjectWithTag('player', Player);
-        player.translate([2, 3, 0]);
+        player.translate([-100, -90, 0]);
 
         // Create a player controller and set the player to it.
         // This way we can control the player with input.

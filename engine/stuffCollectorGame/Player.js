@@ -13,6 +13,7 @@ class Player extends Sprite {
     //gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
     gCollisionDetection.registerCollidable(this, 'player');
+    gCollisionDetection.registerCollidable(this, "entity");
     this.dead = false;
   }
 
