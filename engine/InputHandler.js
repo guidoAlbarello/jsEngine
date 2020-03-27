@@ -88,6 +88,8 @@ class InputHandler {
 			//return this.getTapKey(90);
 			case "sword":
 				return this.getKey(69); //E
+			case "interact":
+				return this.getKey(73); //I
 			default:
 				return false;
 		}

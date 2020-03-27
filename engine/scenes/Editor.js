@@ -89,6 +89,12 @@ class Editor {
 
 
         
+        let interactiveObj = new Interactive(3,3,3,function(){volume6.translate([0, -1,0]);;});
+        //interactiveObj.translate([-14, 16,0]);
+        gDeveloperTools.drawHitbox(interactiveObj);
+        this.scene.addChild(interactiveObj);
+
+        
 
 
         let gameManager = new GameManager(this.scene, this.objective);
