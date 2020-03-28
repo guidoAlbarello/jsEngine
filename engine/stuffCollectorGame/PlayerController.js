@@ -12,6 +12,8 @@ class PlayerController {
 
         this.timeShoot = 0;
         this.direction = [1,0];
+
+        this.createPlayerAttacks();
     }
 
     setPlayer(player) {
@@ -73,6 +75,8 @@ class PlayerController {
         this.player.walk(velocityX);
 
         this.calculateDirection();
+
+        this.attackGraph.update();
     }
 
     walk(direction) {
@@ -98,5 +102,25 @@ class PlayerController {
     calculateDirection(){
         if (this.velocity[0]>0) this.direction[0]=1;
         if (this.velocity[0]<0) this.direction[0]=-1;
+    }
+
+    createPlayerAttacks() {
+        this.attackGraph = new ActionGraph();
+
+        // Add possible attacks to graph
+        this.attackGraph.addAction(new Attack1Action(this.player));
+        this.attackGraph.addAction(new Attack2Action(this.player));
+        this.attackGraph.addAction(new DashSlashAction(this.player));
+        this.attackGraph.addAction(new SkySlamAction(this.player));
+        this.attackGraph.addAction(new UppercutAction(this.player));
+
+        // Add transitions to switch between attacks to graph
+        // They need to be in order of more specific to more generic.
+        // For example an attack that is activated with UP + x should be first that an attack activated with x.        
+        this.attackGraph.addTransition("*", DashSlashAction.NAME, new WildcardToDashSlashCondition());
+        this.attackGraph.addTransition("*", SkySlamAction.NAME, new WildcardToSkySlamCondition(this.player));
+        this.attackGraph.addTransition("*", UppercutAction.NAME, new WildcardToUppercutCondition());
+        this.attackGraph.addTransition(Attack1Action.NAME, Attack2Action.NAME, new Attack1ToAttack2Condition());
+        this.attackGraph.addTransition("*", Attack1Action.NAME, new WildcardToAttack1Condition());
     }
 }
