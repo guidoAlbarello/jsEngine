@@ -3,12 +3,12 @@
 Controles:
 	- Z : Heavy attack
 	- X : Light attack
-        - E : Dash attack 
-        - W: Up/Jump
-        - S: Down
-        - D: Right
-        - A: Left
-        - Q: Shoot
+        - C : Dash attack 
+        - UP: Up/Jump
+        - DOWN: Down
+        - RIGHT: Right
+        - LEFT: Left
+        - A: Shoot
 Combos:
         - Uppercut: Heavy_Attack + Up
 	- Sky slam: Heavy_Attack + Down (in air)

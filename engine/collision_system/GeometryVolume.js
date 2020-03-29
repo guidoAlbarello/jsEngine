@@ -21,7 +21,6 @@ class GeometryVolume extends Object3d {
                 }
             }
             if (!((otherObject.getWorldPosition()[0] >= this.getWorldPosition()[0] - width / 2) && (otherObject.getWorldPosition()[0] <= this.getWorldPosition()[0] + width / 2))) {
-
                 if (enemyCameFromTheRightSide) {
                     otherObject.setWorldPosition([this.getWorldPosition()[0] + width / 2 + otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                 } else {
@@ -32,7 +31,7 @@ class GeometryVolume extends Object3d {
             }
         });
         collider.setOnCollisionStay((otherObject) => {
-            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && (otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 0.5 >= this.getWorldPosition()[1] + height / 2);
+            let enemyCameFromAbove = (otherObject.getWorldPosition()[1] > this.getWorldPosition()[1]) && (otherObject.getWorldPosition()[1] - otherObject.getHeight() / 2 + 5.0 >= this.getWorldPosition()[1] + height / 2);
             let enemyCameFromTheRightSide = (otherObject.getWorldPosition()[0] > this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] - otherObject.getWidth() / 2 < this.getWorldPosition()[0] + width / 2);
             let enemyCameFromTheLeftSide = (otherObject.getWorldPosition()[0] < this.getWorldPosition()[0]) && (otherObject.getWorldPosition()[0] + otherObject.getWidth() / 2 >= this.getWorldPosition()[0] - width / 2);
 
@@ -43,7 +42,7 @@ class GeometryVolume extends Object3d {
                 }
             }
 
-            if (!((otherObject.getWorldPosition()[0] >= this.getWorldPosition()[0] - width / 2) && (otherObject.getWorldPosition()[0] <= this.getWorldPosition()[0] + width / 2))) {
+       //     if (!((otherObject.getWorldPosition()[0] >= this.getWorldPosition()[0] - width / 2) && (otherObject.getWorldPosition()[0] <= this.getWorldPosition()[0] + width / 2))) {
                 if (enemyCameFromTheRightSide && !enemyCameFromAbove) {
                     otherObject.setWorldPosition([this.getWorldPosition()[0] + width / 2 + otherObject.getWidth() / 2, otherObject.getWorldPosition()[1], otherObject.getWorldPosition()[2]]);
                     // Check if the collider object is the player, if so, allow wall jump in left direction.
@@ -65,7 +64,7 @@ class GeometryVolume extends Object3d {
                         }
                     }
                 }
-            }
+      //      }
         });
         
         collider.setOnCollisionExit((otherObject) => {
