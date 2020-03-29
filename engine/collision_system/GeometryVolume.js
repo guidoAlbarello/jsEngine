@@ -2,7 +2,6 @@ class GeometryVolume extends Object3d {
     constructor(width, height, depth) {
         super();
         this.setHitbox(new BoxHitbox(-width / 2, -height / 2, -depth, width / 2, height / 2, depth / 2));
-        gDeveloperTools.drawHitbox(this);
         let collider = new Collider("walker");
 
         collider.setOnCollisionEnter((otherObject) => {

@@ -54,6 +54,16 @@ class MaterialManager {
 			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
 			this.SHADERS_DIRECTORY + "defaultSpriteFS.glsl"
 		]);
+		materialPrograms.push([
+			PlatformMaterial,
+			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
+			this.SHADERS_DIRECTORY + "platformFS.glsl"
+		]);
+		materialPrograms.push([
+			LavaMaterial,
+			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
+			this.SHADERS_DIRECTORY + "lavaFS.glsl"
+		]);
 
 		return materialPrograms;
 	}
