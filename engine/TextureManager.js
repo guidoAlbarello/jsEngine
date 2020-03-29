@@ -68,6 +68,7 @@ class TextureManager {
 			this.gl.TEXTURE_MIN_FILTER,
 			this.gl.LINEAR
 		);
+		
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
@@ -198,6 +199,10 @@ class TextureManager {
 		gTextureManager.createTextureFromArray(
 			"hibiscus_color",
 			new Uint8Array([180, 55, 87])
+		);
+		gTextureManager.createTextureFromArray(
+			"lava_color",
+			new Uint8Array([207, 96, 16])
 		);
 		gTextureManager.createTextureFromArray(
 			"red_color",

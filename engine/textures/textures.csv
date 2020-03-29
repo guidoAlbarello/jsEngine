@@ -1,2 +1,3 @@
-tilemap,tilemap.png
-entity,enemy.jpg
+background,background/Background.png
+zombie,zombie.png
+forest_tileset,tiles/Tileset.png

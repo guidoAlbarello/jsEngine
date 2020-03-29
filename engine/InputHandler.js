@@ -56,9 +56,9 @@ class InputHandler {
 		// TODO: Add mouse movement
 		switch (input) {
 			case "up":
-				return this.getKey(81); //Q
+				return this.getKey(87); //Q
 			case "down":
-				return this.getKey(69); //E
+				return this.getKey(83); //E
 			case "forward":
 				return this.getKey(87); //W
 			case "backwards":
@@ -72,19 +72,28 @@ class InputHandler {
 			case "change_mode":
 				return this.getTapKey(66); //B
 			case "hide_axis":
-				return this.getTapKey(88); //H
+				return this.getTapKey(73); //H
 			case "hide_vertical_grid":
 				return this.getTapKey(89); //Y
 			case "hide_horizontal_grid":
 				return this.getTapKey(84); //Y
 			case "jump":
 				return this.getKey(87); //W
-				//return this.getTapKey(32, 0.0166); // Space
+			//return this.getTapKey(32, 0.0166); // Space
 			case "regulate":
 				return this.getTapKey(82); // R
 			case "shoot":
-				return this.isMouseDown;
+				return this.getKey(81); //Q
+			//return this.isMouseDown;
 			//return this.getTapKey(90);
+			case "sword":
+				return this.getKey(69); //E
+			case "heavy_attack":
+				return this.getKey(90); // Z 
+			case "light_attack":
+				return this.getKey(88); // X
+			case "dash_attack":
+				return this.getKey(69); // Keep E for now
 			default:
 				return false;
 		}

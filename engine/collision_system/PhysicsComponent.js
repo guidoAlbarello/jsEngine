@@ -8,19 +8,23 @@ class PhysicsComponent {
 	movility = [1, 1, 1];
 	dontFall = false;
 	isOnSurface = false;
-	MAX_VELOCITY = [20, 15];
+	MAX_VELOCITY = [20, 170];
+	impulse = [0,0];
 
 	constructor(object) {
 		this.object = object;
 		this.velocity = [0, 0, 0];
 		this.mass = 1;
 		this.gravityMultiplier = this.gravityInteraction;
+		this.impulse = [0,0];
 	}
 
 	update() {
-		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier;
-		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier;
+		this.velocity[0] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[0] * this.gravityMultiplier + this.impulse[0];
+		this.velocity[1] += gDeltaTime * this.GRAVITY_VALUE * this.GRAVITY_VALUE * this.gravity[1] * this.gravityMultiplier + this.impulse[1];
 
+		this.impulse = [0,0];
+		
 		vec3.mul(this.velocity, this.velocity, this.movility);
 		this.move();
 	}
@@ -35,10 +39,14 @@ class PhysicsComponent {
 			if (Math.abs(this.velocity[0]) > this.MAX_VELOCITY[0]){
 				this.velocity[0] = Math.sign(this.velocity[0]) * this.MAX_VELOCITY[0];
 			}
-			if (Math.abs(this.velocity[1]) > this.MAX_VELOCITY[1]){
-				this.velocity[1] = Math.sign(this.velocity[1]) * this.MAX_VELOCITY[1];
+			
+			if (this.velocity[1] > this.MAX_VELOCITY[1]){
+				this.velocity[1] = this.MAX_VELOCITY[1];
 			}
 
+			if (this.velocity[1] < 0 && Math.abs(this.velocity[1]) > this.MAX_VELOCITY[1] * 0.9) {
+				this.velocity[1] = - this.MAX_VELOCITY[1] * 0.9;
+			}
 			this.object.translate(vecMulScalar(this.velocity, gDeltaTime));
 		}
 	}

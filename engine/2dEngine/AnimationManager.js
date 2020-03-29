@@ -56,4 +56,8 @@ class AnimationManager {
             }
         }
     }
+
+    freeze(secondsToFreeze) {
+         this.animations[this.currentAnimation].freeze(secondsToFreeze);
+    }
 }
