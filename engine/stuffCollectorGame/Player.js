@@ -1,6 +1,8 @@
 class Player extends Sprite {
   constructor() {
-    super(1, 1.8, 'lime_color', 1, 1);
+    // Init player sprite.
+    super(3, 2.22, 'player', 50/512, 37/1024);
+
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.physicsComponent.setGravity(1);
 
@@ -10,6 +12,9 @@ class Player extends Sprite {
 
     this.wallJumpDirection = [0,0];
     this.organsCollected = new Map();
+
+    this.setAnimationManager(this.createAnimations(this));
+
     //gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
     gCollisionDetection.registerCollidable(this, 'player');
@@ -54,5 +59,43 @@ class Player extends Sprite {
 
   getVelocity() {
     return this.physicsComponent.getVelocity();
+  }
+
+  createAnimations(object) {
+    let animationManager = new AnimationManager();
+
+    animationManager.addAnimation("idle", Animation2d.fromRow(0, 0, 4, 1/6));
+    animationManager.addAnimation("left", Animation2d.fromRow(1, 1, 6, 1/12, /*flip=*/ true));
+    animationManager.addAnimation("right", Animation2d.fromRow(1, 1, 6, 1/12));
+    animationManager.addAnimation("death", Animation2d.fromRow(9, 0, 6, 1/3));
+
+    let conditionIdle = new AnimationTransitionCondition(object);
+    conditionIdle.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[0] == 0;
+    });
+
+    let conditionLeft = new AnimationTransitionCondition(object);
+    conditionLeft.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[0] < 0;
+    });
+
+    let conditionRight = new AnimationTransitionCondition(object);
+    conditionRight.setEvaluate((condition) => {
+      return condition.object.physicsComponent.velocity[0] > 0;
+    });
+
+    let conditionDeath = new AnimationTransitionCondition(object);
+    conditionDeath.setEvaluate((condition) => {
+      return condition.object.isDead();
+    });
+
+    animationManager.addTransitionToEveryAnimation("idle", conditionIdle);
+    animationManager.addTransitionToEveryAnimation("left", conditionLeft);
+    animationManager.addTransitionToEveryAnimation("right", conditionRight);
+    animationManager.addTransitionToEveryAnimation("death", conditionDeath);
+
+    animationManager.setCurrentAnimation("idle");
+
+    return animationManager;
   }
 }

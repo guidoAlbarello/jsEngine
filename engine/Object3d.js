@@ -175,7 +175,7 @@ class Object3d {
 		if (this.physicsComponent) {
 			this.physicsComponent.update();
 		}
-		
+
 		mat4.invert(this.inverseFatherModelMatrix, fatherModelMatrix);
 
 		mat4.multiply(
