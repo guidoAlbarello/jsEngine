@@ -1,7 +1,7 @@
 class DefaultSpriteMaterial extends Material {
 	constructor(texture) {
-        super();
-        this.setTextureAtlas(texture || "white");
+    super();
+    this.setTextureAtlas(texture || "white");
 		this.setVertexNormals([0,1,0]);
 		this.setTextureOffset(0,0);
 	}
@@ -21,8 +21,8 @@ class DefaultSpriteMaterial extends Material {
 	setVertexNormal(normals) {
 		this.addAttribute("aVertexNormal", normals, 3);
     }
-    
-    setTextureCoordinates(texCoords) {
+
+  setTextureCoordinates(texCoords) {
 		this.addAttribute("aTexCoord", texCoords, 2);
 	}
 
@@ -41,9 +41,9 @@ class DefaultSpriteMaterial extends Material {
 		this.addUniform("uNormalMatrix", gRenderer.MAT4, normalMatrix);
 	}
 
-    setTextureAtlas(texture) {
-        this.addSampler("textureAtlas", gTextureManager.getTexture(texture));
-    }
+  setTextureAtlas(texture) {
+    this.addSampler("textureAtlas", gTextureManager.getTexture(texture));
+  }
 
 	setWorldMatrix(matrix) {}
 

@@ -406,15 +406,15 @@ class SurfaceCreator {
 	}
 
 	/*
-      Form example: 
+      Form example:
       form = {
 	    "positions" :  [
-		[0.0, 0.0, 0.5],    
+		[0.0, 0.0, 0.5],
 		[0.0, 0.5, 0.0],
 		[0.0, -0.5,0.0]
 	    ],
 	    "normals" : [
-		[1.0, 0.0, 0.0],    
+		[1.0, 0.0, 0.0],
 		[0.0, 0.5, 0.0],
 		[0.0, 1.0,0.5]
 	    ],
@@ -548,7 +548,7 @@ class SurfaceCreator {
 		return surface;
 	}
 
-	makeQuad(w, h, scaleX, scaleY) {
+	makeQuad(w, h, scaleX, scaleY, textureCoordinates) {
 		let params = gAssetManager.makeModelParams();
 		params.positions = [
 				-w/2, -h/2, 0,
@@ -562,13 +562,22 @@ class SurfaceCreator {
 				0,0,1,
 				0,0,1
 			];
-		params.textureCoordinates = [
+		params.textureCoordinates = textureCoordinates || [
 				0,scaleY,
 				scaleX,scaleY,
 				0,0,
 				scaleX,0
 			];
-			
+
 		return gAssetManager.makeModelData(params, [0,1,2,3], "TRIANGLE_STRIP");
+	}
+
+	makeInvertedQuad(w, h, scaleX, scaleY) {
+		return this.makeQuad(w, h, scaleX, scaleY, [
+			scaleX, scaleY,
+			0, scaleY,
+			scaleX, 0,
+			0, 0
+		]);
 	}
 }

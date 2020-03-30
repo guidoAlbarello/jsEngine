@@ -1,4 +1,14 @@
 class Animation2d {
+    static fromRow(row_number, col_i, n_frames, duration, flip = false) {
+      let animation = new Animation2d();
+      let col_f = col_i + n_frames;
+
+      for (let col = col_i; col < col_f; ++col) {
+        animation.addFrame(col, row_number, duration, flip);
+      }
+      return animation;
+    }
+
     constructor() {
         this.frames = []
         this.timer = 0;
@@ -7,11 +17,12 @@ class Animation2d {
         this.freezeDuration = 0;
     }
 
-    addFrame(offsetX, offsetY, duration) {
+    addFrame(offsetX, offsetY, duration, flip = false) {
         let frame = {
             "offsetX": offsetX,
             "offsetY": offsetY,
-            "duration": duration
+            "duration": duration,
+            "flip": flip
         }
         this.frames.push(frame);
     }

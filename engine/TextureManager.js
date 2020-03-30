@@ -17,6 +17,7 @@ class TextureManager {
 		let texturesToLoad = (await this.getTexturesToLoad()).split("\n");
 		if (texturesToLoad) {
 			for (let i = 0; i < texturesToLoad.length; i++) {
+				if (texturesToLoad[i] == "") continue;
 				let texture = texturesToLoad[i].split(",");
 				texture = texture.map(element => element.trim());
 				texture_loading.push(
@@ -68,7 +69,7 @@ class TextureManager {
 			this.gl.TEXTURE_MIN_FILTER,
 			this.gl.LINEAR
 		);
-		
+
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
@@ -187,7 +188,7 @@ class TextureManager {
 			"blue_color",
 			new Uint8Array([63, 224, 208])
 		);
-		
+
 		gTextureManager.createTextureFromArray(
 			"rust_color",
 			new Uint8Array([157, 58, 22])
