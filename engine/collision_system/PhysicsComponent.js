@@ -8,7 +8,7 @@ class PhysicsComponent {
 	movility = [1, 1, 1];
 	dontFall = false;
 	isOnSurface = false;
-	MAX_VELOCITY = [20, 170];
+	MAX_VELOCITY = [30, 170];
 	impulse = [0,0];
 
 	constructor(object) {

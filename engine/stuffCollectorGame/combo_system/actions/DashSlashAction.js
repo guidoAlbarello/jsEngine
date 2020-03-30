@@ -2,9 +2,9 @@ class DashSlashAction extends Action {
     constructor (object) {
         super(DashSlashAction.NAME, object);
         this.start_time = 0;
-        this.end_time = 1;
-        this.action_duration = 1;
-        this.dash_speed = 30;
+        this.end_time = 0.5;
+        this.action_duration = 0.5;
+        this.dash_speed = 10;
         this.direction = [0,0];
     }
 
@@ -19,7 +19,7 @@ class DashSlashAction extends Action {
 
     gameplayReaction() {
         // TODO: Rotate player in direction.
-        this.object.physicsComponent.addImpulse([this.dash_speed * this.direction[0], this.dash_speed * this.direction[1]]);
+        this.object.translate(vecMulScalar([this.dash_speed * this.direction[0], this.dash_speed * this.direction[1], 0], 1));
         // Add code to damage here.
     }
 

@@ -39,4 +39,6 @@ class Action {
     getActionDuration() {
         return this.action_duration;
     }
+
+    clean() {}
 }

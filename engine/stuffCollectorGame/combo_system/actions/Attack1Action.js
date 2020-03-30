@@ -2,9 +2,9 @@ class Attack1Action extends Action {
     constructor (object) {
         super(Attack1Action.NAME, object);
         this.start_time = 0;
-        this.end_time = 1.0;
+        this.end_time = 0.7;
         let attack2_input_window = 0.2;
-        this.action_duration = 1.0 + attack2_input_window; 
+        this.action_duration = 0.7 + attack2_input_window; 
     }
 
     animationReaction() {

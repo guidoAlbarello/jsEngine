@@ -11,7 +11,7 @@ class PlayerController {
         this.maxHeightJump = this.jumpSpeed * 5;
 
         this.timeShoot = 0;
-        this.direction = [1,0];
+        this.direction = [1, 0];
 
         this.createPlayerAttacks();
     }
@@ -26,48 +26,51 @@ class PlayerController {
     }
 
     update() {
-        if(this.player.isDead()) this.player.remove();
+        if (this.player.isDead()) this.player.remove();
 
         let velocityX = 0;
         let actualVelocity = this.player.getVelocity();
 
-        if (gInputHandler.getInput("shoot")){
-            if (this.timeShoot > 0){
-                this.timeShoot -= gDeltaTime;
-                return;
+        this.attackGraph.update();
+
+        if (this.attackGraph.currentAction == RootAction.NAME) {
+            if (gInputHandler.getInput("shoot")) {
+                if (this.timeShoot > 0) {
+                    this.timeShoot -= gDeltaTime;
+                    return;
+                }
+                this.timeShoot = gDeltaTime * 10;
+
+                let shot = new Shot([this.direction[0], this.direction[1]], this.walkSpeedMax + 2);
+                shot.translate(this.player.getWorldPosition());
+                this.player.addOrphanChild(shot);
+                //this.player.addChild(shot);
             }
-            this.timeShoot = gDeltaTime*10;
-            
-            let shot = new Shot([this.direction[0],this.direction[1]],this.walkSpeedMax+2);
-            shot.translate(this.player.getWorldPosition());
-            this.player.addOrphanChild(shot);
-            //this.player.addChild(shot);
+
+            if (gInputHandler.getInput("sword")) {
+                let sword = new Sword([this.direction[0], this.direction[1]], this.walkSpeedMax + 2);
+                sword.translate([this.direction[0] * (this.player.getWidth() / 2 + 0.3 * sword.getWidth()), 0, 0]);
+                //+
+                this.player.addChild(sword);
+            }
+
+            if (actualVelocity[1] == 0) this.jumping = false;
+
+            // When unlocking new skill, comment this.
+            if (this.player.physicsComponent.velocity[1] < 0) {
+                this.jumping = true;
+            }
+
+            if (gInputHandler.getInput("jump") && !this.jumping) {
+                if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
+                else this.jumping = true;
+            } else this.jumping = true;
+
+
+            if (gInputHandler.getInput("left")) velocityX = this.walk(-1);
+            if (gInputHandler.getInput("right")) velocityX = this.walk(1);
         }
-
-        if (gInputHandler.getInput("sword")){
-            let sword = new Sword([this.direction[0],this.direction[1]],this.walkSpeedMax+2);
-            sword.translate([this.direction[0]*(this.player.getWidth()/2+0.3*sword.getWidth()),0,0]);
-            //+
-            this.player.addChild(sword);
-        }
-
         
-        if (actualVelocity[1] == 0) this.jumping = false;
-
-        // When unlocking new skill, comment this.
-        if (this.player.physicsComponent.velocity[1] < 0) {
-            this.jumping = true;
-        }
-        
-        if (gInputHandler.getInput("jump") && !this.jumping) {
-            if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
-            else this.jumping = true;
-        } else this.jumping=true;
-        
-
-        if (gInputHandler.getInput("left")) velocityX = this.walk(-1);
-        if (gInputHandler.getInput("right")) velocityX = this.walk(1);
-
         if (velocityX == 0) velocityX = this.walk(0);
 
         this.velocity = actualVelocity;
@@ -75,8 +78,6 @@ class PlayerController {
         this.player.walk(velocityX);
 
         this.calculateDirection();
-
-        this.attackGraph.update();
     }
 
     walk(direction) {
@@ -89,7 +90,7 @@ class PlayerController {
                 return decelerate;
             }
         }
-        
+
         if (direction != 0 && this.player.wallJumpDirection[0] == direction) {
             this.player.physicsComponent.addImpulse([1000 * this.player.wallJumpDirection[0], 16]);
         }
@@ -99,9 +100,9 @@ class PlayerController {
     }
 
 
-    calculateDirection(){
-        if (this.velocity[0]>0) this.direction[0]=1;
-        if (this.velocity[0]<0) this.direction[0]=-1;
+    calculateDirection() {
+        if (this.velocity[0] > 0) this.direction[0] = 1;
+        if (this.velocity[0] < 0) this.direction[0] = -1;
     }
 
     createPlayerAttacks() {

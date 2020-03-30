@@ -56,19 +56,19 @@ class InputHandler {
 		// TODO: Add mouse movement
 		switch (input) {
 			case "up":
-				return this.getKey(87); //Q
+				return this.getKey(38); //up arrow
 			case "down":
-				return this.getKey(83); //E
+				return this.getKey(40); //down arrow 
 			case "forward":
 				return this.getKey(87); //W
 			case "backwards":
 				return this.getKey(83); //S
 			case "right":
-				return this.getKey(68); //D
+				return this.getKey(39); //right arrow
 			case "left":
-				return this.getKey(65); //A
+				return this.getKey(37); //left arrow
 			case "change_camera":
-				return this.getTapKey(67); //C
+				return this.getTapKey(69); //E
 			case "change_mode":
 				return this.getTapKey(66); //B
 			case "hide_axis":
@@ -76,24 +76,26 @@ class InputHandler {
 			case "hide_vertical_grid":
 				return this.getTapKey(89); //Y
 			case "hide_horizontal_grid":
-				return this.getTapKey(84); //Y
+				return this.getTapKey(84); //T
 			case "jump":
-				return this.getKey(87); //W
+				return this.getKey(38); //up arrow
 			//return this.getTapKey(32, 0.0166); // Space
 			case "regulate":
-				return this.getTapKey(82); // R
+				return this.getTapKey(82); //R
 			case "shoot":
-				return this.getKey(81); //Q
+				return this.getKey(65); //A
 			//return this.isMouseDown;
 			//return this.getTapKey(90);
 			case "sword":
-				return this.getKey(69); //E
+				return this.getKey(83); //S
+			case "interact":
+				return this.getKey(68); //D
 			case "heavy_attack":
-				return this.getKey(90); // Z 
+				return this.getKey(90); //Z 
 			case "light_attack":
-				return this.getKey(88); // X
+				return this.getKey(88); //X
 			case "dash_attack":
-				return this.getKey(69); // Keep E for now
+				return this.getKey(67); //C
 			default:
 				return false;
 		}
