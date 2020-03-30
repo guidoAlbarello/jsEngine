@@ -21,6 +21,14 @@ class Player extends Sprite {
     gCollisionDetection.registerCollidable(this, 'player');
     gCollisionDetection.registerCollidable(this, "entity");
     this.dead = false;
+
+    let updateHpBar = new Behaviour(this);
+    updateHpBar.setUpdate(() => {
+      this.hp.material.setLife(this.hp.getHP());
+      this.hp.material.setTotalLife(this.hp.hpMax);
+      console.log(this.hp.hpMax + ", " + this.hp.hp);
+    });
+    this.addBehaviour(updateHpBar);    
   }
 
   walk(velocityX) {

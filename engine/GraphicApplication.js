@@ -62,7 +62,7 @@ class GraphicApplication {
     loadMaterialsPromise.then(() => {
       gTextureManager.loadDefaultArrayTextures();
       gRenderer.initMaterials();
-      this.scene = new LoadingScene(this, Editor).build();
+      this.scene = new LoadingScene(this, ForestLevel).build();
 
       this.initDeveloperStuff();
 

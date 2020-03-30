@@ -17,12 +17,12 @@ class Enemy extends Sprite {
 			if (!this.isDead()) otherObject.takeDamage(gConfiguration.enemyDamage);
 		});
 		collider.setOnCollisionEnter((otherObject) => {
-	/*		if (this.isDead()) return;
+			if (this.isDead()) return;
 			let otherObjectPosition = otherObject.getWorldPosition();
 			let myPosition = this.getWorldPosition();
 			if (otherObjectPosition[0] < myPosition[0]) otherObject.physicsComponent.addImpulse([-otherObject.getWidth() * 15, 0]);
 			else otherObject.physicsComponent.addImpulse([otherObject.getWidth() * 15, 0]);
-			otherObject.takeDamage(gConfiguration.enemyDamage);*/
+			otherObject.takeDamage(gConfiguration.enemyDamage);
 		});
 		this.addCollider(collider);
 	}

@@ -56,7 +56,7 @@ var gConfiguration = {
 	"playerHP": 100,
 	"enemyHP": 10,
 	"zombieHP": 20,
-	"enemyDamage": 1,
+	"enemyDamage": 10,
 	"shotDamage": 2,
 	"swordDamage": 3
 };
