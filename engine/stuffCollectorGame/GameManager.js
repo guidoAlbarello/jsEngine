@@ -6,7 +6,7 @@ class GameManager extends Object3d {
 	}
 
 	init() {
-		this.generateGuards();
+		//this.generateGuards();
 	}
 
 	generateGuards() {
@@ -26,8 +26,6 @@ class GameManager extends Object3d {
 		//console.log(organsCollected);
 		//debugger;
 		if (this._gameOver(hp, organsCollected)) {
-			this.scene.destroy();
-			//document.getElementById("game-over").style.display = "block";
 			document.getElementById("my-canvas").style.display = "none";
 			document.getElementById("img").style.display = "block";
 		}

@@ -2,9 +2,9 @@ class ForestLevel {
 	constructor() {
 		this.scene = new Scene();
 		this.objective = new Map([
-			[ "liver", 1 ],
-			[ "brain", 1 ],
-			[ "heart", 1 ]
+			["liver", 1],
+			["brain", 1],
+			["heart", 1]
 		]);
 	}
 
@@ -16,42 +16,42 @@ class ForestLevel {
 		this.setupLevelGeometry();
 
 
-		let gameManager = new GameManager( this.scene, this.objective );
+		let gameManager = new GameManager(this.scene, this.objective);
 		gameManager.init();
-		this.scene.addChild( gameManager );
+		this.scene.addChild(gameManager);
 
 		return this.scene;
 	}
 
 	setupCameras() {
 		// Set up cameras
-		this.scene.addCamera( new OrtographicCamera([ 0, 0, 20 ], [ 0, 0, 0 ], [ 0, 1, 0 ], 27, 48 ), "ortho", gQuerySystem.getPlayer() );
-		this.scene.addCamera( new OrbitalCamera( 20, [ 0.0, 0.0, 0.0 ]), "orbital");
+		this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), "ortho", gQuerySystem.getPlayer());
+		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
 		this.scene.useCamera("ortho");
 	}
 
 	setupPlayer() {
 		// Create the player
-		let player = gEntityManager.instantiateObjectWithTag("player", Player );
-		player.translate([ 0, 3, 0 ]);
+		let player = gEntityManager.instantiateObjectWithTag("player", Player);
+		player.translate([0, 3, 0]);
 
 		// Create a player controller and set the player to it.
 		// This way we can control the player with input.
-		let playerController = new PlayerController( player );
-		this.scene.setController( playerController );
+		let playerController = new PlayerController(player);
+		this.scene.setController(playerController);
 
 		// Add animation maanger for player
 		//player.setAnimationManager(this.createAnimations(player));
 
 
 		// Added player to the scene
-		this.scene.addChild( player );
+		this.scene.addChild(player);
 	}
 
 	setupBackground() {
-		let background = gEntityManager.instantiateObjectWithTag("background", Sprite, 50, 50, "background", 1, 1 );
-		background.translate([ 0, 0, 10 ]);
-		gQuerySystem.getPlayer().addChild( background );
+		let background = gEntityManager.instantiateObjectWithTag("background", Sprite, 50, 50, "background", 1, 1);
+		background.translate([0, 0, 10]);
+		gQuerySystem.getPlayer().addChild(background);
 	}
 
 	setupLevelGeometry() {
@@ -64,10 +64,11 @@ class ForestLevel {
 		};
 
 		// Upper level
-
+		let g1 = this.createEnemyOfTypeAt(Guard, 8, 3);
+		g1.setPatrollCenter([8, 3, 0]);
 		// First Jumps
-		this.createPlatformFromSizeAt( 30, baseY + 10, d_x, d_y );
-		increaseDisplacement( 38, 5 );
+		this.createPlatformFromSizeAt(30, baseY + 10, d_x, d_y);
+		increaseDisplacement(38, 5);
 		this.createPlatformFromSizeAt(8, baseY, d_x - 8, -5);
 		this.createPlatformFromSizeAt(15, baseY + 10 + d_y, d_x, d_y);
 		increaseDisplacement(23, 6);
@@ -165,7 +166,9 @@ class ForestLevel {
 		this.createPlatformFromSizeAt(45, baseY, d_x - 25, d_y);
 		increaseDisplacement(-10, -1.5 * baseY);
 		this.createPlatformFromSizeAt(80, baseY, d_x - 20, d_y);
-		this.createEnemyOfTypeAt(Guard, d_x + 10, d_y);
+		let g = this.createEnemyOfTypeAt(Guard, d_x + 10, d_y);
+		g.setPatrollCenter([d_x + 10, d_y, 0]);
+
 		// this.createExit(); Spawn Exit
 		increaseDisplacement(-70, 2.5 * baseY);
 
@@ -253,6 +256,7 @@ class ForestLevel {
 		let enemy = gEntityManager.instantiateObjectWithTag("enemy", enemyType);
 		enemy.translate([enemy.getWidth() / 2 + x, enemy.getHeight() / 2 + y, 0]);
 		this.scene.addChild(enemy);
+		return enemy;
 	}
 
 	createPlatformFromSizeAt(width, height, x, y) {
