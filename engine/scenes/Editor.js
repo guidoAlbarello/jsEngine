@@ -89,6 +89,12 @@ class Editor {
 
 
         
+        let tomb = new Tomb();
+        this.scene.addChild(tomb);
+
+
+
+        
 
 
         let gameManager = new GameManager(this.scene, this.objective);
