@@ -7,6 +7,7 @@ class ForestLevel {
         this.setupPlayer();
         this.setupCameras();
 
+        this.setupBackground();
         this.setupLevelGeometry();
 
         return this.scene;
@@ -22,7 +23,7 @@ class ForestLevel {
     setupPlayer() {
         // Create the player
         let player = gEntityManager.instantiateObjectWithTag('player', Player);
-        player.translate([-100, -90, 0]);
+        player.translate([0, 3, 0]);
 
         // Create a player controller and set the player to it.
         // This way we can control the player with input.
@@ -35,6 +36,12 @@ class ForestLevel {
 
         // Added player to the scene
         this.scene.addChild(player);
+    }
+
+    setupBackground() {
+        let background = gEntityManager.instantiateObjectWithTag("background", Sprite, 50, 50, "background", 1, 1);
+        background.translate([0,0, 10]);
+        gQuerySystem.getPlayer().addChild(background);
     }
 
     setupLevelGeometry() {

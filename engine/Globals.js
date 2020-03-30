@@ -59,7 +59,8 @@ var gConfiguration = {
 	"enemyDamage": 1,
 	"shotDamage": 2,
 	"swordDamage": 3
-}
+};
+var gOrgansType = ["heart","brain"];
 
 var gDeltaTime = 0.0;
 var gDeltaTimeMultiplier = 1.0;

@@ -9,7 +9,7 @@ class Player extends Sprite {
     this.addChild(this.hp);
 
     this.wallJumpDirection = [0,0];
-    this.organsCollected = new Map();
+    this.inventory = new Map();
     //gDeveloperTools.drawHitbox(this);
     gCollisionDetection.registerCollidable(this, 'walker');
     gCollisionDetection.registerCollidable(this, 'player');
@@ -49,10 +49,18 @@ class Player extends Sprite {
   }
 
   getInventory() {
-    return this.organsCollected;
+    return this.inventory;
   }
 
   getVelocity() {
     return this.physicsComponent.getVelocity();
+  }
+
+  addToInventory(object){
+    if(this.inventory.has(object)){
+      this.inventory.set(object,this.inventory.get(object)+1);
+    }else{
+      this.inventory.set(object,1);
+    }
   }
 }
