@@ -1,15 +1,14 @@
 class Guard extends Enemy {
 	constructor() {
 		super();
-		this.init(1, 1.5, "hibiscus_color", 1, 1);
-		this.patrollCenter = [0, 0, 0];
+		this.init( 1, 1.5, "hibiscus_color", 1, 1 );
+		this.patrollCenter = [ 0, 0, 0 ];
 		this.direction = 1;
-		this.addBehaviour(new GuardBehaviour(this));
+		this.addBehaviour( new GuardBehaviour( this ) );
 	}
 
 	setPatrollCenter(pc) {
 		this.patrollCenter = pc;
-		console.log("setPatrollCenter " + pc);
 	}
 
 	walk(p) {
@@ -18,9 +17,8 @@ class Guard extends Enemy {
 }
 class GuardBehaviour extends Behaviour {
 	constructor(object) {
-		super(object);
+		super( object );
 		this.makeTree();
-		console.log("construct guard b " + object.patrollCenter);
 		this.update =
 			() => {
 
@@ -29,41 +27,41 @@ class GuardBehaviour extends Behaviour {
 	}
 
 	patrollBehaviour() {
-		let patroll = new ActionNode(() => {
-			if (distance(this.object.patrollCenter, this.object.getPosition()) > 3) {
-				let d = (this.object.getPosition()[0] - this.object.patrollCenter[0]) > 0 ? -1 : 1;
+		let patroll = new ActionNode( () => {
+			if ( distance( this.object.patrollCenter, this.object.getPosition() ) > 3 ) {
+				let d = (this.object.getPosition()[ 0 ] - this.object.patrollCenter[ 0 ]) > 0 ? -1 : 1;
 				this.object.direction = d;
 			}
 
-			this.object.physicsComponent.setVelocityX(this.object.direction * 5);
+			this.object.physicsComponent.setVelocityX( this.object.direction * 5 );
 			return returnStatement.SUCCESS;
 		});
 
 		new Selector(
 			new Map([
 				//      ['gotoPatrollPosition', gotoPatrollPos],
-				["patroll", patroll]
+				[ "patroll", patroll ]
 			])
 		);
 		return patroll;
 	}
 
 	engageBehaviour() {
-		const move = new ActionNode(() => {
+		const move = new ActionNode( () => {
 			//move towards player
 			let player = gQuerySystem.getPlayer();
 			const direction =
-				(this.object.getPosition()[0] - player.getPosition()[0]) > 0 ? -1 : 1;
-			this.object.physicsComponent.setVelocityX(direction * 5);
+				(this.object.getPosition()[ 0 ] - player.getPosition()[ 0 ]) > 0 ? -1 : 1;
+			this.object.physicsComponent.setVelocityX( direction * 5 );
 			return returnStatement.SUCCESS;
 		});
-		const atack = new ActionNode(() => {
+		const atack = new ActionNode( () => {
 			//atack player
 			return returnStatement.SUCCESS;
 		});
 		let inAtackRange = new DecoratorNode(
 			new Map([
-				["", atack]
+				[ "", atack ]
 			]),
 			() => {
 				return false;
@@ -73,18 +71,18 @@ class GuardBehaviour extends Behaviour {
 		let chooseAtackOrMove = new Selector(
 			new Map([
 				//      ['atack', atack],
-				["moveTowards", move]
+				[ "moveTowards", move ]
 			])
 		);
 
 		let engage = new DecoratorNode(
 			new Map([
-				["", chooseAtackOrMove]
+				[ "", chooseAtackOrMove ]
 			]),
 			() => { //if player close engage
 				let playerPos = gQuerySystem.getPlayer().getPosition();
 				let guardPos = this.object.getPosition();
-				return distance(playerPos, guardPos) < 10;
+				return distance( playerPos, guardPos ) < 10;
 			}
 		);
 		return engage;
@@ -94,11 +92,11 @@ class GuardBehaviour extends Behaviour {
 
 		let root = new Selector(
 			new Map([
-				["engage", this.engageBehaviour()],
-				["patroll", this.patrollBehaviour()]
+				[ "engage", this.engageBehaviour() ],
+				[ "patroll", this.patrollBehaviour() ]
 			])
 		);
-		this.tree = new BehaviourTree(root);
+		this.tree = new BehaviourTree( root );
 	}
 }
 
