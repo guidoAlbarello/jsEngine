@@ -10,11 +10,10 @@ class GameManager extends Object3d {
 	}
 
 	generateGuards() {
-		let entity = gEntityManager.instantiateObjectWithTag("guard1", Guard);
-		console.log("generate ");
-		entity.setPatrollCenter([8, 3, 0]);
-		entity.translate([8, 3, 0]);
-		this.scene.addChild(entity);
+		let entity = gEntityManager.instantiateObjectWithTag("guard1", Guard );
+		entity.setPatrollCenter([ 8, 3, 0 ]);
+		entity.translate([ 8, 3, 0 ]);
+		this.scene.addChild( entity );
 		return;
 	}
 
@@ -23,9 +22,7 @@ class GameManager extends Object3d {
 		const hp = player.getHP();
 		const organsCollected = player.getInventory();
 
-		//console.log(organsCollected);
-		//debugger;
-		if (this._gameOver(hp, organsCollected)) {
+		if ( this._gameOver( hp, organsCollected ) ) {
 			document.getElementById("my-canvas").style.display = "none";
 			document.getElementById("img").style.display = "block";
 		}
@@ -35,13 +32,12 @@ class GameManager extends Object3d {
 	}
 
 	_gameOver(hp, organsCollected) {
-		return (hp <= 0) || this._allOrgansCollected(organsCollected);
+		return (hp <= 0) || this._allOrgansCollected( organsCollected );
 	}
 
 	_allOrgansCollected(organs) {
-
-		return Array.from(this.objective.keys()).reduce((acum, key) => {
-			return acum && organs.has(key) && (organs[key] >= this.objective[key]);
-		}, true);
+		return Array.from( this.objective.keys() ).reduce( (acum, key) => {
+			return acum && organs.has( key ) && (organs.get( key ) >= this.objective.get( key ));
+		}, true );
 	}
 }
