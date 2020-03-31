@@ -21,6 +21,7 @@ class Player extends Sprite {
     gCollisionDetection.registerCollidable(this, 'player');
     gCollisionDetection.registerCollidable(this, "entity");
     this.dead = false;
+    this.jumping = false;
 
     let updateHpBar = new Behaviour(this);
     updateHpBar.setUpdate(() => {
@@ -28,7 +29,7 @@ class Player extends Sprite {
       this.hp.material.setTotalLife(this.hp.hpMax);
       console.log(this.hp.hpMax + ", " + this.hp.hp);
     });
-    this.addBehaviour(updateHpBar);    
+    this.addBehaviour(updateHpBar);
   }
 
   walk(velocityX) {
@@ -37,6 +38,11 @@ class Player extends Sprite {
 
   jump(height) {
     this.physicsComponent.addImpulse([-this.physicsComponent.gravity[0] * height, -this.physicsComponent.gravity[1] * height]);
+    this.jumping = true;
+  }
+
+  finishJump() {
+    this.jumping = false;
   }
 
   allowWallJump(direction) {
@@ -58,8 +64,12 @@ class Player extends Sprite {
       }
   }
 
-  isDead(){
+  isDead() {
     return this.dead;
+  }
+
+  isJumping() {
+    return this.jumping;
   }
 
   getInventory() {
@@ -70,27 +80,45 @@ class Player extends Sprite {
     return this.physicsComponent.getVelocity();
   }
 
+  isGoingLeft() {
+    return this.physicsComponent.getVelocity()[0] < 0;
+  }
+
+  isGoingRight() {
+    return this.physicsComponent.getVelocity()[0] > 0;
+  }
+
+  isIdle() {
+    return this.physicsComponent.getVelocity()[0] == 0;
+  }
+
   createAnimations(object) {
     let animationManager = new AnimationManager();
 
     animationManager.addAnimation("idle", Animation2d.fromRow(0, 0, 4, 1/6));
     animationManager.addAnimation("left", Animation2d.fromRow(1, 1, 6, 1/12, /*flip=*/ true));
+    animationManager.addAnimation("jumpRight",
+        Animation2d.fromRow(2, 0, 7, 1/12).addAnimation(
+        Animation2d.fromRow(3, 0, 3, 1/12)));
+    animationManager.addAnimation("jumpLeft",
+        Animation2d.fromRow(2, 0, 7, 1/12, /*flip=*/ true).addAnimation(
+        Animation2d.fromRow(3, 0, 3, 1/12, /*flip=*/ true)));
     animationManager.addAnimation("right", Animation2d.fromRow(1, 1, 6, 1/12));
     animationManager.addAnimation("death", Animation2d.fromRow(9, 0, 6, 1/3));
 
     let conditionIdle = new AnimationTransitionCondition(object);
     conditionIdle.setEvaluate((condition) => {
-      return condition.object.physicsComponent.velocity[0] == 0;
+      return condition.object.isIdle() && !condition.object.isJumping();
     });
 
     let conditionLeft = new AnimationTransitionCondition(object);
     conditionLeft.setEvaluate((condition) => {
-      return condition.object.physicsComponent.velocity[0] < 0;
+      return condition.object.isGoingLeft() && !condition.object.isJumping();
     });
 
     let conditionRight = new AnimationTransitionCondition(object);
     conditionRight.setEvaluate((condition) => {
-      return condition.object.physicsComponent.velocity[0] > 0;
+      return condition.object.isGoingRight() && !condition.object.isJumping();
     });
 
     let conditionDeath = new AnimationTransitionCondition(object);
@@ -98,9 +126,23 @@ class Player extends Sprite {
       return condition.object.isDead();
     });
 
+    let conditionJumpLeft = new AnimationTransitionCondition(object);
+    conditionJumpLeft.setEvaluate((condition) => {
+      return condition.object.isGoingLeft() && condition.object.isJumping();
+    });
+
+    let conditionJumpRight = new AnimationTransitionCondition(object);
+    conditionJumpRight.setEvaluate((condition) => {
+      return condition.object.isGoingRight() && condition.object.isJumping();
+    });
+
+
+
     animationManager.addTransitionToEveryAnimation("idle", conditionIdle);
     animationManager.addTransitionToEveryAnimation("left", conditionLeft);
     animationManager.addTransitionToEveryAnimation("right", conditionRight);
+    animationManager.addTransitionToEveryAnimation("jumpRight", conditionJumpRight);
+    animationManager.addTransitionToEveryAnimation("jumpLeft", conditionJumpLeft);
     animationManager.addTransitionToEveryAnimation("death", conditionDeath);
 
     animationManager.setCurrentAnimation("idle");

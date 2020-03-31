@@ -54,7 +54,10 @@ class PlayerController {
                 this.player.addChild(sword);
             }
 
-            if (actualVelocity[1] == 0) this.jumping = false;
+            if (actualVelocity[1] == 0) {
+              this.jumping = false;
+              this.player.finishJump();
+            }
 
             // When unlocking new skill, comment this.
             if (this.player.physicsComponent.velocity[1] < 0) {
@@ -62,15 +65,17 @@ class PlayerController {
             }
 
             if (gInputHandler.getInput("jump") && !this.jumping) {
-                if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
+                if (actualVelocity[1] < this.maxHeightJump) {
+                  this.player.jump(this.jumpSpeed * this.jumpSpeed);
+                }
                 else this.jumping = true;
-            } else this.jumping = true;
+            }
 
 
             if (gInputHandler.getInput("left")) velocityX = this.walk(-1);
             if (gInputHandler.getInput("right")) velocityX = this.walk(1);
         }
-        
+
         if (velocityX == 0) velocityX = this.walk(0);
 
         this.velocity = actualVelocity;
@@ -117,7 +122,7 @@ class PlayerController {
 
         // Add transitions to switch between attacks to graph
         // They need to be in order of more specific to more generic.
-        // For example an attack that is activated with UP + x should be first that an attack activated with x.        
+        // For example an attack that is activated with UP + x should be first that an attack activated with x.
         this.attackGraph.addTransition("*", DashSlashAction.NAME, new WildcardToDashSlashCondition());
         this.attackGraph.addTransition("*", SkySlamAction.NAME, new WildcardToSkySlamCondition(this.player));
         this.attackGraph.addTransition("*", UppercutAction.NAME, new WildcardToUppercutCondition());

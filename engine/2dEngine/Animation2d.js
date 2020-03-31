@@ -42,6 +42,12 @@ class Animation2d {
         }
     }
 
+    // Adds the frames of another animation, while maintaining the rest of the properties.
+    addAnimation(otherAnimation) {
+      this.frames = this.frames.concat(otherAnimation.frames);
+      return this;
+    }
+
     getCurrentFrame() {
         return this.frames[this.currentFrame];
     }
