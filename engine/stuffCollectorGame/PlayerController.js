@@ -62,7 +62,7 @@ class PlayerController {
             }
 
             if (gInputHandler.getInput("jump") && !this.jumping) {
-                if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed * this.jumpSpeed);
+                if (actualVelocity[1] < this.maxHeightJump) this.player.jump(this.jumpSpeed);
                 else this.jumping = true;
             } else this.jumping = true;
 
