@@ -1,0 +1,25 @@
+img{
+	display:none;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	min-height: 100%
+}
+
+#my-canvas{
+	width: 100%;
+}
+
+body {
+		background-color: grey;
+}
+
+canvas {
+		background-color: white;
+}
+
+textarea {
+		background-color: black;
+		foreground-color: white;
+}
