@@ -64,8 +64,6 @@ class ForestLevel {
 		};
 
 		// Upper level
-		let g1 = this.createEnemyOfTypeAt(Guard, 8, 3);
-		g1.setPatrollCenter([8, 3, 0]);
 		// First Jumps
 		this.createPlatformFromSizeAt(30, baseY + 10, d_x, d_y);
 		increaseDisplacement(38, 5);

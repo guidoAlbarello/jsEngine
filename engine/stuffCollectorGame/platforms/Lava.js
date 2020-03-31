@@ -5,5 +5,6 @@ class Lava extends Sprite {
         this.translate([width/2, -height/2, 0]);
         let material = new LavaMaterial("lava_color");
         this.setMaterial(material);
+        this.addChild(new KillVolume(width || 3, height || 0.7, 2));
     }
 }
