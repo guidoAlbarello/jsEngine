@@ -1,11 +1,12 @@
 class Tomb extends Sprite {
-    constructor() {
+    constructor(organType) {
         super();
         this.init(2,1.3,"space_color", 1,1);
 
         this.level = 3;
         this.colorLevel = ["brown", "violet", "blue","space_color"];
 
+        this.organ = organType;
         this.empty = false;
 
         let interactiveObj = new Interactive(2,1,1,function(){
@@ -23,7 +24,7 @@ class Tomb extends Sprite {
 
         behaviour.setUpdate(() => {
             if(!this.empty && behaviour.object.level <=0){
-            	let organ = new Organ();
+            	let organ = new Organ(this.organ);
             	this.addChild(organ);
             	this.empty = true;
             }

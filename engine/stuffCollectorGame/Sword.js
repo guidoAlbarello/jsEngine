@@ -1,5 +1,5 @@
 class Sword extends Sprite {
-  constructor(direction=[1,0], speed=5) {
+  constructor(direction=[1,0], swordDamage=3) {
     super(0.75, 0.25, 'violet', 1, 1);
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.addBehaviour(this.createBehaviour(this));
@@ -9,10 +9,10 @@ class Sword extends Sprite {
 
     let collider = new Collider("enemy");
     collider.setOnCollisionStay((otherObject) => {
-      otherObject.takeDamage(gConfiguration.swordDamage);
+      otherObject.takeDamage(swordDamage);
     });
     collider.setOnCollisionEnter((otherObject) => {
-      otherObject.takeDamage(gConfiguration.swordDamage);
+      otherObject.takeDamage(swordDamage);
     });
     this.addCollider(collider);
   }

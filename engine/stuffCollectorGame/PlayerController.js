@@ -41,14 +41,14 @@ class PlayerController {
                 }
                 this.timeShoot = gDeltaTime * 10;
 
-                let shot = new Shot([this.direction[0], this.direction[1]], this.walkSpeedMax + 2);
+                let shot = new Shot([this.direction[0], this.direction[1]], this.walkSpeedMax + 2, this.player.getDamages().shotDamage);
                 shot.translate(this.player.getWorldPosition());
                 this.player.addOrphanChild(shot);
                 //this.player.addChild(shot);
             }
 
             if (gInputHandler.getInput("sword")) {
-                let sword = new Sword([this.direction[0], this.direction[1]], this.walkSpeedMax + 2);
+                let sword = new Sword([this.direction[0], this.direction[1]], this.player.getDamages().swordDamage);
                 sword.translate([this.direction[0] * (this.player.getWidth() / 2 + 0.3 * sword.getWidth()), 0, 0]);
                 //+
                 this.player.addChild(sword);

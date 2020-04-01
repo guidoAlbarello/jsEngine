@@ -1,12 +1,13 @@
 class Player extends Sprite {
-	constructor() {
+	constructor(playerHP, playerDamages) {
 		// Init player sprite.
 		super(3, 2.22, 'player', 50 / 512, 37 / 1024);
+		this.playerDamages = playerDamages;
 		this.organsCollected = new Map();
 		this.setPhysicsComponent(new PhysicsComponent2d());
 		this.physicsComponent.setGravity(1);
 
-		this.hp = new HealthPoints(gConfiguration.playerHP);
+		this.hp = new HealthPoints(playerHP);
 		this.hp.translate([0, this.getHeight() / 2 + 0.3 * this.getHeight(), 0]);
 		this.addChild(this.hp);
 
@@ -113,5 +114,9 @@ class Player extends Sprite {
 		} else {
 			this.inventory.set(object, 1);
 		}
+	}
+
+	getDamages(){
+		return this.playerDamages;
 	}
 }

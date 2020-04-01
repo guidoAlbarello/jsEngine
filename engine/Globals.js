@@ -52,15 +52,7 @@ var gModelMaker = new ModelMaker();
 var gCollisionDetection = new CollisionDetection();
 var gEntityManager = new EntityManager();
 var gQuerySystem = new QuerySystem();
-var gConfiguration = {
-	"playerHP": 100,
-	"enemyHP": 10,
-	"zombieHP": 20,
-	"enemyDamage": 10,
-	"shotDamage": 2,
-	"swordDamage": 3
-};
-var gOrgansType = ["heart","brain"];
+
 
 var gDeltaTime = 0.0;
 var gDeltaTimeMultiplier = 1.0;

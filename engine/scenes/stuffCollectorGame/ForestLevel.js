@@ -6,6 +6,15 @@ class ForestLevel {
 			["brain", 1],
 			["heart", 1]
 		]);
+
+        this.configuration = {
+            "playerHP": 100,
+            "enemyHP": 10,
+            "enemyDamage": 10,
+            "playerDamage": {"shotDamage": 2,
+                            "swordDamage": 3}
+        };
+        this.organsType = ["heart","brain","liver"];
 	}
 
 	build() {
@@ -32,7 +41,7 @@ class ForestLevel {
 
 	setupPlayer() {
 		// Create the player
-		let player = gEntityManager.instantiateObjectWithTag("player", Player);
+		let player = gEntityManager.instantiateObjectWithTag("player", Player, this.configuration.playerHP, this.configuration.playerDamage);
 		player.translate([0, 3, 0]);
 
 		// Create a player controller and set the player to it.
@@ -244,8 +253,8 @@ class ForestLevel {
 		this.scene.addChild(hook);
 	}
 
-	createTombAt(x, y) {
-		let tomb = gEntityManager.instantiateObjectWithTag("tomb", Tomb);
+	createTombAt(x, y, organType=this.organsType[Math.floor(Math.random() * this.organsType.length)]) {
+		let tomb = gEntityManager.instantiateObjectWithTag("tomb", Tomb, organType);
 		tomb.translate([tomb.getWidth() / 2 + x, tomb.getHeight() / 2 + y, 0]);
 		this.scene.addChild(tomb);
 	}

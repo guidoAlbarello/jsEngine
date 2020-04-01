@@ -1,5 +1,5 @@
 class Shot extends Sprite {
-  constructor(direction=[1,0], speed=5) {
+  constructor(direction=[1,0], speed=5, shotDamage=2) {
     super(0.33, 0.25, 'red', 1, 1);
     this.setPhysicsComponent(new PhysicsComponent2d());
     this.addBehaviour(this.createBehaviour(this));
@@ -13,7 +13,7 @@ class Shot extends Sprite {
       this.remove();
     });
     collider.setOnCollisionEnter((otherObject) => {
-      otherObject.takeDamage(gConfiguration.shotDamage);
+      otherObject.takeDamage(shotDamage);
     });
     this.addCollider(collider);
   }

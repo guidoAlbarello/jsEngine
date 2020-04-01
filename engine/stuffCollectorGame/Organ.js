@@ -1,8 +1,8 @@
 class Organ extends Sprite {
-    constructor() {
+    constructor(organType) {
         super();
         this.init(1,1,"green", 1,1);
-        this.type = gOrgansType[Math.floor(Math.random() * gOrgansType.length)];
+        this.type = organType;//gOrgansType[Math.floor(Math.random() * gOrgansType.length)];
 
         let collider = new Collider("player");
         collider.setOnCollisionEnter((otherObject) => {
