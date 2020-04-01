@@ -15,10 +15,12 @@ class ForestLevel {
                             "swordDamage": 3}
         };
         this.organsType = ["heart","brain","liver"];
+        this.amountDeadEnemiesInColliseum = 10;
 	}
 
 	build() {
 		this.setupPlayer();
+        this.setupEnemies();
 		this.setupCameras();
 
 		this.setupBackground();
@@ -36,6 +38,7 @@ class ForestLevel {
 		// Set up cameras
 		this.scene.addCamera(new OrtographicCamera([0, 0, 20], [0, 0, 0], [0, 1, 0], 27, 48), "ortho", gQuerySystem.getPlayer());
 		this.scene.addCamera(new OrbitalCamera(20, [0.0, 0.0, 0.0]), "orbital");
+        this.scene.addCamera(new OrtographicCamera([50, -100, 100], [50, -100, 0], [0, 1, 0], 350, 500), "orthoAll");
 		this.scene.useCamera("ortho");
 	}
 
@@ -56,6 +59,77 @@ class ForestLevel {
 		// Added player to the scene
 		this.scene.addChild(player);
 	}
+
+    setupEnemies() {
+        let baseY = 15;
+        let d_y = 0;
+        let d_x = 0;
+        const increaseDisplacement = (x, y) => {
+            d_x += x;
+            d_y += y;
+        };
+
+        // Upper level
+        // First Jumps
+        increaseDisplacement(38, 5);
+        increaseDisplacement(23, 6);
+
+        // Cave + platforms
+        increaseDisplacement(0, -17);
+        this.createEnemyOfTypeAt(Zombie, 2 + d_x, d_y);
+
+        increaseDisplacement(50, 0);
+        increaseDisplacement(14, 27);
+
+        // Upper platform before colliseum
+        increaseDisplacement(40, 0);
+        this.createEnemyOfTypeAt(Zombie, d_x - 1, d_y);
+
+        // Colliseum
+
+        // Bottom level
+
+        // Start Area
+        increaseDisplacement(0, -150);
+        this.createEnemyOfTypeAt(Wolf, 60 + d_x, d_y);
+        increaseDisplacement(-20, 0);
+
+        // Upper platforming area
+
+        // Bottom platform section with lava
+        this.createEnemyOfTypeAt(Wolf, d_x + 7, d_y);
+        increaseDisplacement(-10 - 14, 0);
+        increaseDisplacement(-5 - 54, 0);
+
+        // Upper platforming area
+
+        // Endzone
+        increaseDisplacement(-15, 6);
+        increaseDisplacement(-20, -15);
+
+        // Slope side
+        increaseDisplacement(-50, -2 * baseY);
+        this.createEnemyOfTypeAt(Zombie, d_x + 28, d_y + 1.75 * baseY);
+        increaseDisplacement(-20, -baseY);
+        increaseDisplacement(-10, -1.5 * baseY);
+        let g = this.createEnemyOfTypeAt(Guard, d_x + 10, d_y);
+        g.setPatrollCenter([d_x + 10, d_y, 0]);
+
+        increaseDisplacement(-70, 2.5 * baseY);
+
+        // Platforms in air
+
+        // Left side
+
+        // Spiral
+        increaseDisplacement(10, 10);
+        this.createEnemyOfTypeAt(Zombie, d_x - 4.5, d_y + 35);
+        increaseDisplacement(10, 65);
+        this.createEnemyOfTypeAt(ZombieFast, d_x + 7, d_y);
+        this.createEnemyOfTypeAt(Zombie, d_x + 23, d_y);
+        this.createEnemyOfTypeAt(Zombie, d_x + 30, d_y);
+        this.createEnemyOfTypeAt(Dragon, d_x + 20, d_y - 12);
+    }
 
 	setupBackground() {
 		let background = gEntityManager.instantiateObjectWithTag("background", Sprite, 50, 50, "background", 1, 1);
@@ -87,7 +161,6 @@ class ForestLevel {
 		increaseDisplacement(0, -17);
 		this.createPlatformFromSizeAt(50, baseY, d_x, d_y);
 		this.createPlatformFromSizeAt(8, 16, d_x, 16 + d_y);
-		this.createEnemyOfTypeAt(Zombie, 2 + d_x, d_y);
 
 		increaseDisplacement(50, 0);
 		this.createPlatformFromSizeAt(5, 1, 4 + d_x, d_y - 3);
@@ -101,20 +174,34 @@ class ForestLevel {
 		increaseDisplacement(40, 0);
 		this.createPlatformFromSizeAt(1, 8, d_x - 9, 13 + d_y);
 		this.createPlatformFromSizeAt(15, 1, d_x + 1, 10 + d_y);
-		this.createEnemyOfTypeAt(Zombie, d_x - 1, d_y);
 		this.createTombAt(14 + d_x, 10 + d_y - 0.1);
 
-		// Colliseum
-		this.createPlatformFromSizeAt(30, 30, d_x, -30);
-		this.createPlatformFromSizeAt(10, 2, 30 + d_x, -30.1); // This platform is movable.
-		this.createPlatformFromSizeAt(30, 30, 40 + d_x, -30);
-		this.createPlatformFromSizeAt(30, 150, 70 + d_x, 0);
+        // Colliseum
+        this.createPlatformFromSizeAt(30, 30, d_x, -30);
+
+        let colliseumPlatform = this.createPlatformFromSizeAt(10, 2, 30 + d_x, -30.1); // This platform is movable.
+        let colliseumBehaviour = new Behaviour(colliseumPlatform);
+        colliseumBehaviour.setInit(() => {
+            colliseumBehaviour.object.amountEnemies = gQuerySystem.getAmountObjectsWithTag("enemy");
+            colliseumBehaviour.object.setPhysicsComponent( new PhysicsComponent2d() );
+            colliseumBehaviour.object.initialPositionX=colliseumBehaviour.object.getPosition()[0];
+            colliseumBehaviour.object.amountDeadEnemies = this.amountDeadEnemiesInColliseum;
+        });
+        colliseumBehaviour.setUpdate(() => {
+            if(gQuerySystem.getAmountObjectsWithTag("enemy")<=colliseumBehaviour.object.amountEnemies-colliseumBehaviour.object.amountDeadEnemies){
+                if(colliseumBehaviour.object.getPosition()[0] <= colliseumBehaviour.object.initialPositionX-colliseumBehaviour.object.getWidth()) colliseumBehaviour.object.remove();
+                colliseumBehaviour.object.physicsComponent.setVelocity([-1, 0]);
+            }            
+        });
+        colliseumPlatform.addBehaviour(colliseumBehaviour);
+
+        this.createPlatformFromSizeAt(30, 30, 40 + d_x, -30);
+        this.createPlatformFromSizeAt(30, 150, 70 + d_x, 0);
 
 		// Bottom level
 
 		// Start Area
 		increaseDisplacement(0, -150);
-		this.createEnemyOfTypeAt(Wolf, 60 + d_x, d_y);
 		this.createPlatformFromSizeAt(70, baseY, d_x, d_y);
 		increaseDisplacement(-20, 0);
 
@@ -136,7 +223,6 @@ class ForestLevel {
 
 		// Bottom platform section with lava
 		this.createLavaAt(10, baseY, d_x + 5, d_y - 13);
-		this.createEnemyOfTypeAt(Wolf, d_x + 7, d_y);
 		this.createPlatformFromSizeAt(10, baseY, d_x, d_y);
 		increaseDisplacement(-10 - 14, 0);
 		this.createLavaAt(19, baseY, d_x - 4.5, d_y - 13);
@@ -166,15 +252,12 @@ class ForestLevel {
 		// Slope side
 		increaseDisplacement(-50, -2 * baseY);
 		this.createPlatformFromSizeAt(1, 8, d_x + 40, d_y + 2.5 * baseY);
-		this.createEnemyOfTypeAt(Zombie, d_x + 28, d_y + 1.75 * baseY);
 		this.createPlatformFromSizeAt(8, 5, d_x + 27, d_y + 1.75 * baseY);
 		this.createPlatformFromSizeAt(50, 2.5 * baseY, d_x, d_y);
 		increaseDisplacement(-20, -baseY);
 		this.createPlatformFromSizeAt(45, baseY, d_x - 25, d_y);
 		increaseDisplacement(-10, -1.5 * baseY);
 		this.createPlatformFromSizeAt(80, baseY, d_x - 20, d_y);
-		let g = this.createEnemyOfTypeAt(Guard, d_x + 10, d_y);
-		g.setPatrollCenter([d_x + 10, d_y, 0]);
 
 		// this.createExit(); Spawn Exit
 		increaseDisplacement(-70, 2.5 * baseY);
@@ -201,7 +284,6 @@ class ForestLevel {
 		this.createPlatformFromSizeAt(1, 8, d_x + 7, d_y + 29);
 		this.createPlatformFromSizeAt(1, 8, d_x, d_y + 24);
 
-		this.createEnemyOfTypeAt(Zombie, d_x - 4.5, d_y + 35);
 		this.createPlatformFromSizeAt(5, 5, d_x - 7, d_y + 35);
 		this.createPlatformFromSizeAt(1, 8, d_x + 7, d_y + 48);
 
@@ -212,12 +294,9 @@ class ForestLevel {
 
 		increaseDisplacement(10, 65);
 		this.createPlatformFromSizeAt(8, 1, d_x, d_y);
-		this.createEnemyOfTypeAt(ZombieFast, d_x + 7, d_y);
 
 		this.createBouncyPlatform(15, 0.8, d_x + 8, d_y - 1);
 
-		this.createEnemyOfTypeAt(Zombie, d_x + 23, d_y);
-		this.createEnemyOfTypeAt(Zombie, d_x + 30, d_y);
 		this.createPlatformFromSizeAt(8, 1, d_x + 23, d_y);
 
 		this.createPlatformFromSizeAt(1, 8, d_x + 33, d_y - 3);
@@ -231,7 +310,6 @@ class ForestLevel {
 
 		this.createPlatformFromSizeAt(1, 8, d_x + 25, d_y - 20);
 
-		this.createEnemyOfTypeAt(Dragon, d_x + 20, d_y - 12);
 		// TODO: Add interactable here at post d_x + 12!!
 		//this.createInteractable();
 		this.createPlatformFromSizeAt(10, 4, d_x + 19, d_y - 12);
@@ -270,6 +348,7 @@ class ForestLevel {
 		let platform = gEntityManager.instantiateObjectWithTag("floor", Platform, width, height, true);
 		platform.translate([x, y, 0]);
 		this.scene.addChild(platform);
+        return platform;
 	}
 
 	createBouncyPlatform(width, height, x, y) {

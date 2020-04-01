@@ -14,4 +14,8 @@ class QuerySystem {
     let objectsWithTag = this.getAllObjectsWithTag(tag);
     return objectsWithTag.filter(anObject => anObject.getId() == object.getId()).length > 0;
   }
+
+  getAmountObjectsWithTag(tag){
+    return gEntityManager.getEntitiesByTag()[tag].length;
+  }
 }
