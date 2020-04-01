@@ -9,6 +9,13 @@ class Zombie extends Enemy {
         this.durationDeath = 1;
     }
 
+    takeDamage(damage = 1) {
+        this.hp.subtract( damage );
+        if ( this.hp.getHP() <= 0 ) {
+            this.dead = true;
+        }
+    }
+
     createPatrolBehaviour(object){
 
         let patrolBehaviour = new Behaviour(object);
@@ -19,8 +26,8 @@ class Zombie extends Enemy {
 
         patrolBehaviour.setUpdate(() => {
             if(patrolBehaviour.object.isDead()){
-                if(this.durationDeath <= 0) this.remove();
-                this.durationDeath-=1*gDeltaTime;
+                if(patrolBehaviour.object.durationDeath <= 0) gEntityManager.destroyObject(patrolBehaviour.object.getId());
+                patrolBehaviour.object.durationDeath-=1*gDeltaTime;
             }
             patrolBehaviour.object.timer += gDeltaTime;
             if (patrolBehaviour.object.timer >= 8) {

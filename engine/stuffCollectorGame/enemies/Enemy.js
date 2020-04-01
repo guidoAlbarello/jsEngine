@@ -39,6 +39,7 @@ class Enemy extends Sprite {
 		this.hp.subtract( damage );
 		if ( this.hp.getHP() <= 0 ) {
 			this.dead = true;
+            gEntityManager.destroyObject(this.getId());
 		}
 	}
 

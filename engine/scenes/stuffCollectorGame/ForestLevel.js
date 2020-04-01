@@ -9,23 +9,20 @@ class ForestLevel {
 
         this.configuration = {
             "playerHP": 100,
-            "enemyHP": 10,
-            "enemyDamage": 10,
             "playerDamage": {"shotDamage": 2,
                             "swordDamage": 3}
         };
         this.organsType = ["heart","brain","liver"];
-        this.amountDeadEnemiesInColliseum = 10;
+        this.amountDeadEnemiesInColliseum = 2;
 	}
 
 	build() {
 		this.setupPlayer();
+        this.setupBackground();
         this.setupEnemies();
 		this.setupCameras();
-
-		this.setupBackground();
 		this.setupLevelGeometry();
-
+        
 
 		let gameManager = new GameManager(this.scene, this.objective);
 		gameManager.init();
@@ -45,8 +42,7 @@ class ForestLevel {
 	setupPlayer() {
 		// Create the player
 		let player = gEntityManager.instantiateObjectWithTag("player", Player, this.configuration.playerHP, this.configuration.playerDamage);
-		player.translate([0, 3, 0]);
-
+		player.translate([0, 3, 0])
 		// Create a player controller and set the player to it.
 		// This way we can control the player with input.
 		let playerController = new PlayerController(player);
@@ -189,7 +185,7 @@ class ForestLevel {
         });
         colliseumBehaviour.setUpdate(() => {
             if(gQuerySystem.getAmountObjectsWithTag("enemy")<=colliseumBehaviour.object.amountEnemies-colliseumBehaviour.object.amountDeadEnemies){
-                if(colliseumBehaviour.object.getPosition()[0] <= colliseumBehaviour.object.initialPositionX-colliseumBehaviour.object.getWidth()) colliseumBehaviour.object.remove();
+                if(colliseumBehaviour.object.getPosition()[0] <= colliseumBehaviour.object.initialPositionX-colliseumBehaviour.object.getWidth()) gEntityManager.destroyObject(colliseumBehaviour.object.getId());
                 colliseumBehaviour.object.physicsComponent.setVelocity([-1, 0]);
             }            
         });
@@ -245,7 +241,36 @@ class ForestLevel {
 		// Endzone
 		increaseDisplacement(-15, 6);
 		this.createPlatformFromSizeAt(35, 8, d_x - 20, d_y);
-		this.createPlatformFromSizeAt(2, 7, d_x, d_y - 8);
+
+		let wall = this.createPlatformFromSizeAt(2, 7, d_x, d_y - 8);
+
+        let wallLever = new Lever();
+        //wallLever.translate([d_x -15, d_y - 14.5,0]);
+        this.scene.addChild(wallLever);
+        let wallInteractive = new Interactive(1,1,1,function(){
+            if(this.object.timeToMove<=0){
+                this.object.moving = true;
+                this.remove();}
+            this.object.timeToMove-=gDeltaTime;});
+        wallInteractive.setObject(wall);
+        gDeveloperTools.drawHitbox(wallInteractive);
+        wallLever.addChild(wallInteractive);
+
+        let wallBehaviour = new Behaviour(colliseumPlatform);
+        wallBehaviour.setInit(() => {
+            wallBehaviour.object.timeToMove = 1;
+            wallBehaviour.object.setPhysicsComponent( new PhysicsComponent2d() );
+            wallBehaviour.object.initialPosition=wallBehaviour.object.getPosition();
+            wallBehaviour.object.moving=false;
+        });
+        wallBehaviour.setUpdate(() => {
+            if(wallBehaviour.object.moving){
+                if(wallBehaviour.object.getPosition()[1] >= wallBehaviour.object.initialPosition[1]+wallBehaviour.object.getHeight()) gEntityManager.destroyObject(wallBehaviour.object.getId());
+                wallBehaviour.object.physicsComponent.setVelocity([0, 1]);
+            }            
+        });
+        wall.addBehaviour(wallBehaviour);
+
 		increaseDisplacement(-20, -15);
 		this.createPlatformFromSizeAt(25, 8 * baseY, d_x, d_y);
 
@@ -298,6 +323,7 @@ class ForestLevel {
 		this.createBouncyPlatform(15, 0.8, d_x + 8, d_y - 1);
 
 		this.createPlatformFromSizeAt(8, 1, d_x + 23, d_y);
+        wallLever.translate([d_x +20, d_y - 12+wallLever.getHeight()/2,0]);
 
 		this.createPlatformFromSizeAt(1, 8, d_x + 33, d_y - 3);
 		this.createPlatformFromSizeAt(1, 8, d_x + 40, d_y - 7);
