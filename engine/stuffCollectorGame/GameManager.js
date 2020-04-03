@@ -31,7 +31,8 @@ class GameManager extends Object3d {
 
 	}
 	_playerWon(organs) {
-		return this._allOrgansCollected( organs );
+		console.log(gQuerySystem.getPlayer().inventory);
+		return gQuerySystem.getPlayer().onEndPlatform && this._allOrgansCollected( organs );
 	}
 
 	_playerDead(hp) {

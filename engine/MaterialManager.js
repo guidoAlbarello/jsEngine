@@ -69,6 +69,11 @@ class MaterialManager {
 			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
 			this.SHADERS_DIRECTORY + "healthPointsFS.glsl"
 		]);
+		materialPrograms.push([
+			OrgansMaterial,
+			this.SHADERS_DIRECTORY + "defaultSpriteVS.glsl",
+			this.SHADERS_DIRECTORY + "organsFS.glsl"
+		]);
 
 		return materialPrograms;
 	}

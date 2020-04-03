@@ -110,6 +110,7 @@ class ForestLevel {
         increaseDisplacement(-10, -1.5 * baseY);
         let g = this.createEnemyOfTypeAt(Guard, d_x + 10, d_y);
         g.setPatrollCenter([d_x + 10, d_y, 0]);
+		this.createEndPlatform(d_x, d_y);
 
         increaseDisplacement(-70, 2.5 * baseY);
 
@@ -380,6 +381,18 @@ class ForestLevel {
 	createBouncyPlatform(width, height, x, y) {
 		let platform = gEntityManager.instantiateObjectWithTag("bouncy_floor", BouncyPlatform, width, height, true);
 		platform.translate([x, y, 0]);
+		this.scene.addChild(platform);
+	}
+
+	createEndPlatform(d_x, d_y) {
+		let platform = gEntityManager.instantiateObjectWithTag("end_platform", Sprite, 3, 0.5, "black", 1, 1);
+	
+		let winCollider = new Collider("player");
+		winCollider.setOnCollisionEnter((player) => {player.onEndPlatform = true;});
+		winCollider.setOnCollisionExit((player) => {player.onEndPlatform = false;});
+		platform.addCollider(winCollider);
+
+		platform.translate([d_x + 10, d_y, 0]);
 		this.scene.addChild(platform);
 	}
 }

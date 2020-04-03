@@ -11,6 +11,11 @@ class Player extends Sprite {
 		this.hp.translate([0, this.getHeight() / 2 + 0.3 * this.getHeight(), 0]);
 		this.addChild(this.hp);
 
+		this.organs_ui = new Sprite(1, 0.3, 'white', 1, 1);
+		this.organs_ui.setMaterial(new OrgansMaterial("white"));
+		this.organs_ui.translate([0, this.getHeight() / 2 - 0.4 + 0.3 * this.getHeight(), 0]);
+		this.addChild(this.organs_ui);
+
 		this.wallJumpDirection = [0, 0];
 
 		this.setAnimationManager(this.createAnimations(this));
@@ -29,6 +34,7 @@ class Player extends Sprite {
 			this.hp.material.setTotalLife(this.hp.hpMax);
 		});
 		this.addBehaviour(updateHpBar);
+		this.onEndPlatform = false;
 	}
 
 	walk(velocityX) {
@@ -114,9 +120,20 @@ class Player extends Sprite {
 		} else {
 			this.inventory.set(object, 1);
 		}
+		switch (object) {
+			case "liver":
+				this.organs_ui.material.setHasLiver();
+				break;
+			case "brain":
+				this.organs_ui.material.setHasBrain();
+				break;
+			case "heart":
+				this.organs_ui.material.setHasHeart();
+				break;
+		}
 	}
 
-	getDamages(){
+	getDamages() {
 		return this.playerDamages;
 	}
 }

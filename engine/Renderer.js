@@ -8,6 +8,7 @@ class Renderer {
 	MAT4 = "mat4";
 	VEC3 = "vec3";
 	FLOAT = "float";
+	BOOL = "bool";
 
 	constructor() {
 		this.elementsToDraw = [];
@@ -174,6 +175,7 @@ class Renderer {
 					this.gl.uniform3fv(location, data);
 					break;
 				case this.FLOAT:
+				case this.BOOL:
 					this.gl.uniform1f(location, data);
 					break;
 				default:
